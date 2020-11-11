@@ -14,14 +14,14 @@
                       <label class="label-text-color" for="shopcd">From Date:</label>
                       </div>
                       <p-calendar name="fDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [(ngModel)]="fromDate"
-                       [showIcon]="true" (ngModelChange)="onDateChange()"></p-calendar>
+                      showTime="true" hourFormat="12" [showIcon]="true" (ngModelChange)="onDateChange()"></p-calendar>
                   </div>
                   <div class="p-col-12 p-md-4 p-lg-2">
                     <div>
                       <label class="label-text-color" for="shopcd">To Date:</label>
                       </div>
                       <p-calendar name="tDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [(ngModel)]="toDate"
-                       [showIcon]="true" (ngModelChange)="onDateChange()" ></p-calendar>
+                      showTime="true" hourFormat="12" [showIcon]="true" (ngModelChange)="onDateChange()" ></p-calendar>
                   </div>
                 </div>
             <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">
