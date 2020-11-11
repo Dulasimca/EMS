@@ -1,0 +1,416 @@
+@import '../node_modules/primeng/resources/themes/saga-green/theme.css';
+@import '../node_modules/primeng/resources/primeng.min.css';
+@import '../node_modules/primeicons/primeicons.css';
+/* @import '../node_modules/primeflex/primeflex.css'; */
+@import url("http://fonts.googleapis.com/css?family=Oswald");
+@import '../node_modules/font-awesome/css/font-awesome.min.css';
+body {
+    font-family: Verdana, Geneva, sans-serif;
+    position: relative;
+  
+  }
+
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(102, 100, 100, 0.2), 0 6px 20px 0 rgba(133, 131, 131, 0.19);
+    border: lightgray 1px solid;
+  }
+
+  .header-h1 {
+    /* color: #32CD32 !important; */
+    color: #ce0000;
+    font-size: 32px;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    font-weight: normal;
+  } 
+
+  .header-h3 {
+    font-weight: normal;
+    /* color: #32CD32 !important; */
+    color: #ce0000;
+    font-size: 20px;
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+    margin-left: 4.3em;
+}
+
+@media screen and (max-width: 775px) {
+  .hidden{
+    display: none !important;
+  }
+  .show{
+    display: flex !important;
+  }
+}
+
+@media screen and (min-width: 775px) {
+  .hidden{
+    display: flex !important;
+  }
+  .show{
+    display: none !important;
+  }
+}
+
+  @media only screen and (max-width: 1100px) {
+    .header-h3 {
+        font-size: 18px;
+    }
+
+    .header-h1 {
+    font-size: 25px;
+    padding-left: 15px;
+    text-align: left;
+    }
+  }
+
+  @media only screen and (max-width: 990px) {
+    .header-h3 {
+        font-size: 17px;
+        margin-left: 0px !important;
+    }
+
+    .header-h1 {
+    font-size: 23px;
+    margin-left: -15%;
+    }
+  }
+
+  /* @media only screen and (max-width: 935px) {
+    .header-h3 {
+        font-size: 17px;
+        margin-left: 0px !important;
+    }
+
+    .header-h1 {
+    font-size: 22.4px;
+    margin-left: -15%;
+    }
+  } */
+  @media only screen and (max-width: 935px) {
+    .header-h3 {
+        font-size: 15px;
+    }
+
+    .header-h1 {
+    font-size: 21.5px;
+    }
+  }
+  @media only screen and (max-width: 856px) {
+    .header-h3 {
+        font-size: 16px;
+        margin-left: 1em;
+    }
+
+    .header-h1 {
+    font-size: 20px;
+    padding-left: 30px !important;
+    }
+  }
+  @media only screen and (max-width: 700px) {
+    .header-h3 {
+        font-size: 14px;
+        padding-left: 15px;
+    }
+
+    .header-h1 {
+    font-size: 19px;
+    margin-left: -10px;
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .header-h3 {
+        font-size: 13px;
+        padding-left: 12px;
+
+    }
+
+    .header-h1 {
+    font-size: 19px;
+    margin-left: -10px;
+    }
+  }
+  @media only screen and (max-width: 525px) {
+    .header-h3 {
+        font-size: 13px;
+        text-align: center;
+    }
+
+    .header-h1 {
+    font-size: 19px;
+    margin-left: 25px;
+
+    }
+  }
+  @media only screen and (max-width: 410px) {
+    .header-h3 {
+        font-size: 11px;
+        text-align: center;
+
+    }
+
+    .header-h1 {
+    font-size: 15px;
+    margin-left: 25px;
+
+    }
+  }
+
+  .fa-user{
+    color: #809481 !important;
+    font-size: 2.3em;
+  }
+
+  .menu-bar{
+      /* background: rgb(104, 206, 3); */
+      /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
+      /* border-width: 1px;
+      border-style: solid;
+      border-color: rgb(144, 146, 142); */
+      /* background: #157110; original site */
+      /* background: #14af0b; */
+      background: #157110;
+      font-size: 1rem;
+      color: #464b50;
+      font-family: var(--font-family);
+  }
+
+  .menu-label-splitter {
+    border-width: 0px 1.2px 0px 0px;border-style: solid; border-color: white;
+  }
+
+  .login-body{
+    background: rgb(42 49 43 / 76%);
+    margin-bottom: 7px;
+    height: 600px;
+  }
+
+  .f-pwd-text {
+    color: green;
+    font-size: smaller;
+    text-decoration: underline;
+  }
+
+  .p-btn-pad {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+  }
+
+  .no-pad{
+    padding: 0px !important;
+  }
+
+  .no-pad-top {
+    padding-top: 0px !important
+  }
+
+  .no-pad-left {
+    padding-left: 0px !important;
+  }
+
+  .no-pad-bottom {
+    padding-bottom: 0px !important;
+  }
+
+  .no-pad-right {
+    padding-right: 0px !important;
+  }
+
+  .bg-div {
+    /* background: rgb(104, 206, 3); */
+    /* background: rgb(104, 206, 3); */
+    /* background: #14af0b; */
+    background: #157110;
+    border: 1px solid rgb(126 214 38);
+  }
+
+  .login-card {
+    box-shadow: 0px 8.2px 12px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.42);
+  }
+
+  .login-container {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    margin-top: 5% ;
+  }
+
+  .login-bar {
+    text-align: center;
+    color: white;
+    padding: 12px !important;
+  }
+
+  .txt-align {
+    text-align: center !important;
+  }
+
+  .fa-icon-customized {
+    color: #5d695d !important;
+    font-size: 1.2em;
+    padding-right: 2.5px !important;
+}
+  
+  form {
+    width: 100%;
+  }
+  
+  .login-content {
+    width: 400px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .login-toolbar {
+    justify-content: center;
+  }
+  
+  .mat-form-field {
+    width: 100%;
+    display: block;
+  }
+  
+  .mat-raised-button {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .mat-toolbar.mat-primary {
+    background: #3f51b5;
+    color: white;
+    /* background: rgb(104, 206, 3); */
+    background: #157110;
+    /* background: #14af0b; */
+}
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+  color: white; 
+  /* background: rgb(104, 206, 3); */
+ /* background: #14af0b; */
+ background: #157110;
+}
+
+.home-bg{
+  background-color: rgb(194, 189, 189) !important;
+  margin-left: 35px; margin-right: 35px;
+  margin-top: 8px;
+  height: auto;
+}
+  
+html, body { height: 100%; background-color: rgb(194, 189, 189); }
+body { margin: 0px; font-family: Verdana, Geneva, sans-serif; }
+
+.cursor-pointer{
+  cursor: pointer !important;
+}
+
+.p-panel .p-panel-header {
+  border: 1px solid rgb(194 241 147);
+  padding: 0.38rem;
+  /* background: #f8f9fa; */
+  /* background: rgb(194 241 147); */
+  background: #9dca71;
+  color: #495057;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.menu-a {
+  text-decoration: none !important;
+  /* color: #464b50; */
+  color: white;
+}
+
+.footer-bg {
+  /* background: rgb(104, 206, 3); */
+  /* background: rgb(104, 206, 3); */
+  /* background: #14af0b; */
+  background: #157110;
+  color: white;
+}
+
+.label-text-color {
+  color: #000000cc !important;
+}
+
+.alert {
+  font-size: 12px !important;
+}
+
+.alert-danger {
+  color: #ff3122;
+}
+
+.page-content {
+ background-color: white !important;
+}
+
+.border-green {
+  border: 0.03px #a4d27d solid;
+}
+
+.align-center{
+  align-items: center !important;
+}
+
+.pi-times{
+  color: white;
+}
+
+.sidebar {
+  color: white !important;
+}
+
+.sidebar-pad-left {
+  padding-left: 30px !important;
+}
+
+.sidenav-items {
+  padding-bottom: 15px !important;
+}
+
+.sidenav-content :hover, .sidenav-content :hover a {
+  background: rgb(186, 243, 147);
+  border-radius: 2.5px;
+  color: black !important;
+}
+
+.pad-left {
+  padding-left: 5px;
+}
+
+.p-datatable table {
+  border-collapse: collapse;
+  border: 0.62px solid #dae6db;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  text-align: left;
+  border: 1px solid #e9ecef;
+  border-width: 0 0 1px 0;
+  padding: 0.5rem 0.5rem;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  text-align: left;
+  padding: 0.5rem 0.5rem;
+  border: 1px solid #e9ecef;
+  border-width: 0 0 1px 0;
+  font-weight: 600;
+  color: #495057;
+  background: #f8f9fa;
+  transition: box-shadow 0.2s;
+}
+
+.p-paginator {
+  background: #ffffff;
+  color: #6c757d;
+  border: solid #e9ecef;
+  border-width: 0;
+  /* padding: 0.5rem 1rem; */
+  padding: 0px !important;
+  border-radius: 3px;
+}

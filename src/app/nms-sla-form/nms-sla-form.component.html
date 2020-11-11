@@ -1,0 +1,161 @@
+<body class="home-bg">
+  <div class="p-grid card page-content border-green">
+    <div class="p-col-12 p-md-12 p-lg-12 no-pad">
+      <app-topbar></app-topbar>
+    </div>
+    <div class="p-col-12 p-md-12 p-lg-12 border-green" style="min-height: 445px;">
+      <p-panel>
+        <p-header>NMS/SLA Form
+          <div class="ui-g panel-header">
+            <div class="ui-g-12"></div>
+          </div>
+        </p-header>
+        <!-- <div class="ui-g"> -->
+          <form #f="ngForm" name="nmsForm">
+            <div class="p-grid card">
+              <!-- <div class="p-fluid p-formgrid"> -->
+              <div class="p-col-12 p-md-4 p-lg-3">
+                <div>
+                  <label for="rname" class="label-text-color">DM Office:</label>
+                </div>
+                  <p-dropdown #reg name="rname" [options]="regionOptions" [style]="{'width':'190px'}"
+                    [(ngModel)]="rcode" (onClick)="onSelectRegions()" filter="true" 
+                    resetFilterOnHide="true" filterMatchMode="startsWith" [showClear]="false" required>
+                    <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:middle">{{item.label}}</span>
+                    </ng-template>
+                  </p-dropdown>
+              </div>
+            <!-- </div> -->
+            <!-- <div class="p-fluid"> -->
+              <div class="p-col-12 p-md-4 p-lg-3">
+                <div>
+                  <label class="label-text-color" for="shopcd">Shop Number:</label>
+                  </div>
+                <input name="shopcd" type="text" size="20" pInputText [(ngModel)]="shopCode" autocomplete="off"
+                  required>
+              </div>
+              <div class="p-col-12 p-md-4 p-lg-3">
+                <div>
+                  <label class="label-text-color" for="shopcd">Type:</label>
+                  </div>
+                  <p-radioButton name="typename" label="Planned" value="1" [(ngModel)]="selectedType"></p-radioButton>
+                  <p-radioButton name="typename" value="2" label="Unplanned" [(ngModel)]="selectedType"></p-radioButton>              </div>
+              <div class="p-col-12 p-md-4 p-lg-3">
+                <div>
+                  <label class="label-text-color" for="shopcd">From Date:</label>
+                  </div>
+                  <p-calendar name="fDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [(ngModel)]="fromDate"
+                  showTime="true" hourFormat="12"  [showIcon]="true"></p-calendar>
+              </div>
+              <div class="p-col-12 p-md-4 p-lg-3">
+                <div>
+                  <label class="label-text-color" for="shopcd">To Date:</label>
+                  </div>
+                  <p-calendar name="tDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [(ngModel)]="toDate"
+                  showTime="true" hourFormat="12"  [showIcon]="true" ></p-calendar>
+              </div>
+            <!-- </div> -->
+             <!-- <div class="p-fluid p-formgrid p-grid"> -->
+              <div class="p-col-12 p-md-4 p-lg-3">
+                <div>
+                  <label class="label-text-color" for="campos">Camera Position:</label>
+                  </div>
+                  <p-checkbox name="campos1" class="ui-g-1" value="1" label="1" [(ngModel)]="selectedCameraPos"
+                    >
+                  </p-checkbox>
+                  <p-checkbox name="campos2" class="ui-g-1" value="2" label="2" [(ngModel)]="selectedCameraPos"
+                    >
+                  </p-checkbox>
+               </div>
+              <!-- </div> -->
+              <!-- <div class="p-fluid">
+                <div class="p-col-12 p-md-12 p-lg-12">
+                <div>
+                  <label class="label-text-color" for="nwdt">Network Down Time:</label>
+                  </div>
+                <input name="nwdt" type="text" size="20" pInputText [(ngModel)]="networkDownTime" autocomplete="off"
+                  required>
+              </div>
+              </div> -->
+              <!-- <div class="p-fluid">
+                <div class="p-col-123 p-md-12 p-lg-12">
+                <div>
+                  <label class="label-text-color" for="nwut">Network Up Time:</label>
+                  </div>
+                <input name="nwdt" type="text" size="20" pInputText [(ngModel)]="networkUpTime" autocomplete="off"
+                  required>
+              </div>
+              </div>
+              <div class="p-fluid">
+              <div class="p-col-12 p-md-12 p-lg-12">
+                <div>
+                  <label class="label-text-color" for="pwdt">Planned Down Time:</label>
+                </div>
+                <input name="nwdt" type="text" size="20" pInputText [(ngModel)]="plannedDownTime" autocomplete="off"
+                  required>
+              </div>
+              </div> -->
+              <!-- <div class="p-fluid">
+              <div class="p-col-12 p-md-12 p-lg-12">
+                <div>
+                  <label class="label-text-color" for="dfs">Duration (For system):</label>
+                  </div>
+                <input name="dfs" type="text" size="20" pInputText [(ngModel)]="duration" autocomplete="off" required>
+              </div>
+              </div> -->
+              <!-- <div class="p-fluid p-formgrid p-grid"> -->
+              <div class="p-col-12 p-md-4 p-lg-3">
+                <div>
+                  <label class="label-text-color" for="dfs">Network:</label>
+                  </div>
+                  <p-radioButton name="groupname" label="Up" value="1" [(ngModel)]="selectedNetwork"></p-radioButton>
+                  <p-radioButton name="groupname" value="2" label="Down" [(ngModel)]="selectedNetwork"></p-radioButton>
+             </div>
+              <!-- </div> -->
+             <!-- <div class="p-fluid p-formgrid p-grid"> -->
+              <div class="p-col-12 p-md-4 p-lg-3">
+                <div>
+                  <label for="reasons" class="label-text-color">Reason:</label>
+                  </div>
+                  <p-dropdown #reg name="reasons" [options]="reasonOptions" [style]="{'width':'190px'}"
+                    [(ngModel)]="reason" filter="true"
+                    resetFilterOnHide="true" filterMatchMode="startsWith" [showClear]="true" required>
+                    <ng-template let-item pTemplate="selectedItem">
+                      <span style="vertical-align:middle">{{item.label}}</span>
+                    </ng-template>
+                  </p-dropdown>
+              </div>
+            <!-- </div> -->
+              <!-- <div class="p-fluid p-formgrid p-grid"> -->
+              <div class="p-col-12 p-md-3 p-lg-3">
+                <div>
+                  <label for="remarks" class="label-text-color">Remarks:</label>
+                </div>
+                <textarea class="p-col-10 p-md-10 p-lg-10" [rows]="3" name="remarks" [cols]="28" [(ngModel)]="remarksTxt" pInputTextarea autoResize="autoResize"></textarea>
+                </div>
+                <div class="p-col-12 p-md-6 p-lg-6">
+                <div>
+                  <label class="label-text-color" for="url">Video URL:</label>
+                </div>
+                <input class="p-col-10 p-md-7 p-lg-5" name="url" type="url" size="20" pInputText [(ngModel)]="urlPath" autocomplete="off"
+                 style="text-decoration: underline; color: rgb(116, 116, 255);"  required>
+                 <!-- (change)="onFileUpload($event)" -->
+              </div> 
+              <div class="p-col-12 p-md-12 p-lg-12">
+                <div class="p-col-12 p-md-12 p-lg-12 txt-align" style="margin-top: 5px;">
+                  <button pButton type="submit" label="save" class="p-button-raised p-btn-pad bg-div"
+                  (click)="onSave()" [disabled]="!f.valid"></button>
+                </div>
+              </div>
+            </div>
+          </form>
+        <!-- </div> -->
+      </p-panel>
+    </div>
+  </div>
+
+</body>
+<div class="no-pad" style="margin-left: 35px; margin-right: 35px;">
+  <app-footer></app-footer>
+</div>

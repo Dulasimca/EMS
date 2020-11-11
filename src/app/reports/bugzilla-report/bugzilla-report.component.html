@@ -1,0 +1,35 @@
+<body class="home-bg">
+    <div class="p-grid card page-content border-green" >
+      <div class="p-col-12 p-md-12 p-lg-12 no-pad">
+        <app-topbar></app-topbar>
+      </div>
+        <div class="p-col-12 p-md-12 p-lg-12 card" style="min-height: 485px;">
+            <p-panel>
+            <p-header>
+                <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">TASMAC-HMS Status Report</div>
+            </p-header>
+            <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">
+                <p-table #dt styleClass="p-datatable-gridlines" [columns]="bugzillaCols" [value]="bugzillaData" [rows]="20"
+                [rowsPerPageOptions]="[10,20,30,40,50,100]" [paginator]="true" [responsive]="true"
+                 autoLayout="true" [loading]="loading" exportFilename="BUGZILLA_STATUS_REPORT">
+                  <ng-template pTemplate="header" let-columns>
+                  <tr style="text-align: center;">
+                    <th *ngFor="let col of columns">
+                      {{col.header}}
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                  <tr>
+                    <td *ngFor="let col of columns">
+                        {{rowData[col.field]}}
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+        </p-panel>
+    </div>
+</div>
+<app-footer></app-footer>
+</body>
