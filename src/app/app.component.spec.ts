@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'tasmac-app'`, () => {
+  it(`should have as title 'ems-app'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('tasmac-app');
+    expect(app.title).toEqual('ems-app');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('tasmac-app app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('ems-app app is running!');
   });
 });
