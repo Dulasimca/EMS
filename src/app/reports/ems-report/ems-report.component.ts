@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MessageService, SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-ems-report',
@@ -8,10 +8,13 @@ import { MessageService } from 'primeng/api';
 })
 export class EmsReportComponent implements OnInit {
   nmsCols: any;
-  nmsData: any = [];
+  nmsData = [];
   loading: boolean;
   fromDate: any;
   toDate: any;
+  maxDate: Date = new Date();
+  typeOptions: SelectItem[];
+  type: any;
 
   constructor(private messageService: MessageService) { }
 
@@ -27,13 +30,21 @@ export class EmsReportComponent implements OnInit {
       { field: 'remarks', header: 'Remarks' },
       { field: 'url', header: 'URL' }
     ];
+    this.typeOptions = [
+      { label: '-select-', value: null },
+      { label: 'UnPlanned', value: 2 },
+      { label: 'Planned', value: 1}
+    ];
   }
 
-  onDateChange() {
+  onChange(type) {
+    this.nmsData = [];
+    if(type === 'D') {
     this.checkValidDateSelection();
+    }
     if (this.fromDate !== undefined && this.fromDate !== null && this.fromDate !== '' &&
-      this.toDate !== undefined && this.toDate !== null && this.toDate !== '') {
-      this.loading = true;
+      this.toDate !== undefined && this.toDate !== null && this.toDate !== '' && this.type !== null
+      && this.type !== undefined) {
       this.nmsData.push(
         {
           SlNo: 1, dm_office: 'Dindigul', shop_number: '12456', type: 'Unplanned', camera_pos: 1,
@@ -123,9 +134,23 @@ export class EmsReportComponent implements OnInit {
           SlNo: 22, dm_office: 'Chennai(South)', shop_number: '778450', type: 'Planned', camera_pos: 1,
           network: 'Down', reason: 'Non-Scheduled', remarks: 'testing', url: 'xxxx'
         },
-
       )
+      if(this.nmsData.length !== 0) {
+      if((this.type * 1) === 1) {
+        this.nmsData = this.nmsData.filter(x => {
+          return x.type === 'Planned';
+        })
+      } else {
+        this.nmsData = this.nmsData.filter(x => {
+          return x.type === 'Unplanned';
+        })
+      }
+      let sno = 1;
+      this.nmsData.forEach(i => { i.SlNo = sno; sno += 1;});
+    }
       this.loading = false;
+    } else {
+      this.nmsData = [];
     }
 
   }
@@ -141,9 +166,10 @@ export class EmsReportComponent implements OnInit {
       if ((selectedFromDate > selectedToDate && ((selectedFromMonth >= selectedToMonth && selectedFromYear >= selectedToYear) ||
         (selectedFromMonth === selectedToMonth && selectedFromYear === selectedToYear))) ||
         (selectedFromMonth > selectedToMonth && selectedFromYear === selectedToYear) || (selectedFromYear > selectedToYear)) {
-        this.messageService.add({ key: 't-err', severity: 'error', life:5000
+        this.messageService.add({ key: 'msgKey', severity: 'error', life:5000
         ,summary: 'Invalid Date!', detail: 'Please select the valid date' });
-        this.fromDate = this.toDate = '';
+        this.fromDate = '';
+        this.toDate = '';
       }
       return this.fromDate, this.toDate;
     }

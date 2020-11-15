@@ -7,19 +7,25 @@
         <div class="p-grid">
             <div class="p-col-12 p-md-7 p-lg-7 no-pad-right">
                 <div class="p-col-12 p-md-12 p-lg-12 card">
-                    <p-chart type="line" [data]="lineData" width="auto" height="60vh" [options]="lineOptions"></p-chart>
+                    <div class="label-text-color" style="text-align: center; font-weight: 500; text-decoration: underline;">Network Management System</div>
+                    <p-chart type="bar" [data]="nmsBarData" width="auto" height="60vh" [options]="nmsBarOptions"></p-chart>
                 </div>
                 <div class="p-col-12 p-md-12 p-lg-12 card">
-                    <p-chart type="bar" [data]="barData" width="auto" height="60vh" [options]="barOptions"></p-chart>
+                    <div class="label-text-color" style="text-align: center; font-weight: 500; text-decoration: underline;">Service Level Agreement</div>
+                   <div style="padding-top: 10px;">
+                    <p-selectButton [options]="slaTypeOptions" [(ngModel)]="slaType" (onChange)="onSLATypeChange(slaType)"></p-selectButton>
+                </div>
+                    <p-chart type="bar" [data]="slaBarData" width="auto" height="60vh" [options]="slaBarOptions" (refresh)="onRefreshChart()"></p-chart>
                 </div>
             </div>
-            <div class="p-col-12 p-md-5 p-lg-5 no-pad-left" style="display: flex;" (click)="onClick()">
+            <div class="p-col-12 p-md-5 p-lg-5 no-pad-left" style="display: flex;">
                 <div class="p-col-12 p-md-12 p-lg-12 card">
+                    <div class="label-text-color" style="text-align: center; font-weight: 500; text-decoration: underline;">Helpdesk Management</div>
                     <div style="position: relative;
-                    top: 40%;
+                    top: 35%;
                     transform: translateY(-40%);">
-                        <p-chart type="pie" [data]="pieData"  width="auto" height="80vh" [options]="pieOptions"></p-chart>
-                    </div>
+                         <p-chart type="pie" [data]="pieData"  width="auto" height="80vh" [plugins]="plugin" [options]="pieOptions"></p-chart> 
+                        </div>
                 </div>
             </div>
         </div>
