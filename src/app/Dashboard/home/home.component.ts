@@ -5,6 +5,7 @@ import { ChartModule } from 'primeng/chart';
 import * as Chart from 'chart.js';
 import * as ChartDataLabels from 'chartjs-plugin-datalabels';
 import { SelectItem } from 'primeng/api';
+import { PathConstants } from 'src/app/Helper/PathConstants';
 
 
 @Component({
@@ -30,15 +31,25 @@ export class HomeComponent implements OnInit {
   pieChartData: any[];
   plugin: any;
   slaTypeOptions: SelectItem[];
+  nmsTypeOptions: SelectItem[];
   slaType: string = 'SH';
+  nmsType: string = 'DM';
+  districts: string[] = [];
+  regions: string[] = [];
+
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy) { }
 
   ngOnInit() {
     this.preventBackButton();
     this.onLoadBugzillaData();
+    this.onLoadNMSLabels();
     this.slaTypeOptions = [
       {label: 'Shop', value: 'SH'},
+      {label: 'DM Office', value: 'DM'},
+      {label: 'RM Office', value: 'RM'},
+    ];
+    this.nmsTypeOptions = [
       {label: 'DM Office', value: 'DM'},
       {label: 'RM Office', value: 'RM'},
     ];
@@ -70,33 +81,8 @@ export class HomeComponent implements OnInit {
     this.onSLATypeChange(this.slaType);
 
     //NMS Bar chart
-    this.NMSLabels = ['No.of connections up', 'No.of connections down', 'Video uploaded volume', 'Video downloaded error', 'Video upload error'];
-    this.nmsBarData = {
-      labels: this.NMSLabels,
-      datasets: [
-        {
-          label: "No's",
-          data: [65, 59, 80, 81, 60],
-          backgroundColor: ['#52c91e', '#09d6d3', '#f7074b', '#edcf24', '#1c83eb'],
-        }
-      ]
-    }
-
-    this.nmsBarOptions = {
-      scales: {
-        xAxes: [{
-            barPercentage: 0.28
-        }]
-    },
-      title: {
-        display: true,
-        fontSize: 16
-      },
-      legend: {
-        position: 'bottom'
-      }
-    };
-
+    this.onNMSTypeChange(this.nmsType);
+   
     //Pie chart
     this.pieData = {
       labels: ['Open', 'Running', 'Assigned', 'Completed'],
@@ -120,8 +106,21 @@ export class HomeComponent implements OnInit {
     };
   }
 
-  onSLATypeChange(type) {
-    if(type === 'SH') {
+  onLoadNMSLabels() {
+    this.restApi.get(PathConstants.RegionMasterURL).subscribe(reg => {
+      reg.forEach(r => {
+        this.regions.push(r.REGNNAME);
+      })
+    })
+    this.restApi.get(PathConstants.DistrictMasterURL).subscribe(dist => {
+      dist.forEach(d => {
+        this.districts.push(d.Dname);
+      })
+    })
+  }
+
+  onSLATypeChange(value) {
+    if(value === 'SH') {
       this.SLALabels = ['Camera', '4G-Network', 'UPS'];
       this.slaBarData = {
         labels: this.SLALabels,
@@ -147,7 +146,7 @@ export class HomeComponent implements OnInit {
           position: 'bottom'
         }
       };
-     } else if(type === 'DM') {
+     } else if(value === 'DM') {
       this.SLALabels =  ['NVR', 'Internet', 'UPS', 'VMS'];
       this.slaBarData = {
         labels: this.SLALabels,
@@ -200,12 +199,63 @@ export class HomeComponent implements OnInit {
         }
       };
      }
-     this.onRefreshChart();
   }
 
-  onRefreshChart() {
-    console.log('refreshed');
+  onNMSTypeChange(value) {
+  if(value === 'DM') {
+    this.NMSLabels = this.districts;
+    this.nmsBarData = {
+      labels: this.NMSLabels,
+      datasets: [
+        {
+          label: "No's",
+          data: [65, 59, 80, 81, 60, 55],
+          backgroundColor: '#52c91e',
+        }
+      ]
+    }
+    this.nmsBarOptions = {
+      scales: {
+        xAxes: [{
+            barPercentage: 0.22
+        }]
+    },
+      title: {
+        display: true,
+        fontSize: 16
+      },
+      legend: {
+        position: 'bottom'
+      }
+    };
+  } else {
+    this.NMSLabels = this.regions;
+    this.nmsBarData = {
+      labels: this.NMSLabels,
+      datasets: [
+        {
+          label: "No's",
+          data: [65, 59, 80, 81, 60, 88],
+          backgroundColor: '#52c91e',
+        }
+      ]
+    }
+    this.nmsBarOptions = {
+      scales: {
+        xAxes: [{
+            barPercentage: 0.15
+        }]
+    },
+      title: {
+        display: true,
+        fontSize: 16
+      },
+      legend: {
+        position: 'bottom'
+      }
+    };
   }
+}
 
   onLoadBugzillaData() {
     this.restApi.get('/ems/api/bugzilladata').subscribe(data => {

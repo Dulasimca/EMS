@@ -11,15 +11,17 @@ import { RestAPIService } from '../services/restAPI.service';
   styleUrls: ['./nms-sla-form.component.css']
 })
 export class NMSSLAFormComponent implements OnInit {
-  selectedCameraPos: any = '1';
-  selectedNetwork: any = 2;
   shopCode: any;
   regionOptions: SelectItem[];
   rcode: string;
-  // networkDownTime: string;
-  // networkUpTime: string;
-  // plannedDownTime: string;
-  // duration: string;
+  districtOptions: SelectItem[];
+  dcode: string;
+  locationOptions: SelectItem[];
+  location: string;
+  componentOptions: SelectItem[];
+  component: string;
+  bug_id: number;
+  closed_date: string;
   reasonOptions: SelectItem[];
   reason: string;
   remarksTxt: string;
@@ -29,28 +31,69 @@ export class NMSSLAFormComponent implements OnInit {
   toDate: any;
   urlPath: string;
   regionsData: any = [];
+  componentsData: any = [];
+  districtsData: any = [];
+  showCloseDate: boolean;
+  isLocationSelected: boolean;
 
   constructor(private restApiService: RestAPIService, private datepipe: DatePipe, private messageService: MessageService) { }
 
   ngOnInit() {
+    this.showCloseDate = false;
     this.reasonOptions = [
       { label: '-select-', value: null },
       { label: 'Scheduled', value: 1 }, { label: 'Non Scheduled', value: 2},
       { label: 'Accidental', value: 3}, { label: 'Incidental', value: 4}
     ];
+    this.locationOptions = [
+      { label: '-select-', value: null },
+      { label: 'RM-Office', value: 'R' }, { label: 'DM-Office', value:'D' },
+      { label: 'Shop', value: 'S' }
+    ];
   }
 
-  onSelectRegions() {
-    if(this.regionOptions === undefined) {
-    this.restApiService.get(PathConstants.RegionMasterURL).subscribe((res: any) => {
-      res.forEach(x => {
-          this.regionsData.push({ 'label': x.REGNNAME, 'value': x.REGNCODE });
-      });
-    this.regionOptions = this.regionsData;
-    this.regionOptions.unshift({ label: '-select-', value: null });
-  })
+  onSelect(type) {
+    switch(type) {
+      case 'R':
+        if(this.regionOptions === undefined) {
+          this.restApiService.get(PathConstants.RegionMasterURL).subscribe((res: any) => {
+            res.forEach(x => {
+                this.regionsData.push({ 'label': x.REGNNAME, 'value': x.REGNCODE });
+            });
+          this.regionOptions = this.regionsData;
+          this.regionOptions.unshift({ label: '-select-', value: null });
+        })
+      }
+        break;
+        case 'D':
+          if(this.districtOptions === undefined) {
+            this.restApiService.get(PathConstants.DistrictMasterURL).subscribe((res: any) => {
+              res.forEach(x => {
+                  this.districtsData.push({ 'label': x.Dname, 'value': x.Dcode });
+              });
+            this.districtOptions = this.districtsData;
+            this.districtOptions.unshift({ label: '-select-', value: null });
+          })
+        }
+          break;
+      case 'L':
+        this.componentsData = [];
+          this.restApiService.get(PathConstants.ComponentsURL).subscribe((res: any) => {
+            res.forEach(x => {
+              if(this.location === 'R' && x.product_id === 3) {
+                this.componentsData.push({ 'label': x.name, 'value': x.product_id });
+              } else if(this.location === 'D' && x.product_id === 4) {
+                this.componentsData.push({ 'label': x.name, 'value': x.product_id });
+              } else if(this.location === 'S' && x.product_id === 5) {
+                this.componentsData.push({ 'label': x.name, 'value': x.product_id });
+              } 
+            });
+          this.componentOptions = this.componentsData;
+          this.componentOptions.unshift({ label: '-select-', value: null });
+        })
+        break;
+    }
   }
-}
 
 onFileUpload(event ) {
 console.log('eve', event);
@@ -66,9 +109,12 @@ if (event.target.files && event.target.files[0]) {
 onSave() {
   const params = {
     'RCode': this.rcode,
+    'DCode': this.dcode,
+    'Location': this.location,
+    'Component': this.component,
+    'BugId': 0,
+    'ClosedDate': (this.showCloseDate) ? this.closed_date : '-',
     'SLAType': this.selectedType,
-    'Network': this.selectedNetwork,
-    'CameraPos': (this.selectedCameraPos * 1),
     'ShopNumber': this.shopCode,
     'FromDate': this.datepipe.transform(this.fromDate, 'dd/MM/yyyy h:mm:ss a'),
     'ToDate': this.datepipe.transform(this.toDate, 'dd/MM/yyyy h:mm:ss a'),

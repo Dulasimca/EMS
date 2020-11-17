@@ -5,7 +5,7 @@
 @import url("http://fonts.googleapis.com/css?family=Oswald");
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
 body {
-    font-family: Verdana, Geneva, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     position: relative;
   
   }
@@ -49,6 +49,18 @@ body {
   }
   .show{
     display: none !important;
+  }
+}
+
+@media only screen and (max-width: 1150px) {
+  .header-h3 {
+      font-size: 18px;
+  }
+
+  .header-h1 {
+  font-size: 30px;
+  padding-left: 15px;
+  text-align: left;
   }
 }
 
@@ -132,12 +144,13 @@ body {
   }
   @media only screen and (max-width: 525px) {
     .header-h3 {
-        font-size: 13px;
-        text-align: center;
+      font-size: 10px;
+      text-align: center;
+      padding-left: 35px;
     }
 
     .header-h1 {
-    font-size: 19px;
+    font-size: 17px;
     margin-left: 25px;
 
     }
@@ -332,6 +345,15 @@ body { margin: 0px; font-family: Verdana, Geneva, sans-serif; }
 
 .label-text-color {
   color: #000000cc !important;
+  font-size: 13px;
+}
+
+.header-line {
+  color: rgb(0 0 0 / 63%) !important;
+  text-decoration: underline !important;
+  font-size: 15px;
+  text-align: center !important;
+  font-weight: 600;
 }
 
 .alert {
@@ -348,6 +370,11 @@ body { margin: 0px; font-family: Verdana, Geneva, sans-serif; }
 
 .border-green {
   border: 0.03px #a4d27d solid;
+}
+
+.border-grey {
+  border: 1px solid #dee2e6;
+  height: 40px;
 }
 
 .align-center{

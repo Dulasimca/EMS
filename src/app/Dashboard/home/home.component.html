@@ -1,35 +1,48 @@
 <body class="home-bg">
-<div class="p-grid card page-content border-green">
-    <div class="p-col-12 p-md-12 p-lg-12 no-pad">
-        <app-topbar></app-topbar>
-    </div>
-    <div id="main" class="p-col-12 p-md-12 p-lg-12 no-pad-top" style="margin-bottom: -10px;">
-        <div class="p-grid">
-            <div class="p-col-12 p-md-7 p-lg-7 no-pad-right">
-                <div class="p-col-12 p-md-12 p-lg-12 card">
-                    <div class="label-text-color" style="text-align: center; font-weight: 500; text-decoration: underline;">Network Management System</div>
-                    <p-chart type="bar" [data]="nmsBarData" width="auto" height="60vh" [options]="nmsBarOptions"></p-chart>
-                </div>
-                <div class="p-col-12 p-md-12 p-lg-12 card">
-                    <div class="label-text-color" style="text-align: center; font-weight: 500; text-decoration: underline;">Service Level Agreement</div>
-                   <div style="padding-top: 10px;">
-                    <p-selectButton [options]="slaTypeOptions" [(ngModel)]="slaType" (onChange)="onSLATypeChange(slaType)"></p-selectButton>
-                </div>
-                    <p-chart type="bar" [data]="slaBarData" width="auto" height="60vh" [options]="slaBarOptions" (refresh)="onRefreshChart()"></p-chart>
-                </div>
-            </div>
-            <div class="p-col-12 p-md-5 p-lg-5 no-pad-left" style="display: flex;">
-                <div class="p-col-12 p-md-12 p-lg-12 card">
-                    <div class="label-text-color" style="text-align: center; font-weight: 500; text-decoration: underline;">Helpdesk Management</div>
-                    <div style="position: relative;
-                    top: 35%;
-                    transform: translateY(-40%);">
-                         <p-chart type="pie" [data]="pieData"  width="auto" height="80vh" [plugins]="plugin" [options]="pieOptions"></p-chart> 
+    <div class="p-grid card page-content border-green">
+        <div class="p-col-12 p-md-12 p-lg-12 no-pad">
+            <app-topbar></app-topbar>
+        </div>
+        <div id="main" class="p-col-12 p-md-12 p-lg-12 no-pad-top" style="margin-bottom: -10px;">
+            <div class="p-grid">
+                <!-- <div class="p-col-12 p-md-7 p-lg-7 no-pad-right"> -->
+                    <div class="p-col-12 p-md-12 p-lg-12" style="display: flex;">
+                    <div class="p-col-12 p-md-12 p-lg-12 card">
+                        <div class="header-line">Network Management System</div>
+                        <div style="padding-top: 10px;">
+                            <p-selectButton [options]="nmsTypeOptions" [(ngModel)]="nmsType"
+                                (onChange)="onNMSTypeChange(nmsType)"></p-selectButton>
                         </div>
+                        <p-chart type="bar" [data]="nmsBarData" width="auto" height="60vh" [options]="nmsBarOptions">
+                        </p-chart>
+                    </div>
                 </div>
+                <div class="p-col-12 p-md-6 p-lg-6" style="display: flex;">
+                    <div class="p-col-12 p-md-12 p-lg-12 card">
+                        <div class="header-line">Service Level Agreement</div>
+                        <div style="padding-top: 10px;">
+                            <p-selectButton [options]="slaTypeOptions" [(ngModel)]="slaType"
+                                (onChange)="onSLATypeChange(slaType)"></p-selectButton>
+                        </div>
+                        <p-chart type="bar" [data]="slaBarData" width="auto" height="60vh" [options]="slaBarOptions"
+                            (refresh)="onRefreshChart()"></p-chart>
+                    </div>
+                    </div>
+                <!-- </div> -->
+                <!-- <div class="p-col-12 p-md-5 p-lg-5 no-pad-left" style="display: flex;"> -->
+                    <div class="p-col-12 p-md-6 p-lg-6" style="display: flex;">
+                           <div class="p-col-12 p-md-12 p-lg-12 card">
+                        <div class="header-line">Helpdesk Management</div>
+                        <!-- <div style="position: relative;
+                    top: 35%;
+                    transform: translateY(-40%);"> -->
+                            <p-chart type="pie" [data]="pieData" width="auto" height="80vh" [plugins]="plugin"
+                                [options]="pieOptions"></p-chart>
+                        <!-- </div> -->
+                    </div>
+                 </div>
             </div>
         </div>
     </div>
-</div>
-<app-footer></app-footer>
+    <app-footer></app-footer>
 </body>
