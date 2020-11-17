@@ -3,6 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
 import { PathConstants } from '../Helper/PathConstants';
+import { MasterDataService } from '../masters-services/master-data.service';
 import { RestAPIService } from '../services/restAPI.service';
 
 @Component({
@@ -35,11 +36,15 @@ export class NMSSLAFormComponent implements OnInit {
   districtsData: any = [];
   showCloseDate: boolean;
   isLocationSelected: boolean;
+  disableShop: boolean;
 
-  constructor(private restApiService: RestAPIService, private datepipe: DatePipe, private messageService: MessageService) { }
+  constructor(private restApiService: RestAPIService, private datepipe: DatePipe,
+    private messageService: MessageService, private masterDataService: MasterDataService) { }
 
   ngOnInit() {
     this.showCloseDate = false;
+    this.districtsData = this.masterDataService.getDistricts();
+    this.regionsData = this.masterDataService.getRegions();
     this.reasonOptions = [
       { label: '-select-', value: null },
       { label: 'Scheduled', value: 1 }, { label: 'Non Scheduled', value: 2},
@@ -53,28 +58,26 @@ export class NMSSLAFormComponent implements OnInit {
   }
 
   onSelect(type) {
+    let regionSelection = [];
+    let districtSeletion = [];
     switch(type) {
       case 'R':
-        if(this.regionOptions === undefined) {
-          this.restApiService.get(PathConstants.RegionMasterURL).subscribe((res: any) => {
-            res.forEach(x => {
-                this.regionsData.push({ 'label': x.REGNNAME, 'value': x.REGNCODE });
-            });
-          this.regionOptions = this.regionsData;
+        if(this.regionsData.length !== 0) {
+          this.regionsData.forEach(r => {
+            regionSelection.push({ label: r.name, value: r.code });
+          })
+          this.regionOptions = regionSelection;
           this.regionOptions.unshift({ label: '-select-', value: null });
-        })
-      }
+        }
         break;
         case 'D':
-          if(this.districtOptions === undefined) {
-            this.restApiService.get(PathConstants.DistrictMasterURL).subscribe((res: any) => {
-              res.forEach(x => {
-                  this.districtsData.push({ 'label': x.Dname, 'value': x.Dcode });
-              });
-            this.districtOptions = this.districtsData;
+          if(this.districtsData.length !== 0) {
+            this.districtsData.forEach(r => {
+              districtSeletion.push({ label: r.name, value: r.code });
+            })
+            this.districtOptions = districtSeletion;
             this.districtOptions.unshift({ label: '-select-', value: null });
-          })
-        }
+          }
           break;
       case 'L':
         this.componentsData = [];
@@ -82,6 +85,7 @@ export class NMSSLAFormComponent implements OnInit {
             res.forEach(x => {
               if(this.location === 'R' && x.product_id === 3) {
                 this.componentsData.push({ 'label': x.name, 'value': x.product_id });
+                this.disableShop = true;
               } else if(this.location === 'D' && x.product_id === 4) {
                 this.componentsData.push({ 'label': x.name, 'value': x.product_id });
               } else if(this.location === 'S' && x.product_id === 5) {
@@ -92,7 +96,7 @@ export class NMSSLAFormComponent implements OnInit {
           this.componentOptions.unshift({ label: '-select-', value: null });
         })
         break;
-    }
+      }
   }
 
 onFileUpload(event ) {
@@ -115,7 +119,7 @@ onSave() {
     'BugId': 0,
     'ClosedDate': (this.showCloseDate) ? this.closed_date : '-',
     'SLAType': this.selectedType,
-    'ShopNumber': this.shopCode,
+    'ShopNumber': (this.shopCode !== undefined && this.shopCode !== null) ? this.shopCode : '-',
     'FromDate': this.datepipe.transform(this.fromDate, 'dd/MM/yyyy h:mm:ss a'),
     'ToDate': this.datepipe.transform(this.toDate, 'dd/MM/yyyy h:mm:ss a'),
     'Reason': this.reason,

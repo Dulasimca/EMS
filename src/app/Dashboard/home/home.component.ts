@@ -6,6 +6,7 @@ import * as Chart from 'chart.js';
 import * as ChartDataLabels from 'chartjs-plugin-datalabels';
 import { SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Helper/PathConstants';
+import { MasterDataService } from 'src/app/masters-services/master-data.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { PathConstants } from 'src/app/Helper/PathConstants';
 export class HomeComponent implements OnInit {
   chartJs = Chart;
   chartLabelPlugin = ChartDataLabels;
+  blockScreen: boolean;
   nmsBarData: any;
   slaBarData: any;
   pieData: any;
@@ -37,13 +39,26 @@ export class HomeComponent implements OnInit {
   districts: string[] = [];
   regions: string[] = [];
 
-
-  constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy) { }
+  constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
+    private masterDataService: MasterDataService) { }
 
   ngOnInit() {
     this.preventBackButton();
     this.onLoadBugzillaData();
-    this.onLoadNMSLabels();
+    this.restApi.get(PathConstants.RegionMasterURL).subscribe(reg => {
+      reg.forEach(r => {
+        this.regions.push(r.REGNNAME);
+      })
+      //NMS Bar chart
+    this.onNMSTypeChange(this.nmsType);
+    })
+    this.restApi.get(PathConstants.DistrictMasterURL).subscribe(dist => {
+      dist.forEach(d => {
+        this.districts.push(d.Dname);
+      })
+      //NMS Bar chart
+    this.onNMSTypeChange(this.nmsType);
+    })
     this.slaTypeOptions = [
       {label: 'Shop', value: 'SH'},
       {label: 'DM Office', value: 'DM'},
@@ -79,9 +94,6 @@ export class HomeComponent implements OnInit {
   
     //SLA Bar chart
     this.onSLATypeChange(this.slaType);
-
-    //NMS Bar chart
-    this.onNMSTypeChange(this.nmsType);
    
     //Pie chart
     this.pieData = {
@@ -104,19 +116,6 @@ export class HomeComponent implements OnInit {
           ]
         }]
     };
-  }
-
-  onLoadNMSLabels() {
-    this.restApi.get(PathConstants.RegionMasterURL).subscribe(reg => {
-      reg.forEach(r => {
-        this.regions.push(r.REGNNAME);
-      })
-    })
-    this.restApi.get(PathConstants.DistrictMasterURL).subscribe(dist => {
-      dist.forEach(d => {
-        this.districts.push(d.Dname);
-      })
-    })
   }
 
   onSLATypeChange(value) {
@@ -209,7 +208,8 @@ export class HomeComponent implements OnInit {
       datasets: [
         {
           label: "No's",
-          data: [65, 59, 80, 81, 60, 55],
+          data: [65, 59, 80, 81, 60, 55, 100, 110, 75, 58, 150, 170, 101, 99, 87, 121, 74, 65,
+             84, 111, 108, 140, 112, 94, 66, 82, 77, 59, 95, 147, 175, 155, 85, 188, 190, 60, 120, 177],
           backgroundColor: '#52c91e',
         }
       ]

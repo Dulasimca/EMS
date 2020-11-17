@@ -1,4 +1,7 @@
 <body class="home-bg">
+<p-blockUI [blocked]="blockScreen">
+    <p-progressSpinner class="spinner" strokeWidth="4" *ngIf="blockScreen"></p-progressSpinner>
+</p-blockUI>
     <div class="p-grid card page-content border-green">
         <div class="p-col-12 p-md-12 p-lg-12 no-pad">
             <app-topbar></app-topbar>
@@ -7,7 +10,7 @@
             <div class="p-grid">
                 <!-- <div class="p-col-12 p-md-7 p-lg-7 no-pad-right"> -->
                     <div class="p-col-12 p-md-12 p-lg-12" style="display: flex;">
-                    <div class="p-col-12 p-md-12 p-lg-12 card">
+                    <div class="p-col-12 p-md-12 p-lg-12 border-green card">
                         <div class="header-line">Network Management System</div>
                         <div style="padding-top: 10px;">
                             <p-selectButton [options]="nmsTypeOptions" [(ngModel)]="nmsType"

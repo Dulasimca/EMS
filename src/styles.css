@@ -441,3 +441,7 @@ body { margin: 0px; font-family: Verdana, Geneva, sans-serif; }
   padding: 0px !important;
   border-radius: 3px;
 }
+
+.spinner {
+  position:fixed;top:50%;left:46%
+}

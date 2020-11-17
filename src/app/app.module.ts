@@ -18,6 +18,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
 import { ToastModule } from 'primeng/toast';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { BlockUIModule } from 'primeng/blockui';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,6 +37,7 @@ import { NMSSLAFormComponent } from './nms-sla-form/nms-sla-form.component';
 import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { EmsReportComponent } from './reports/ems-report/ems-report.component';
+import { MasterDataService } from './masters-services/master-data.service';
 
 @NgModule({
   declarations: [
@@ -72,9 +74,10 @@ import { EmsReportComponent } from './reports/ems-report/ems-report.component';
     CalendarModule,
     OverlayPanelModule,
     ToastModule,
-    SelectButtonModule
+    SelectButtonModule,
+    BlockUIModule
   ],
-  providers: [AuthService, RestAPIService, DatePipe, MessageService],
+  providers: [AuthService, RestAPIService, DatePipe, MessageService, MasterDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

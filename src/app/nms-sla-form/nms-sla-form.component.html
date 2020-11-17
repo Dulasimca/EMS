@@ -64,7 +64,7 @@
                 <div>
                   <label class="label-text-color" for="shopcd">Shop Number:</label>
                   </div>
-                <input name="shopcd" type="text" size="20" pInputText [(ngModel)]="shopCode" autocomplete="off"
+                <input name="shopcd" [disabled]="disableShop" type="text" size="20" pInputText [(ngModel)]="shopCode" autocomplete="off"
                 style="width: -webkit-fill-available;" required>
                 </div>
                 &nbsp;
