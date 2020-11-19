@@ -1,7 +1,8 @@
 export class PathConstants {
-    public static readonly HMSReportURL = '/ems/api/bugzilladata';
-    public static readonly NMSPostURL = '/ems/api/NMSData/Post';
-    public static readonly RegionMasterURL = '/ems/api/RegionMaster';
-    public static readonly DistrictMasterURL = '/ems/api/DistrictMaster';
-    public static readonly ComponentsURL = '/ems/api/Component';
+    public static readonly HMSReportURL = '/api/bugzilladata';
+    public static readonly NMSPostURL = '/api/NMSData/Post';
+    public static readonly RegionMasterURL = '/api/RegionMaster';
+    public static readonly DistrictMasterURL = '/api/DistrictMaster';
+    public static readonly ComponentsURL = '/api/Component';
+    public static readonly NMSGetURL = '/api/NMSData/Get';
 }
