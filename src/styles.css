@@ -5,9 +5,19 @@
 @import url("http://fonts.googleapis.com/css?family=Oswald");
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     position: relative;
   
+  }
+
+  .p-component {
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+
+  }
+
+  .p-component :root {
+    font-family: Verdana, Geneva, Tahoma, sans-serif !important;
+
   }
 
   .card {
@@ -175,17 +185,19 @@ body {
   }
 
   .menu-bar{
-      /* background: rgb(104, 206, 3); */
-      /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
-      /* border-width: 1px;
-      border-style: solid;
-      border-color: rgb(144, 146, 142); */
-      /* background: #157110; original site */
-      /* background: #14af0b; */
       background: #157110;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: #464b50;
-      font-family: var(--font-family);
+      /* font-family: var(--font-family); */
+  }
+
+  .menu-icons {
+    font-size: 0.95rem !important;
+  }
+
+  .menu-bar-label {
+    width: 120px !important;
+    padding: 5px;
   }
 
   .menu-label-splitter {
@@ -331,7 +343,7 @@ body { margin: 0px; font-family: Verdana, Geneva, sans-serif; }
 
 .menu-a {
   text-decoration: none !important;
-  /* color: #464b50; */
+  font-family: Verdana, Geneva, Tahoma, sans-serif !important;
   color: white;
 }
 
