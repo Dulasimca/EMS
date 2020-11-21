@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
       this.onSLATypeChange(this.slaType);
     });
     this.slaTypeOptions = [
-      { label: 'Shop', value: 'SH' },
+      { label: 'Retail Shop', value: 'SH' },
       { label: 'DM Office', value: 'DM' },
       { label: 'RM Office', value: 'RM' },
     ];
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
             const calculatedPercent = percentage !== 0 ? percentage.toFixed(2) + '%' : '';
             return calculatedPercent;
           },
-          color: '#000000',
+          color: '#fff',
           fontSize: 18
         }
       }

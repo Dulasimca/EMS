@@ -9,15 +9,15 @@ import { delay, timeout, retry, catchError } from 'rxjs/operators';
 })
 
 export class RestAPIService {
-  BASEURL = 'http://180.179.49.72:8084';
-//  BASEURL = 'https://localhost:44394';
+  BASEURL = 'http://180.179.49.72:8084/ems';
+  // BASEURL = 'https://localhost:44394';
   public HttpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Access-Control-Allow-Origin': 'http://180.179.49.72:8084',
-      'Access-Control-Allow-Headers':'Content-Type',
-      'Access-Control-Allow-Methods' : 'Get,Post,Put,Delete,Options',
-      'Access-Control-Allow-Credentials' : 'true'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'Get,Post,Put,Delete,Options',
+      'Access-Control-Allow-Credentials': 'true'
     })
   };
   constructor(private httpClient: HttpClient) { }
@@ -33,7 +33,7 @@ export class RestAPIService {
   }
 
   getByParameters(url, params): Observable<any> {
-   return this.httpClient.get(this.BASEURL + url, { params: params });
+    return this.httpClient.get(this.BASEURL + url, { params: params });
   }
 
   put(url, obj): Observable<any> {
@@ -46,7 +46,7 @@ export class RestAPIService {
     return this.httpClient.delete(this.BASEURL + url, options);
   }
 
-  handleError(error) {    
+  handleError(error) {
     return throwError(error);
   }
 

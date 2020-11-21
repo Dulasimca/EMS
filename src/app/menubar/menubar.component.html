@@ -1,54 +1,59 @@
 <!-- <p-tabMenu [model]="items" styleClass="menu-bar"></p-tabMenu> -->
 <div class="p-grid menu-bar border-green hidden" style="height: 40px;">
-    <div class="p-col-6 p-md-2 p-lg-1 menu-label-splitter">
-        <i class="pi pi-fw pi-home" style="color: white;"><a class="menu-a" style="padding-left: 5px;" [routerLink]="['/home']">Home</a></i>
-    </div>
-    <div class="p-col-6 p-md-2 p-lg-1 menu-label-splitter">
-        <i class="pi pi-fw pi-desktop" style="color: white;"><a class="menu-a" style="padding-left: 5px;" [routerLink]="['/nms-sla']">NMS</a></i>
-    </div>
-    <div class="p-col-6 p-md-2 p-lg-1 menu-label-splitter">
-        <i class="pi pi-fw pi-chart-line" style="color: white;"><a class="menu-a" style="padding-left: 5px;">SLA</a></i>
-    </div>
-    <div class="p-col-6 p-md-2 p-lg-1 menu-label-splitter">
-        <i class="pi pi-fw pi-comments" style="color: white;"><a class="menu-a" style="padding-left: 5px;" [routerLink]="['/bugzilla']">HelpDesk</a></i>
-    </div>
-    <div class="p-col-6 p-md-2 p-lg-1 menu-label-splitter">
-        <i class="pi pi-fw pi-file" style="color: white;"><a class="menu-a" style="padding-left: 5px;" [routerLink]="['/nms-report']">NMSReport</a></i>
-</div>
+  <div class="menu-label-splitter menu-bar-label">
+    <i class="menu-icons pi pi-fw pi-home" style="color: white;"><a class="menu-a" style="padding-left: 5px;"
+        [routerLink]="['/home']">Home</a></i>
+  </div>
+  <div class="menu-label-splitter menu-bar-label">
+    <i class="menu-icons pi pi-fw pi-desktop" style="color: white;"><a class="menu-a" style="padding-left: 5px;"
+        [routerLink]="['/nms-sla']">NMS</a></i>
+  </div>
+  <div class="menu-label-splitter menu-bar-label">
+    <i class="menu-icons pi pi-fw pi-chart-line" style="color: white;"><a class="menu-a"
+        style="padding-left: 5px;">SLA</a></i>
+  </div>
+  <div class="menu-label-splitter menu-bar-label">
+    <i class="menu-icons pi pi-fw pi-comments" style="color: white;"><a class="menu-a" style="padding-left: 5px;"
+        [routerLink]="['/bugzilla']">HelpDesk</a></i>
+  </div>
+  <div class="menu-label-splitter menu-bar-label">
+    <i class="menu-icons pi pi-fw pi-file" style="color: white;"><a class="menu-a" style="padding-left: 5px;"
+        [routerLink]="['/nms-report']">NMSReport</a></i>
+  </div>
 </div>
 <div class="p-grid menu-bar border-green align-center show" style="height: 40px;">
-    <i class="pi pi-fw pi-bars"  style="color: white; font-size: 1.36em;" (click)="showNavBar = true"></i>
-    <p-sidebar [(visible)]="showNavBar" [baseZIndex]="10000" [showCloseIcon]="false"
+  <i class="pi pi-fw pi-bars" style="color: white; font-size: 1.36em;" (click)="showNavBar = true"></i>
+  <p-sidebar [(visible)]="showNavBar" [baseZIndex]="10000" [showCloseIcon]="false"
     [style]="{background:'rgb(41 64 47)', width:'16em', border: '0.14em solid rgb(68 158 6)'}">
-        <div class="p-col-12 p-md-12 p-lg-12 no-pad-top sidebar" style="display: contents;">
-            <div class="p-col-12 no-pad-top">
-                <img href="#default" class="logo no-pad-top" src="../../assets/images/header/tasmac-transparent.png" alt="logo"
-                  style="width: 100%;padding-right: initial; margin-top: -35%; margin-bottom: -30%;" />
-                </div>
-            <ul style="list-style-type:none">
-              <li class="sidenav-content">
-                <div class="p-col-12 no-pad-left sidenav-items">
-                    <i class="pi pi-home pad-right pad-left"></i>
-                    <a class="menu-a sidebar-pad-left"  [routerLink]="['/home']">Home</a>
-                </div>
-                <div class="p-col-12 no-pad-left sidenav-items">
-                    <i class="pi pi-desktop pad-right pad-left"></i>
-                    <a class="menu-a sidebar-pad-left" [routerLink]="['/nms-sla']">NMS</a>
-                  </div>
-                  <div class="p-col-12 no-pad-left sidenav-items">
-                    <i class="pi pi-chart-line pad-right pad-left"></i>
-                    <a class="menu-a sidebar-pad-left" [routerLink]="['/nms-sla']">SLA</a>
-                  </div>
-                  <div class="p-col-12 no-pad-left sidenav-items">
-                    <i class="pi pi-comments pad-right pad-left"></i>
-                    <a class="menu-a sidebar-pad-left" [routerLink]="['/bugzilla']">HelpDesk</a>
-                  </div>
-                  <div class="p-col-12 no-pad-left sidenav-items">
-                    <i class="pi pi-file pad-right pad-left"></i>
-                    <a class="menu-a sidebar-pad-left">Report</a>
-                  </div>
-              </li>
-            </ul>
+    <div class="p-col-12 p-md-12 p-lg-12 no-pad-top sidebar" style="display: contents;">
+      <div class="p-col-12 no-pad-top">
+        <img href="#default" class="logo no-pad-top" src="../../assets/images/header/tasmac-transparent.png" alt="logo"
+          style="width: 100%;padding-right: initial; margin-top: -35%; margin-bottom: -30%;" />
+      </div>
+      <ul style="list-style-type:none">
+        <li class="sidenav-content">
+          <div class="p-col-12 no-pad-left sidenav-items">
+            <i class="pi pi-home pad-right pad-left"></i>
+            <a class="menu-a sidebar-pad-left" [routerLink]="['/home']">Home</a>
           </div>
-    </p-sidebar>
+          <div class="p-col-12 no-pad-left sidenav-items">
+            <i class="pi pi-desktop pad-right pad-left"></i>
+            <a class="menu-a sidebar-pad-left" [routerLink]="['/nms-sla']">NMS</a>
+          </div>
+          <div class="p-col-12 no-pad-left sidenav-items">
+            <i class="pi pi-chart-line pad-right pad-left"></i>
+            <a class="menu-a sidebar-pad-left" [routerLink]="['/nms-sla']">SLA</a>
+          </div>
+          <div class="p-col-12 no-pad-left sidenav-items">
+            <i class="pi pi-comments pad-right pad-left"></i>
+            <a class="menu-a sidebar-pad-left" [routerLink]="['/bugzilla']">HelpDesk</a>
+          </div>
+          <div class="p-col-12 no-pad-left sidenav-items">
+            <i class="pi pi-file pad-right pad-left"></i>
+            <a class="menu-a sidebar-pad-left">Report</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </p-sidebar>
 </div>

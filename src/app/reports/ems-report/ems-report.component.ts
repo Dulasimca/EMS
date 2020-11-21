@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MessageService, SelectItem } from 'primeng/api';
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+import { PathConstants } from 'src/app/Helper/PathConstants';
+import { RestAPIService } from 'src/app/services/restAPI.service';
 
 @Component({
   selector: 'app-ems-report',
@@ -16,7 +20,8 @@ export class EmsReportComponent implements OnInit {
   typeOptions: SelectItem[];
   type: any;
 
-  constructor(private messageService: MessageService) { }
+  constructor(private messageService: MessageService, private datepipe: DatePipe,
+    private restApiService: RestAPIService) { }
 
   ngOnInit() {
     this.nmsCols = [
@@ -33,14 +38,14 @@ export class EmsReportComponent implements OnInit {
     this.typeOptions = [
       { label: '-select-', value: null },
       { label: 'UnPlanned', value: 2 },
-      { label: 'Planned', value: 1}
+      { label: 'Planned', value: 1 }
     ];
   }
 
   onChange(type) {
     this.nmsData = [];
-    if(type === 'D') {
-    this.checkValidDateSelection();
+    if (type === 'D') {
+      this.checkValidDateSelection();
     }
     if (this.fromDate !== undefined && this.fromDate !== null && this.fromDate !== '' &&
       this.toDate !== undefined && this.toDate !== null && this.toDate !== '' && this.type !== null
@@ -135,24 +140,54 @@ export class EmsReportComponent implements OnInit {
           network: 'Down', reason: 'Non-Scheduled', remarks: 'testing', url: 'xxxx'
         },
       )
-      if(this.nmsData.length !== 0) {
-      if((this.type * 1) === 1) {
-        this.nmsData = this.nmsData.filter(x => {
-          return x.type === 'Planned';
-        })
-      } else {
-        this.nmsData = this.nmsData.filter(x => {
-          return x.type === 'Unplanned';
-        })
+      if (this.nmsData.length !== 0) {
+        if ((this.type * 1) === 1) {
+          this.nmsData = this.nmsData.filter(x => {
+            return x.type === 'Planned';
+          })
+        } else {
+          this.nmsData = this.nmsData.filter(x => {
+            return x.type === 'Unplanned';
+          })
+        }
+        let sno = 1;
+        this.nmsData.forEach(i => { i.SlNo = sno; sno += 1; });
       }
-      let sno = 1;
-      this.nmsData.forEach(i => { i.SlNo = sno; sno += 1;});
+      // const params = new HttpParams().set('FDate', this.datepipe.transform(this.fromDate, 'dd/MM/yyyy hh:mm:ss a'))
+      //   .append('TDate', this.datepipe.transform(this.toDate, 'dd/MM/yyyy hh:mm:ss a '));
+      // this.restApiService.getByParameters(PathConstants.NMSGetURL, params).subscribe((res: any) => {
+      //   if (res !== undefined && res !== null && res.length !== 0) {
+      //     this.nmsData = res.filter(x => {
+      //       return x.type === this.type;
+      //     });
+      //     let sno = 1;
+      //     this.nmsData.forEach(i => { i.SlNo = sno; sno += 1; });
+      //     this.loading = false;
+      //   } else {
+      //     this.loading = false;
+      //     this.nmsData = [];
+      //     this.messageService.clear();
+      //     this.messageService.add({
+      //       key: 't-err', severity: 'error',
+      //       summary: 'Error Message', detail: 'No record found!'
+      //     });
+      //   }
+      // }, (err: HttpErrorResponse) => {
+      //   if (err.status === 0 || err.status === 400) {
+      //     this.messageService.clear();
+      //     this.messageService.add({
+      //       key: 't-err', severity: 'error',
+      //       summary: 'Error Message', detail: 'Please contact administrator!'
+      //     });
+      //   } else {
+      //     this.messageService.clear();
+      //     this.messageService.add({
+      //       key: 't-err', severity: 'error',
+      //       summary: 'Error Message', detail: 'Please check your network connection!'
+      //     });
+      //   }
+      // });
     }
-      this.loading = false;
-    } else {
-      this.nmsData = [];
-    }
-
   }
 
   checkValidDateSelection() {
@@ -166,8 +201,10 @@ export class EmsReportComponent implements OnInit {
       if ((selectedFromDate > selectedToDate && ((selectedFromMonth >= selectedToMonth && selectedFromYear >= selectedToYear) ||
         (selectedFromMonth === selectedToMonth && selectedFromYear === selectedToYear))) ||
         (selectedFromMonth > selectedToMonth && selectedFromYear === selectedToYear) || (selectedFromYear > selectedToYear)) {
-        this.messageService.add({ key: 'msgKey', severity: 'error', life:5000
-        ,summary: 'Invalid Date!', detail: 'Please select the valid date' });
+        this.messageService.add({
+          key: 'msgKey', severity: 'error', life: 5000
+          , summary: 'Invalid Date!', detail: 'Please select the valid date'
+        });
         this.fromDate = '';
         this.toDate = '';
       }
