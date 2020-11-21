@@ -107,16 +107,16 @@ export class HomeComponent implements OnInit {
           label: "Percentage",
           data: [200, 50, 120, 80],
           backgroundColor: [
-            "#2ECC71",
-            "#5499C7",
+            "#FA8072",
+            "#459ed9",
             "#F7DC6F",
-            "#FA8072"
+            "#2ECC71"
           ],
           hoverBackgroundColor: [
-            "#2ECC71",
-            "#5499C7",
-            "#F7DC6F",
-            "#FA8072"
+            "#f26555",
+            "#268dd1",
+            "#f2d044",
+            "#0dd160"
           ]
         }]
     };
