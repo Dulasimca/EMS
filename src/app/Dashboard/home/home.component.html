@@ -10,18 +10,19 @@
             <div class="p-grid">
                 <!-- <div class="p-col-12 p-md-7 p-lg-7 no-pad-right"> -->
                     <div class="p-col-12 p-md-12 p-lg-12" style="display: flex;">
-                    <div class="p-col-12 p-md-12 p-lg-12 border-green card">
-                        <div class="header-line">Network Management System</div>
+                    <div class="p-col-12 p-md-12 p-lg-12 border-green card border-green">
+                        <div class="header-line">Enterprise Management System</div>
                         <div style="padding-top: 10px;">
                             <p-selectButton [options]="nmsTypeOptions" [(ngModel)]="nmsType"
                                 (onChange)="onNMSTypeChange(nmsType)"></p-selectButton>
                         </div>
-                        <p-chart type="bar" [data]="nmsBarData" width="auto" height="60vh" [options]="nmsBarOptions">
+                        <p-chart type="bar" [data]="nmsBarData" width="auto" height="60vh" 
+                        [plugins]="plugin" [options]="nmsBarOptions">
                         </p-chart>
                     </div>
                 </div>
-                <div class="p-col-12 p-md-6 p-lg-6" style="display: flex;">
-                    <div class="p-col-12 p-md-12 p-lg-12 card">
+                <div class="p-col-12 p-md-6 p-lg-6 no-pad-top no-pad-right" style="display: flex;">
+                    <div class="p-col-12 p-md-12 p-lg-12 card border-green">
                         <div class="header-line">Service Level Agreement</div>
                         <div style="padding-top: 10px;">
                             <p-selectButton [options]="slaTypeOptions" [(ngModel)]="slaType"
@@ -33,8 +34,8 @@
                     </div>
                 <!-- </div> -->
                 <!-- <div class="p-col-12 p-md-5 p-lg-5 no-pad-left" style="display: flex;"> -->
-                    <div class="p-col-12 p-md-6 p-lg-6" style="display: flex;">
-                           <div class="p-col-12 p-md-12 p-lg-12 card">
+                    <div class="p-col-12 p-md-6 p-lg-6 no-pad-top no-pad-left" style="display: flex;">
+                           <div class="p-col-12 p-md-12 p-lg-12 card border-green">
                         <div class="header-line">Helpdesk Management</div>
                         <!-- <div style="position: relative;
                     top: 35%;

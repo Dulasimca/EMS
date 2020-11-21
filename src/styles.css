@@ -5,13 +5,19 @@
 @import url("http://fonts.googleapis.com/css?family=Oswald");
 @import '../node_modules/font-awesome/css/font-awesome.min.css';
 body {
-    font-family: Arial, Helvetica, sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
     position: relative;
   
   }
 
+  .p-component {
+    font-family: Verdana, Geneva, sans-serif;
+    /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; */
+  }
+
   .card {
-    box-shadow: 0 4px 8px 0 rgba(102, 100, 100, 0.2), 0 6px 20px 0 rgba(133, 131, 131, 0.19);
+    box-shadow: 0 4px 8px 0 rgb(102 100 100 / 51%), 0 6px 20px 0 rgb(0 0 0 / 34%);
     border: lightgray 1px solid;
   }
 
@@ -345,7 +351,7 @@ body { margin: 0px; font-family: Verdana, Geneva, sans-serif; }
 
 .label-text-color {
   color: #000000cc !important;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .header-line {
