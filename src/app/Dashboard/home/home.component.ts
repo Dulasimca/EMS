@@ -101,22 +101,22 @@ export class HomeComponent implements OnInit {
     }
     //Pie chart
     this.pieData = {
-      labels: ['Open', 'Running', 'Assigned', 'Completed'],
+      labels: ['Open', 'Assigned', 'In-Progress', 'Completed'],
       datasets: [
         {
           label: "Percentage",
           data: [200, 50, 120, 80],
           backgroundColor: [
-            "#FA8072",
-            "#459ed9",
-            "#F7DC6F",
-            "#2ECC71"
+            "#f73e3e",
+            "#f5953b",
+            "#f7ee39",
+            "#4fc437"
           ],
           hoverBackgroundColor: [
-            "#f26555",
-            "#268dd1",
-            "#f2d044",
-            "#0dd160"
+            "#ed2d2d",
+            "#f2851f",
+            "#fff305",
+            "#3abf1f"
           ]
         }]
     };
@@ -136,7 +136,7 @@ export class HomeComponent implements OnInit {
         datasets: [
           {
             label: 'Time(in percentage)',
-            backgroundColor: ['#a81313', '#f0dd13', '#09c4d9'],
+            backgroundColor: ['#1ebf1b', '#f0dd13', '#09c4d9'],
             data: [62, 85, 70]
           }
         ]
@@ -145,6 +145,13 @@ export class HomeComponent implements OnInit {
         scales: {
           xAxes: [{
             barPercentage: 0.20
+          }],
+          yAxes: [{
+            ticks: {
+              min: 50,
+              max: 100,
+              stepSize: 10
+            }
           }]
         },
         title: {
@@ -168,7 +175,7 @@ export class HomeComponent implements OnInit {
         datasets: [
           {
             label: 'Time(in percentage)',
-            backgroundColor: ['#a81313', '#f0dd13', '#09c4d9', '#26870b', '#d1ae13'],
+            backgroundColor: ['#f77c2f', '#f0dd13', '#09c4d9', '#26870b', '#d1ae13'],
             data: [62, 85, 70, 58, 98]
           }
         ]
@@ -200,7 +207,7 @@ export class HomeComponent implements OnInit {
         datasets: [
           {
             label: 'Time(in percentage)',
-            backgroundColor: ['#a81313'],
+            backgroundColor: ['#1dbfba'],
             data: [80]
           }
         ]
@@ -235,10 +242,10 @@ export class HomeComponent implements OnInit {
             backgroundColor: '#52c91e',
           },
           {
-            label: "Down (in No's)",
+            label: "Not Running (in No's)",
             data: [43, 50, 85, 81, 60, 50, 100, 110, 75, 58, 150, 170, 110, 99, 55, 87, 74, 65,
               60, 111, 108, 140, 90, 55, 66, 82, 77, 80, 95, 65, 120, 155, 85, 150, 95, 55, 98, 137],
-            backgroundColor: '#ee1900',
+            backgroundColor: '#fc2121',
           }
         ]
       }

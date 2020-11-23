@@ -19,6 +19,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { ToastModule } from 'primeng/toast';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { BlockUIModule } from 'primeng/blockui';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -75,7 +76,8 @@ import { MasterDataService } from './masters-services/master-data.service';
     OverlayPanelModule,
     ToastModule,
     SelectButtonModule,
-    BlockUIModule
+    BlockUIModule,
+    SplitButtonModule
   ],
   providers: [AuthService, RestAPIService, DatePipe, MessageService, MasterDataService],
   bootstrap: [AppComponent]
