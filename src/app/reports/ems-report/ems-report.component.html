@@ -39,8 +39,8 @@
           <div class="p-col-12 p-md-3 p-lg-1 txt-align" style="margin-top: 25px;">
             <!-- <button pButton type="button" label="Excel" class="p-button-raised p-btn-pad bg-div" (click)="dt.exportCSV()"
               [disabled]="(!type && !fromDate && !toDate)"></button> -->
-              <p-splitButton label="Excel" icon="pi pi-download" (onClick)="onDownload()" 
-              [disabled]="(!type && !fromDate && !toDate)" [model]="items"></p-splitButton>
+              <p-splitButton label="Download" icon="pi pi-download" (onClick)="onDownload()" 
+              [disabled]="(!type || !fromDate || !toDate)" [model]="items"></p-splitButton>
           </div>
         </div>
         <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">

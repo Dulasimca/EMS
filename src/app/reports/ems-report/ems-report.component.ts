@@ -4,8 +4,6 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { PathConstants } from 'src/app/Helper/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
-import * as jsPDF from 'jspdf';
-import 'jspdf-autotable';
 import { Table } from 'primeng/table';
 
 @Component({
@@ -269,7 +267,6 @@ export class EmsReportComponent implements OnInit {
     // });
     // doc.autoTable(col, rows);
     // doc.save('Document_Correction.pdf');
-    const doc = new jsPDF.default('p', 'pt', 'a4');
     var rows = [];
     this.nmsData.forEach(element => {
       var temp = [element.SlNo, element.rm_office, element.dm_office,
@@ -278,9 +275,13 @@ export class EmsReportComponent implements OnInit {
       element.url_path];
       rows.push(temp);
     });
-
-    doc.autoTable(this.nmsCols, rows);
-    doc.save('NMS_REPORT.pdf');
+    import("jspdf").then(jsPDF => {
+      import("jspdf-autotable").then(x => {
+          const doc = new jsPDF.default(0,0);
+          doc.autoTable(this.nmsCols, rows);
+          doc.save('NMS_REPORT.pdf');
+      })
+  })
   }
 
 }
