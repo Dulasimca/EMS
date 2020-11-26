@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import {TabMenuModule} from 'primeng/tabmenu';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { ChartModule } from 'primeng/chart';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,6 +20,7 @@ import { ToastModule } from 'primeng/toast';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { BlockUIModule } from 'primeng/blockui';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import { MenubarModule } from 'primeng/menubar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,11 +35,12 @@ import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
 import { BugzillaReportComponent } from './reports/bugzilla-report/bugzilla-report.component';
 import { ScreenReaderComponent } from './screen-reader/screen-reader.component';
-import { NMSSLAFormComponent } from './nms-sla-form/nms-sla-form.component';
+import { NMSSLAFormComponent } from './Documents/nms-sla-form/nms-sla-form.component';
 import { DatePipe } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { EmsReportComponent } from './reports/ems-report/ems-report.component';
 import { MasterDataService } from './masters-services/master-data.service';
+import { IncidentDetailsFormComponent } from './Documents/incident-details-form/incident-details-form.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import { MasterDataService } from './masters-services/master-data.service';
     ScreenReaderComponent,
     NMSSLAFormComponent,
     EmsReportComponent,
+    IncidentDetailsFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -77,7 +80,8 @@ import { MasterDataService } from './masters-services/master-data.service';
     ToastModule,
     SelectButtonModule,
     BlockUIModule,
-    SplitButtonModule
+    SplitButtonModule,
+    MenubarModule
   ],
   providers: [AuthService, RestAPIService, DatePipe, MessageService, MasterDataService],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MenuItem} from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 
 
 @Component({
@@ -16,12 +16,32 @@ export class MenubarComponent implements OnInit {
   ngOnInit() {
     this.showNavBar = false;
     this.items = [
-      {label: 'Home', icon: 'pi pi-fw pi-home'},
-      {label: 'NMS', icon: 'pi pi-fw pi-desktop'},
-      {label: 'SLA', icon: 'pi pi-fw pi-chart-line'},
-      {label: 'Help Desk', icon: 'pi pi-fw pi-comments'},
-      {label: 'Report', icon: 'pi pi-fw pi-file'}
-  ];
+      { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: '/home' },
+      {
+        label: 'Document', icon: 'pi pi-fw pi-desktop',
+        items: [
+          {
+            label: 'NMS-Form', routerLink: '/nms-sla'
+          },
+          {
+            label: 'Incident-Form', routerLink: '/incident-form'
+          }
+        ]
+      },
+      { label: 'SLA', icon: 'pi pi-fw pi-chart-line' },
+      { label: 'Help Desk', icon: 'pi pi-fw pi-comments' },
+      {
+        label: 'Report', icon: 'pi pi-fw pi-file',
+        items: [
+          {
+            label: 'NMS-Report', routerLink: '/nms-report'
+          },
+          {
+            label: 'Incident-Report', routerLink: '/incident-report'
+          }
+        ]
+      }
+    ];
   }
 
 }

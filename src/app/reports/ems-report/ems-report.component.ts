@@ -41,17 +41,15 @@ export class EmsReportComponent implements OnInit {
     ];
     this.nmsCols = [
       { header: 'S.No', field: 'SlNo', width: '40px' },
+      { field: 'location', header: 'Location' },
       { field: 'rm_office', header: 'RM Office' },
       { field: 'dm_office', header: 'DM Office' },
-      { field: 'location', header: 'Location' },
       { field: 'component', header: 'Component' },
       { field: 'shop_number', header: 'Shop Number' },
       { field: 'type', header: 'Type' },
       { field: 'from_date', header: 'From Date' },
       { field: 'to_date', header: 'To Date' },
-      { field: 'reason', header: 'Reason' },
-      { field: 'remarks', header: 'Remarks' },
-      { field: 'url_path', header: 'URL' }
+      { field: 'remarks', header: 'Remarks' }
     ];
     this.typeOptions = [
       { label: '-select-', value: null },
@@ -72,112 +70,112 @@ export class EmsReportComponent implements OnInit {
         {
           SlNo: 1, rm_office: 'HeadOffice', dm_office: 'Dindigul', shop_number: '12456',
           from_date: '01/11/2020 03:00 PM', to_date: '05/11/2020 05:10 PM', type: 'Unplanned',
-          location: 'RM Office', component: 'VMS', reason: 'Scheduled', remarks: 'testing', url_path: 'https://abcd'
+          location: 'RM Office', component: 'VMS', remarks: 'testing'
         },
         {
           SlNo: 2, rm_office: 'Salem', dm_office: 'Cuddalore', shop_number: '456001',
-          from_date: '07/11/2020 10:21 AM', to_date: '09/10/2020 05:10 PM', type: 'Planned', camera_pos: 2,
-          network: 'Down', location: 'DM Office', component: 'INTERNET', reason: 'Non-Scheduled', remarks: '', url_path: 'https://jhdj.in'
+          from_date: '07/11/2020 10:21 AM', to_date: '09/10/2020 05:10 PM', type: 'Planned',
+          location: 'DM Office', component: 'INTERNET', remarks: ''
         },
         {
           SlNo: 3, rm_office: 'Coimbatore', dm_office: 'Erode', shop_number: '772106',
           from_date: '02/11/2020 05:21 PM', to_date: '03/11/2020 07:10 PM', type: 'Unplanned',
-          location: 'RM Office', component: 'VMS', reason: 'Scheduled', remarks: '', url_path: 'https://www.google.com'
+          location: 'RM Office', component: 'VMS', remarks: ''
         },
         {
           SlNo: 4, rm_office: 'HeadOffice', dm_office: 'Namakkal', shop_number: '80457',
           from_date: '12/11/2020 08:00 AM', to_date: '13/10/2020 09:10 AM', type: 'Planned',
-          location: 'DM Office', component: 'INTERNET', reason: 'Accidental', remarks: 'testing', url_path: 'https://abcd'
+          location: 'DM Office', component: 'INTERNET', remarks: 'testing'
         },
         {
           SlNo: 5, rm_office: 'Salem', dm_office: 'Dindigul', shop_number: '40056',
-          from_date: '11/11/2020 08:00 AM', to_date: '11/11/2020 10:00 AM', type: 'Unplanned', camera_pos: 2,
-          network: 'Down', location: 'Shop', component: 'CAMERA', reason: 'Incidental', remarks: 'testing 1', url_path: 'https://yyt.in'
+          from_date: '11/11/2020 08:00 AM', to_date: '11/11/2020 10:00 AM', type: 'Unplanned',
+          location: 'Shop', component: 'CAMERA', remarks: 'testing 1'
         },
         {
           SlNo: 6, rm_office: 'Trichy', dm_office: 'Trichy', shop_number: '75456',
           from_date: '02/11/2020 09:10 AM', to_date: '04/11/2020 11:10 AM', type: 'Unplanned',
-          location: 'RM Office', component: 'VMS', reason: 'Scheduled', remarks: 'testing 2', url_path: 'https://qqq.com'
+          location: 'RM Office', component: 'VMS', remarks: 'testing 2'
         },
         {
           SlNo: 7, rm_office: 'Coimbatore', dm_office: 'Vellore', shop_number: '20156',
-          from_date: '02/10/2020 11:21 AM', to_date: '05/10/2020 05:10 PM', type: 'Planned', camera_pos: 1,
-          network: 'Down', location: 'DM Office', component: 'UPS', reason: 'Non-Scheduled', remarks: '', url_path: 'https://pss.com'
+          from_date: '02/10/2020 11:21 AM', to_date: '05/10/2020 05:10 PM', type: 'Planned',
+          location: 'DM Office', component: 'UPS', remarks: ''
         },
         {
           SlNo: 8, rm_office: 'HeadOffice', dm_office: 'Villipuram', shop_number: '45475',
-          from_date: '02/11/2020 08:10 AM', to_date: '05/11/2020 05:10 PM', type: 'Unplanned', camera_pos: 2,
-          network: 'Up', location: 'Shop', component: '4G-NETWORK', reason: 'Incidental', remarks: 'testing 3', url_path: 'https://trt.in'
+          from_date: '02/11/2020 08:10 AM', to_date: '05/11/2020 05:10 PM', type: 'Unplanned',
+          location: 'Shop', component: '4G-NETWORK', remarks: 'testing 3'
         },
         {
           SlNo: 9, rm_office: 'Salem', dm_office: 'Salem', shop_number: '45784',
-          from_date: '05/10/2020 10:00 AM', to_date: '08/10/2020 11:00 AM', type: 'Planned', camera_pos: 1,
-          network: 'Down', location: 'RM Office', component: 'VMS', reason: 'Scheduled', remarks: '', url_path: 'https://testing.com'
+          from_date: '05/10/2020 10:00 AM', to_date: '08/10/2020 11:00 AM', type: 'Planned',
+          location: 'RM Office', component: 'VMS', remarks: ''
         },
         {
           SlNo: 10, rm_office: 'HeadOffice', dm_office: 'Thirunelveli', shop_number: '12407',
           from_date: '02/10/2020 11:21 AM', to_date: '05/10/2020 05:10 PM', type: 'Unplanned',
-          location: 'DM Office', component: 'INTERNET', reason: 'Scheduled', remarks: 'testing', url_path: 'https://www.test.com'
+          location: 'DM Office', component: 'INTERNET', remarks: 'testing'
         },
         {
           SlNo: 11, rm_office: 'Salem', dm_office: 'Coimbatore', shop_number: '78740',
-          from_date: '10/10/2020 11:21 AM', to_date: '12/10/2020 05:10 PM', type: 'Planned', camera_pos: 2,
-          network: 'Down', location: 'RM Office', component: 'VMS', reason: 'Non-Scheduled', remarks: 'testing', url_path: 'https://abcd'
+          from_date: '10/10/2020 11:21 AM', to_date: '12/10/2020 05:10 PM', type: 'Planned',
+          location: 'RM Office', component: 'VMS', remarks: 'testing'
         },
         {
           SlNo: 12, rm_office: 'Salem', dm_office: 'Salem', shop_number: '548700',
           from_date: '01/10/2020 11:00 AM', to_date: '02/10/2020 02:10 PM', type: 'Unplanned',
-          location: 'RM Office', component: 'VMS', reason: 'Scheduled', remarks: 'testing', url_path: 'https://abcd'
+          location: 'RM Office', component: 'VMS', remarks: 'testing'
         },
         {
           SlNo: 13, rm_office: 'Coimbatore', dm_office: 'Thirunelveli', shop_number: '45001',
-          from_date: '12/10/2020 10:00 AM', to_date: '13/10/2020 10:10 AM', type: 'Planned', camera_pos: 2,
-          network: 'Up', location: 'Shop', component: '4G-NETWORK', reason: 'Scheduled', remarks: 'testing', url_path: 'https://abcd'
+          from_date: '12/10/2020 10:00 AM', to_date: '13/10/2020 10:10 AM', type: 'Planned',
+          location: 'Shop', component: '4G-NETWORK', remarks: 'testing'
         },
         {
           SlNo: 14, rm_office: 'HeadOffice', dm_office: 'Coimbatore', shop_number: '44875',
           from_date: '10/10/2020 01:20 PM', to_date: '10/10/2020 05:10 PM', type: 'Unplanned',
-          location: 'RM Office', component: 'VMS', reason: 'Incidental', remarks: 'testing', url_path: 'xxx'
+          location: 'RM Office', component: 'VMS', remarks: 'testing'
         },
         {
           SlNo: 15, rm_office: 'Trichy', dm_office: 'Dindigul', shop_number: '448001',
-          from_date: '02/10/2020 03:21 PM', to_date: '04/10/2020 05:10 PM', type: 'Planned', camera_pos: 2,
-          network: 'Up', location: 'Shop', component: 'CAMERA', reason: 'Incidental', remarks: 'testing', url_path: 'yyyy'
+          from_date: '02/10/2020 03:21 PM', to_date: '04/10/2020 05:10 PM', type: 'Planned',
+          location: 'Shop', component: 'CAMERA', remarks: 'testing'
         },
         {
           SlNo: 16, rm_office: 'Coimbatore', dm_office: 'Cuddalore', shop_number: '12456',
-          from_date: '23/10/2020 11:21 AM', to_date: '25/10/2020 05:10 PM', type: 'Unplanned', camera_pos: 2,
-          network: 'Up', location: 'Shop', component: '4G-NETWORK', reason: 'Scheduled', remarks: 'testing', url_path: 'zzzz'
+          from_date: '23/10/2020 11:21 AM', to_date: '25/10/2020 05:10 PM', type: 'Unplanned',
+          location: 'Shop', component: '4G-NETWORK', remarks: 'testing'
         },
         {
           SlNo: 17, rm_office: 'HeadOffice', dm_office: 'Erode', shop_number: '784111',
-          from_date: '22/10/2020 11:21 AM', to_date: '25/10/2020 05:10 PM', type: 'Planned', camera_pos: 2,
-          network: 'Up', location: 'DM Office', component: 'UPS', reason: 'Accidental', remarks: 'testing', url_path: 'aaaa'
+          from_date: '22/10/2020 11:21 AM', to_date: '25/10/2020 05:10 PM', type: 'Planned',
+          location: 'DM Office', component: 'UPS', remarks: 'testing'
         },
         {
           SlNo: 18, rm_office: 'Coimbatore', dm_office: 'Dindigul', shop_number: '12456',
           from_date: '02/10/2020 11:21 AM', to_date: '05/10/2020 05:10 PM', type: 'Unplanned',
-          location: 'DM Office', component: 'DM-VMS', reason: 'Scheduled', remarks: '', url_path: 'bbbb'
+          location: 'DM Office', component: 'DM-VMS', remarks: ''
         },
         {
           SlNo: 19, rm_office: 'Trichy', dm_office: 'Salem', shop_number: '44457',
-          from_date: '12/10/2020 11:00 AM', to_date: '13/10/2020 12:10 PM', type: 'Planned', camera_pos: 1,
-          network: 'Down', location: 'DM Office', component: 'INTERNET', reason: 'Accidental', remarks: 'testing', url_path: 'xxxx'
+          from_date: '12/10/2020 11:00 AM', to_date: '13/10/2020 12:10 PM', type: 'Planned',
+          location: 'DM Office', component: 'INTERNET', remarks: 'testing'
         },
         {
           SlNo: 20, rm_office: 'Salem', dm_office: 'Chennai(North)', shop_number: '12456',
-          from_date: '10/10/2020 02:21 PM', to_date: '15/10/2020 05:10 PM', type: 'Unplanned', camera_pos: 2,
-          network: 'Up', location: 'Shop', component: 'CAMERA', reason: 'Scheduled', remarks: '', url_path: 'yyyy'
+          from_date: '10/10/2020 02:21 PM', to_date: '15/10/2020 05:10 PM', type: 'Unplanned',
+          location: 'Shop', component: 'CAMERA', remarks: ''
         },
         {
           SlNo: 21, rm_office: 'HeadOffice', dm_office: 'Chennai(North)', shop_number: '440001',
           from_date: '05/10/2020 10:21 AM', to_date: '07/10/2020 05:10 PM',
-          type: 'Planned', location: 'RM Office', component: 'VMS', reason: 'Accidental', remarks: '-', url_path: 'https://abcd'
+          type: 'Planned', location: 'RM Office', component: 'VMS', remarks: '-'
         },
         {
           SlNo: 22, rm_office: 'HeadOffice', dm_office: 'Chennai(South)', shop_number: '778450',
           from_date: '02/10/2020 11:21 AM', to_date: '05/10/2020 05:10 PM', type: 'Planned',
-          location: 'Shop', component: 'UPS', reason: 'Non-Scheduled', remarks: 'testing', url_path: 'xxxx'
+          location: 'Shop', component: 'UPS', remarks: 'testing'
         },
       )
       if (this.nmsData.length !== 0) {

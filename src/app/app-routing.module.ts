@@ -4,7 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './Dashboard/home/home.component';
 import { AuthGuard } from './services/auth.guard';
 import { BugzillaReportComponent } from './reports/bugzilla-report/bugzilla-report.component';
-import { NMSSLAFormComponent } from './nms-sla-form/nms-sla-form.component';
+import { NMSSLAFormComponent } from './Documents/nms-sla-form/nms-sla-form.component';
 import { EmsReportComponent } from './reports/ems-report/ems-report.component';
 
 
@@ -21,6 +21,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { 
-  
+export class AppRoutingModule {
+
 }

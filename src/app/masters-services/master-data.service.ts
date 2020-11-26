@@ -8,6 +8,8 @@ import { RestAPIService } from '../services/restAPI.service';
 export class MasterDataService {
   regions?: any;
   districts?: any;
+  products?: any;
+  shops?: any;
 
   constructor(private restApiService: RestAPIService) { }
 
@@ -29,5 +31,25 @@ export class MasterDataService {
       })
     })
     return this.districts;
+  }
+
+  getProducts() {
+    this.products = [];
+    this.restApiService.get(PathConstants.ProductsGetURL).subscribe(product => {
+      product.forEach(p => {
+        this.products.push({ 'name': p.name, 'id': p.id });
+      })
+    })
+    return this.products;
+  }
+
+  getShops() {
+    this.shops = [];
+    this.restApiService.get(PathConstants.ShopsGetURL).subscribe(shop => {
+      shop.forEach(s => {
+        this.shops.push({ 'shop_num': s.SHOPNO, 'dcode': s.Dcode });
+      })
+    })
+    return this.shops;
   }
 }

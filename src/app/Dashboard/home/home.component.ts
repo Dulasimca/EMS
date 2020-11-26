@@ -7,6 +7,7 @@ import * as ChartDataLabels from 'chartjs-plugin-datalabels';
 import { SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Helper/PathConstants';
 import { MasterDataService } from 'src/app/masters-services/master-data.service';
+import { type } from 'os';
 
 
 @Component({
@@ -55,14 +56,18 @@ export class HomeComponent implements OnInit {
     })
     this.restApi.get(PathConstants.DistrictMasterURL).subscribe(dist => {
       dist.forEach(d => {
-        this.districts.push(d.Dname);
+        var str: string = d.Dname;
+        var firstStr = str.slice(0, 1).toUpperCase();
+        var secondStr = str.slice(1, str.length).toLowerCase();
+        str = firstStr + secondStr;
+        this.districts.push(str);
       })
       //NMS Bar chart
       this.onNMSTypeChange(this.nmsType);
     })
     this.restApi.get(PathConstants.ComponentsURL).subscribe((comp: any) => {
       comp.forEach(c => {
-        this.components.push({ name: c.name, id: c.product_id} );
+        this.components.push({ name: c.name, id: c.product_id });
       });
       //SLA Bar chart
       this.onSLATypeChange(this.slaType);
@@ -128,7 +133,7 @@ export class HomeComponent implements OnInit {
     this.slaBarOptions = {
       scales: {
         xAxes: [{
-          barPercentage: 0.20
+          barPercentage: 0.21
         }],
         yAxes: [{
           ticks: {
@@ -182,10 +187,10 @@ export class HomeComponent implements OnInit {
           }
         ]
       }
-    } else {
+    } else if (value === 'RM') {
       this.SLALabels = [];
       var labels = this.components.filter(x => {
-           return x.id === 3;
+        return x.id === 3;
       });
       labels.forEach(y => {
         this.SLALabels.push(y.name);
@@ -195,8 +200,26 @@ export class HomeComponent implements OnInit {
         datasets: [
           {
             label: 'Time(in percentage)',
-            backgroundColor: ['#1dbfba'],
-            data: [80]
+            backgroundColor: ['#4fc437', '#f0dd13', '#09c4d9',],
+            data: [60, 80, 100]
+          }
+        ]
+      }
+    } else if (value === 'HO') {
+      this.SLALabels = [];
+      var labels = this.components.filter(x => {
+        return x.id === 6;
+      });
+      labels.forEach(y => {
+        this.SLALabels.push(y.name);
+      });
+      this.slaBarData = {
+        labels: this.SLALabels,
+        datasets: [
+          {
+            label: 'Time(in percentage)',
+            backgroundColor: ['#1dbfba', '#f0dd13', '#4fc437',],
+            data: [80, 90, 70]
           }
         ]
       }
