@@ -399,11 +399,23 @@ body { margin: 0px; font-family: Verdana, Geneva, sans-serif; }
 }
 
 .header-line {
-  color: rgb(0 0 0 / 63%) !important;
+  color: #6c6d6f !important;
   text-decoration: underline !important;
-  font-size: 15px;
+  font-size: 18spx;
   text-align: center !important;
-  font-weight: 600;
+  font-weight: 500;
+}
+
+.p-calendar-w-btn .p-inputtext {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-left: 1px;
+  padding-right: 0px;
+}
+
+.p-button.p-button-icon-only {
+  width: 2.18rem;
+  padding: 0.5rem 0;
 }
 
 .alert {

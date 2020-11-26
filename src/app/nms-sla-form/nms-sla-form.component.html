@@ -22,7 +22,7 @@
                 <label for="rname" class="label-text-color">RM Office:</label>
               </div>
               <p-dropdown #reg name="rname" [options]="regionOptions" [style]="{'width':'-webkit-fill-available'}"
-                [(ngModel)]="rcode" (onClick)="onSelect('R')" filter="true" resetFilterOnHide="true"
+                [(ngModel)]="rcode" (onClick)="onSelect('R')" (onChange)="onResetFields('RM')" filter="true" resetFilterOnHide="true"
                 filterMatchMode="startsWith" [showClear]="false" required>
                 <ng-template let-item pTemplate="selectedItem">
                   <span style="vertical-align:middle">{{item.label}}</span>
@@ -94,7 +94,7 @@
               <div>
                 <label class="label-text-color" for="shopcd">To Date:</label>
               </div>
-              <p-calendar name="tDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [(ngModel)]="toDate" showTime="true"
+              <p-calendar class="date-text" name="tDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [(ngModel)]="toDate" showTime="true"
                 hourFormat="12" [showIcon]="true"></p-calendar>
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">

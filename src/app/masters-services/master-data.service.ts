@@ -25,7 +25,7 @@ export class MasterDataService {
     this.districts = [];
     this.restApiService.get(PathConstants.DistrictMasterURL).subscribe(dist => {
       dist.forEach(d => {
-        this.districts.push({ 'name': d.Dname, 'code': d.Dcode });
+        this.districts.push({ 'name': d.Dname, 'code': d.Dcode, 'rcode': d.Rcode });
       })
     })
     return this.districts;

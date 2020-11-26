@@ -74,8 +74,10 @@ export class NMSSLAFormComponent implements OnInit {
         break;
       case 'D':
         if (this.districtsData.length !== 0) {
-          this.districtsData.forEach(r => {
-            districtSeletion.push({ label: r.name, value: r.code });
+          this.districtsData.forEach(d => {
+            if(this.rcode === d.rcode) {
+            districtSeletion.push({ label: d.name, value: d.code });
+            }
           })
           this.districtOptions = districtSeletion;
           this.districtOptions.unshift({ label: '-select-', value: null });
@@ -109,6 +111,12 @@ export class NMSSLAFormComponent implements OnInit {
         console.log('url', event.target.result);
       }
       reader.readAsDataURL(event.target.files[0]);
+    }
+  }
+
+  onResetFields(field) {
+    if(field === 'RM') {
+      this.dcode = null;
     }
   }
 

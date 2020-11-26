@@ -71,10 +71,12 @@ export class HomeComponent implements OnInit {
       { label: 'Retail Shop', value: 'SH' },
       { label: 'DM Office', value: 'DM' },
       { label: 'RM Office', value: 'RM' },
+      { label: 'HeadOffice', value: 'HO' }
     ];
     this.nmsTypeOptions = [
       { label: 'DM Office', value: 'DM' },
       { label: 'RM Office', value: 'RM' },
+      { label: 'HeadOffice', value: 'HO' }
     ];
 
     //Pie chart show data inside each slices
@@ -123,6 +125,27 @@ export class HomeComponent implements OnInit {
   }
 
   onSLATypeChange(value) {
+    this.slaBarOptions = {
+      scales: {
+        xAxes: [{
+          barPercentage: 0.20
+        }],
+        yAxes: [{
+          ticks: {
+            min: 50,
+            max: 100,
+            stepSize: 10
+          }
+        }]
+      },
+      title: {
+        display: true,
+        fontSize: 16
+      },
+      legend: {
+        position: 'bottom'
+      }
+    };
     if (value === 'SH') {
       this.SLALabels = [];
       var labels = this.components.filter(x => {
@@ -141,27 +164,6 @@ export class HomeComponent implements OnInit {
           }
         ]
       }
-      this.slaBarOptions = {
-        scales: {
-          xAxes: [{
-            barPercentage: 0.20
-          }],
-          yAxes: [{
-            ticks: {
-              min: 50,
-              max: 100,
-              stepSize: 10
-            }
-          }]
-        },
-        title: {
-          display: true,
-          fontSize: 16
-        },
-        legend: {
-          position: 'bottom'
-        }
-      };
     } else if (value === 'DM') {
       this.SLALabels = [];
       var labels = this.components.filter(x => {
@@ -180,20 +182,6 @@ export class HomeComponent implements OnInit {
           }
         ]
       }
-      this.slaBarOptions = {
-        scales: {
-          xAxes: [{
-            barPercentage: 0.25
-          }]
-        },
-        title: {
-          display: true,
-          fontSize: 16
-        },
-        legend: {
-          position: 'bottom'
-        }
-      };
     } else {
       this.SLALabels = [];
       var labels = this.components.filter(x => {
@@ -212,20 +200,6 @@ export class HomeComponent implements OnInit {
           }
         ]
       }
-      this.slaBarOptions = {
-        scales: {
-          xAxes: [{
-            barPercentage: 0.07
-          }]
-        },
-        title: {
-          display: true,
-          fontSize: 16
-        },
-        legend: {
-          position: 'bottom'
-        }
-      };
     }
   }
 
