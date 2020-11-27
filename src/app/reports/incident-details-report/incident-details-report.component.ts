@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
 import { Table } from 'primeng/table/table';
 import { RestAPIService } from 'src/app/services/restAPI.service';
-import { MessageService } from 'primeng/api/public_api';
+import { MessageService } from 'primeng/api';
 import { DatePipe } from '@angular/common';
 
 @Component({
