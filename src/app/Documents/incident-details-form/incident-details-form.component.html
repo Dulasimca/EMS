@@ -71,13 +71,21 @@
                             </div>
                             <p-dropdown #reg name="reasons" [options]="reasonOptions"
                                 [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="reason" filter="true"
-                                resetFilterOnHide="true" filterMatchMode="startsWith" [showClear]="true" required>
+                                resetFilterOnHide="true" filterMatchMode="startsWith" required>
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span style="vertical-align:middle">{{item.label}}</span>
                                 </ng-template>
                             </p-dropdown>
                         </div>
-                        <div class="p-col-12 p-md-4 p-lg-3">
+                        <!-- row 3 -->
+                        <div class="p-col-12 p-md-6 p-lg-3">
+                            <div>
+                                <label for="remarks" class="label-text-color">Remarks:</label>
+                            </div>
+                            <textarea class="p-col-12 p-md-12 p-lg-12" [rows]="3" name="remarks" [cols]="28"
+                                [(ngModel)]="remarksTxt" pInputTextarea autoResize="autoResize" required></textarea>
+                        </div>
+                        <div class="p-col-12 p-md-6 p-lg-3">
                             <div>
                                 <label class="label-text-color" for="url">Video URL:</label>
                             </div>
@@ -85,16 +93,6 @@
                                 autocomplete="off" style="text-decoration: underline; color: rgb(116, 116, 255);"
                                 required>
                             <!-- (change)="onFileUpload($event)" -->
-                        </div>
-                        <!-- row 3 -->
-                        <div class="p-col-12 p-md-12 p-lg-12">
-                            <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
-                                <div>
-                                    <label for="remarks" class="label-text-color">Remarks:</label>
-                                </div>
-                                <textarea class="p-col-10 p-md-10 p-lg-10" [rows]="3" name="remarks" [cols]="28"
-                                    [(ngModel)]="remarksTxt" pInputTextarea autoResize="autoResize" required></textarea>
-                            </div>
                         </div>
                         <div class="p-col-12 p-md-12 p-lg-12">
                             <div class="p-col-12 p-md-12 p-lg-12 txt-align" style="margin-top: 5px;">

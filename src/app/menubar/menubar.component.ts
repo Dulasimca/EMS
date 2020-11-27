@@ -29,7 +29,10 @@ export class MenubarComponent implements OnInit {
         ]
       },
       { label: 'SLA', icon: 'pi pi-fw pi-chart-line' },
-      { label: 'Help Desk', icon: 'pi pi-fw pi-comments' },
+      {
+        label: 'Help Desk', icon: 'pi pi-fw pi-comments',
+        routerLink: '/bugzilla'
+      },
       {
         label: 'Report', icon: 'pi pi-fw pi-file',
         items: [

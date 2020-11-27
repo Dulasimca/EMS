@@ -161,7 +161,7 @@ export class NMSSLAFormComponent implements OnInit {
       'ShopNumber': (this.shopCode !== undefined && this.shopCode !== null) ? this.shopCode.label : '-',
       'FromDate': this.datepipe.transform(this.fromDate, 'dd/MM/yyyy h:mm:ss a'),
       'ToDate': this.datepipe.transform(this.toDate, 'dd/MM/yyyy h:mm:ss a'),
-      'Remarks': this.remarksTxt,
+      'Remarks': (this.remarksTxt !== null && this.remarksTxt.trim() !== '') ? this.remarksTxt.trim() : '-',
     }
     this.restApiService.post(PathConstants.NMSPostURL, params).subscribe(res => {
       if (res.item1) {

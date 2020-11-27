@@ -15,7 +15,7 @@
                             <p-selectButton [options]="nmsTypeOptions" [(ngModel)]="nmsType"
                                 (onChange)="onNMSTypeChange(nmsType)"></p-selectButton>
                         </div>
-                        <p-chart type="bar" [data]="nmsBarData" width="auto" height="60vh" [plugins]="plugin"
+                        <p-chart type={{nmsBarType}} [data]="nmsBarData" width="auto" height="60vh" [plugins]="plugin"
                             [options]="nmsBarOptions">
                         </p-chart>
                     </div>
@@ -36,8 +36,16 @@
                         <div class="header-line">Helpdesk Management Ticket Status</div>
                         <div class="padding-gap">
                             <p-chart type="pie" [data]="pieData" width="auto" height="80vh" [plugins]="plugin"
-                                [options]="pieOptions"></p-chart>
+                                [options]="pieOptions" (onDataSelect)="selectData($event)"></p-chart>
                         </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-12 p-lg-12" style="display: flex;">
+                    <div class="p-col-12 p-md-12 p-lg-12 border-green card border-green">
+                        <div class="header-line">Incident Status</div>
+                        <p-chart type="line" [data]="incidentLineData" width="auto" height="60vh" [plugins]="plugin"
+                            [options]="incidentLineOptions">
+                        </p-chart>
                     </div>
                 </div>
             </div>

@@ -7,4 +7,5 @@ export class PathConstants {
     public static readonly NMSGetURL = '/api/NMSData/Get';
     public static readonly ProductsGetURL = '/api/Products';
     public static readonly ShopsGetURL = '/api/ShopDetails';
+    public static readonly IncidentPostURL = '/api/IncidentDetails/Post';
 }

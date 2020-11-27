@@ -28,19 +28,17 @@
             <div>
               <label for="docType" class="label-text-color">Type:</label>
             </div>
-              <p-dropdown #doctype name="docType" [options]="typeOptions" [style]="{'width':'190px'}"
-                [(ngModel)]="type" (onChange)="onChange('T')" required>
-                <ng-template let-item pTemplate="selectedItem">
-                  <span style="vertical-align:middle">{{item.label}}</span>
-                </ng-template>
-              </p-dropdown>
+            <p-dropdown #doctype name="docType" [options]="typeOptions" [style]="{'width':'190px'}" [(ngModel)]="type"
+              (onChange)="onChange('T')" required>
+              <ng-template let-item pTemplate="selectedItem">
+                <span style="vertical-align:middle">{{item.label}}</span>
+              </ng-template>
+            </p-dropdown>
           </div>
-         <div class="p-col-4"></div>
+          <div class="p-col-4"></div>
           <div class="p-col-12 p-md-3 p-lg-1 txt-align" style="margin-top: 25px;">
-            <!-- <button pButton type="button" label="Excel" class="p-button-raised p-btn-pad bg-div" (click)="dt.exportCSV()"
-              [disabled]="(!type && !fromDate && !toDate)"></button> -->
-              <p-splitButton label="Download" icon="pi pi-download" (onClick)="onDownload()" 
-              [disabled]="(!type || !fromDate || !toDate)" [model]="items"></p-splitButton>
+            <p-splitButton label="Download" icon="pi pi-download" (onClick)="onDownload()"
+              [disabled]="(nmsData.length==0)" [model]="items"></p-splitButton>
           </div>
         </div>
         <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">

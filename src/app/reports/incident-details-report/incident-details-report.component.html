@@ -1,0 +1,59 @@
+<body class="home-bg">
+    <div class="p-grid card page-content border-green">
+        <div class="p-col-12 p-md-12 p-lg-12 no-pad">
+            <app-topbar></app-topbar>
+        </div>
+        <div class="p-col-12 p-md-12 p-lg-12 card" style="min-height: 485px;">
+            <p-toast position="top-center" key="msgKey"></p-toast>
+            <p-panel>
+                <p-header>
+                    <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">Incident Details Report</div>
+                </p-header>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-4 p-lg-2 no-right-pad" style="padding-left: 15px;">
+                        <div>
+                            <label class="label-text-color" for="shopcd">From Date:</label>
+                        </div>
+                        <p-calendar name="fDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [(ngModel)]="fromDate"
+                            showTime="true" hourFormat="12" [showIcon]="true" (ngModelChange)="onChange('D')">
+                        </p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-4 p-lg-2">
+                        <div>
+                            <label class="label-text-color" for="shopcd">To Date:</label>
+                        </div>
+                        <p-calendar name="tDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [(ngModel)]="toDate"
+                            showTime="true" hourFormat="12" [showIcon]="true" (ngModelChange)="onChange('D')">
+                        </p-calendar>
+                    </div>
+                    <div class="p-col-6"></div>
+                    <div class="p-col-12 p-md-3 p-lg-1 txt-align" style="margin-top: 25px;">
+                        <p-splitButton label="Download" icon="pi pi-download" (onClick)="onDownload()"
+                            [disabled]="(incidentData.length==0)" [model]="items"></p-splitButton>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">
+                    <p-table #dt styleClass="p-datatable-gridlines" [columns]="incidentCols" [value]="incidentData"
+                        [rows]="20" [rowsPerPageOptions]="[10,20,30,40,50,100]" [paginator]="true" [responsive]="true"
+                        autoLayout="true" [loading]="loading" exportFilename="INCIDENT_DETAILS_REPORT">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr style="text-align: center;">
+                                <th *ngFor="let col of columns">
+                                    {{col.header}}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                            <tr>
+                                <td *ngFor="let col of columns">
+                                    {{rowData[col.field]}}
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </p-panel>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</body>

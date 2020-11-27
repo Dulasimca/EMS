@@ -25,8 +25,9 @@ export class IncidentDetailsFormComponent implements OnInit {
   shopOptions: SelectItem[];
   shopCode: any;
   reason: any;
-  url_path: string;
+  urlPath: string;
   date: any;
+  remarksTxt: string;
 
   constructor(private restApiService: RestAPIService, private datepipe: DatePipe,
     private messageService: MessageService, private masterDataService: MasterDataService) { }
@@ -103,12 +104,13 @@ export class IncidentDetailsFormComponent implements OnInit {
     const params = {
       'RCode': (this.rcode !== undefined && this.rcode !== null) ? this.rcode : '-',
       'DCode': (this.dcode !== undefined && this.dcode !== null) ? this.dcode : '-',
-      'ShopNumber': (this.shopCode !== undefined && this.shopCode !== null) ? this.shopCode.label : '-',
-      'Date': this.datepipe.transform(this.date, 'dd/MM/yyyy h:mm:ss a'),
+      'ShopCode': (this.shopCode !== undefined && this.shopCode !== null) ? this.shopCode.label : '-',
+      'DocDate': this.datepipe.transform(this.date, 'dd/MM/yyyy h:mm:ss a'),
       'Reason': this.reason,
-      'URL_Path': this.url_path
+      'URL': this.urlPath,
+      'Remarks': (this.remarksTxt !== null && this.remarksTxt.trim() !== '') ? this.remarksTxt.trim() : '-'
     }
-    this.restApiService.post(PathConstants.NMSPostURL, params).subscribe(res => {
+    this.restApiService.post(PathConstants.IncidentPostURL, params).subscribe(res => {
       if (res.item1) {
         this.blockScreen = false;
         form.reset();

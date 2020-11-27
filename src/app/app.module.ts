@@ -41,6 +41,7 @@ import { MessageService } from 'primeng/api';
 import { EmsReportComponent } from './reports/ems-report/ems-report.component';
 import { MasterDataService } from './masters-services/master-data.service';
 import { IncidentDetailsFormComponent } from './Documents/incident-details-form/incident-details-form.component';
+import { IncidentDetailsReportComponent } from './reports/incident-details-report/incident-details-report.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { IncidentDetailsFormComponent } from './Documents/incident-details-form/
     NMSSLAFormComponent,
     EmsReportComponent,
     IncidentDetailsFormComponent,
+    IncidentDetailsReportComponent,
   ],
   imports: [
     BrowserModule,

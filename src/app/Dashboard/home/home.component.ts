@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestAPIService } from 'src/app/services/restAPI.service';
-import { LocationStrategy } from '@angular/common';
+import { LocationStrategy, DatePipe } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import * as Chart from 'chart.js';
 import * as ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -8,6 +8,8 @@ import { SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Helper/PathConstants';
 import { MasterDataService } from 'src/app/masters-services/master-data.service';
 import { type } from 'os';
+import { Router } from '@angular/router';
+import { black } from 'color-name';
 
 
 @Component({
@@ -33,6 +35,8 @@ export class HomeComponent implements OnInit {
   pieChartColor: any;
   pieChartData: any[];
   plugin: any;
+  incidentLineData: any;
+  incidentLineOptions: any;
   slaTypeOptions: SelectItem[];
   nmsTypeOptions: SelectItem[];
   slaType: string = 'SH';
@@ -40,13 +44,13 @@ export class HomeComponent implements OnInit {
   districts: string[] = [];
   regions: string[] = [];
   components: any[] = [];
+  nmsBarType: string;
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
-    private masterDataService: MasterDataService) { }
+    private masterDataService: MasterDataService, private router: Router) { }
 
   ngOnInit() {
     this.preventBackButton();
-    this.onLoadBugzillaData();
     this.restApi.get(PathConstants.RegionMasterURL).subscribe(reg => {
       reg.forEach(r => {
         this.regions.push(r.REGNNAME);
@@ -127,6 +131,47 @@ export class HomeComponent implements OnInit {
           ]
         }]
     };
+
+    //Line Chart
+    const months = ["August", "September", "October", "November", "December",
+      "January", "February", "March", "April", "May", "June", "July"
+    ];
+    const year = new Date().getFullYear();
+    this.incidentLineData = {
+      labels: months,
+      datasets: [
+        {
+          label: 'Months ( From Year' + ' ' + year + ' )',
+          data: [65, 59, 80, 81, 91, 60, 70, 97, 65, 80, 75, 90],
+          fill: false,
+          borderColor: '#4bc0c0',
+          lineTension: 0.08,
+        }
+      ],
+    }
+    this.incidentLineOptions = {
+      responsive: true,
+      plugins: {
+        datalabels: {
+          align: 'end',
+          anchor: 'end',
+          backgroundColor: '4bc0c0',
+          color: 'black',
+          boredrRadius: 4,
+          font: {
+            weight: 'bold'
+          }
+        }
+
+      },
+      title: {
+        display: true,
+        fontSize: 16
+      },
+      legend: {
+        position: 'bottom'
+      }
+    };
   }
 
   onSLATypeChange(value) {
@@ -139,7 +184,10 @@ export class HomeComponent implements OnInit {
           ticks: {
             min: 50,
             max: 100,
-            stepSize: 10
+            stepSize: 10,
+            callback: function (value, index, values) {
+              return value + '%';
+            }
           }
         }]
       },
@@ -223,25 +271,33 @@ export class HomeComponent implements OnInit {
           }
         ]
       }
+      this.slaBarOptions = {
+        scales: {
+          xAxes: [{
+            barPercentage: 0.07
+          }],
+        }
+      }
     }
   }
 
   onNMSTypeChange(value) {
     if (value === 'DM') {
       this.NMSLabels = this.districts;
+      this.nmsBarType = 'bar';
       this.nmsBarData = {
         labels: this.NMSLabels,
         datasets: [
           {
             label: "Running (in No's)",
-            data: [45, 55, 95, 88, 77, 56, 180, 150, 110, 87, 99, 110, 125, 120, 65, 100, 85, 100,
-              77, 150, 200, 180, 110, 66, 95, 105, 89, 95, 110, 85, 155, 180, 110, 180, 125, 85, 120, 187],
+            data: [300, 0, 0, 0, 250, 220, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+              0, 0, 0, 0, 0, 0, 290, 315, 375, 0, 250, 280, 0, 310, 250, 0, 0, 310, 225, 0],
             backgroundColor: '#52c91e',
           },
           {
             label: "Not Running (in No's)",
-            data: [43, 50, 85, 81, 60, 50, 100, 110, 75, 58, 150, 170, 110, 99, 55, 87, 74, 65,
-              60, 111, 108, 140, 90, 55, 66, 82, 77, 80, 95, 65, 120, 155, 85, 150, 95, 55, 98, 137],
+            data: [0, 95, 85, 81, 0, 0, 100, 180, 75, 58, 150, 170, 110, 99, 155, 187, 74, 165,
+              180, 111, 108, 140, 90, 155, 0, 0, 0, 80, 0, 0, 120, 0, 0, 150, 195, 0, 0, 137],
             backgroundColor: '#fc2121',
           }
         ]
@@ -273,7 +329,8 @@ export class HomeComponent implements OnInit {
                 dataArr.map(data => {
                   sum += data;
                 });
-                return value;
+                var data = (value !== 0) ? value : '';
+                return data;
               }
             },
             color: "#000000",
@@ -281,8 +338,9 @@ export class HomeComponent implements OnInit {
           }
         }
       };
-    } else {
+    } else if (value === 'RM') {
       this.NMSLabels = this.regions;
+      this.nmsBarType = 'bar';
       this.nmsBarData = {
         labels: this.NMSLabels,
         datasets: [
@@ -307,14 +365,48 @@ export class HomeComponent implements OnInit {
           position: 'bottom'
         }
       };
+    } else {
+      this.NMSLabels = ['Shops'];
+      this.nmsBarType = 'horizontalBar';
+      this.nmsBarData = {
+        labels: this.NMSLabels,
+        datasets: [
+          {
+            label: "No's",
+            data: [580],
+            backgroundColor: '#52c91e',
+          }
+        ]
+      }
+      this.nmsBarOptions = {
+        scales: {
+          yAxes: [{
+            barPercentage: 0.12
+          }],
+          xAxes: [{
+            ticks: {
+              min: 50,
+              max: 1000,
+              stepSize: 100
+            }
+          }]
+        },
+        title: {
+          display: true,
+          fontSize: 16
+        },
+        legend: {
+          position: 'bottom'
+        }
+      };
     }
   }
 
-  onLoadBugzillaData() {
-    this.restApi.get('/ems/api/bugzilladata').subscribe(data => {
-      console.log('data', data.Table);
-
-    })
+  selectData(event) {
+    console.log('event occurred');
+    console.log('index', event.element._index);
+    const index: string = event.element._index;
+    this.router.navigate(['bugzilla'], { queryParams: { id: index, si: true } });
   }
 
   preventBackButton() {
