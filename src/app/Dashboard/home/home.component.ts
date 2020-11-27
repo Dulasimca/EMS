@@ -305,7 +305,7 @@ export class HomeComponent implements OnInit {
       this.nmsBarOptions = {
         scales: {
           xAxes: [{
-            barPercentage: 0.75,
+            barPercentage: 0.80,
             stacked: true
           }],
           yAxes: [{
@@ -334,7 +334,7 @@ export class HomeComponent implements OnInit {
               }
             },
             color: "#000000",
-            fontSize: 18
+            fontSize: 14
           }
         }
       };
