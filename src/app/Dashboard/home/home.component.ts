@@ -108,6 +108,9 @@ export class HomeComponent implements OnInit {
           color: '#fff',
           fontSize: 18
         }
+      },
+      legend: {
+        position: 'bottom'
       }
     }
     //Pie chart
