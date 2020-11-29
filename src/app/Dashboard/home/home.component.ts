@@ -256,7 +256,7 @@ export class HomeComponent implements OnInit {
     } else if (value === 'HO') {
       this.SLALabels = [];
       var labels = this.components.filter(x => {
-        return x.id === 6;
+        return x.id === 2;
       });
       labels.forEach(y => {
         this.SLALabels.push(y.name);
@@ -270,13 +270,6 @@ export class HomeComponent implements OnInit {
             data: [80, 90, 70]
           }
         ]
-      }
-      this.slaBarOptions = {
-        scales: {
-          xAxes: [{
-            barPercentage: 0.07
-          }],
-        }
       }
     }
   }
@@ -372,22 +365,29 @@ export class HomeComponent implements OnInit {
         labels: this.NMSLabels,
         datasets: [
           {
-            label: "No's",
-            data: [580],
+            label: "Running (in No's)",
+            data: [1000],
             backgroundColor: '#52c91e',
+          },
+          {
+            label: "Not Running (No's)",
+            data: [2000],
+            backgroundColor: '#fc2121',
           }
         ]
       }
       this.nmsBarOptions = {
         scales: {
           yAxes: [{
+            stacked: true,
             barPercentage: 0.12
           }],
           xAxes: [{
+            stacked: true,
             ticks: {
-              min: 50,
-              max: 1000,
-              stepSize: 100
+              min: 0,
+              max: 3200,
+              stepSize: 200
             }
           }]
         },
@@ -403,8 +403,6 @@ export class HomeComponent implements OnInit {
   }
 
   selectData(event) {
-    console.log('event occurred');
-    console.log('index', event.element._index);
     const index: string = event.element._index;
     this.router.navigate(['bugzilla'], { queryParams: { id: index, si: true } });
   }

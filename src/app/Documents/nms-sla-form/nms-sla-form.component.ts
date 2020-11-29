@@ -91,7 +91,7 @@ export class NMSSLAFormComponent implements OnInit {
           })
           this.locationOptions = locationSeletion;
           this.locationOptions.unshift({ label: '-select-', value: null });
-          if (this.location === 6) {
+          if (this.location === 2) {
             this.disableDM = this.disableRM = this.disableShop = true;
           } else if (this.location === 5) {
             this.disableDM = this.disableRM = this.disableShop = false;
