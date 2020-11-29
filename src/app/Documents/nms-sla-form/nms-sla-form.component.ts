@@ -51,11 +51,6 @@ export class NMSSLAFormComponent implements OnInit {
     this.regionsData = this.masterDataService.getRegions();
     this.locationsData = this.masterDataService.getProducts();
     this.shopData = this.masterDataService.getShops();
-    // this.reasonOptions = [
-    //   { label: '-select-', value: null },
-    //   { label: 'Scheduled', value: 1 }, { label: 'Non Scheduled', value: 2 },
-    //   { label: 'Accidental', value: 3 }, { label: 'Incidental', value: 4 }
-    // ];
   }
 
   onSelect(type) {

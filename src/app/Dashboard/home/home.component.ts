@@ -370,7 +370,7 @@ export class HomeComponent implements OnInit {
             backgroundColor: '#52c91e',
           },
           {
-            label: "Not Running (No's)",
+            label: "Not Running (in No's)",
             data: [2000],
             backgroundColor: '#fc2121',
           }

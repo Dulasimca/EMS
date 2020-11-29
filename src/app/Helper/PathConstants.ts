@@ -8,4 +8,5 @@ export class PathConstants {
     public static readonly ProductsGetURL = '/api/Products';
     public static readonly ShopsGetURL = '/api/ShopDetails';
     public static readonly IncidentPostURL = '/api/IncidentDetails/Post';
+    public static readonly IncidentGetURL = '/api/IncidentDetails/Get';
 }

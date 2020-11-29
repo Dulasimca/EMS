@@ -541,6 +541,7 @@ body { margin: 0px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Ro
   border-bottom-right-radius: 0;
   padding-left: 1px;
   padding-right: 0px;
+  text-align: start;
 }
 
 .p-button {
@@ -646,6 +647,38 @@ body { margin: 0px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Ro
 
 .spinner {
   position:fixed;top:50%;left:46%
+}
+
+
+
+
+
+/* .p-toast .p-toast-message .p-toast-message-content {
+    padding: 1rem;
+    border-width: 0 0 0 6px;
+} */
+.p-toast .p-toast-message.p-toast-message-error {
+  padding: .5em 1em;
+  background: crimson;
+    border: solid #fa7482;
+    border-width: 0 0 0 6px;
+    color: black;
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+  padding: .5em 1em;
+  background: #15c415;
+  border: solid #61f561;
+  border-width: 0 0 0 6px;
+  color: black;
+}
+
+.p-toast .p-toast-message.p-toast-message-warn {
+  padding: .5em 1em;
+  background: #e6990b;
+  border: solid #f8ba46;
+  border-width: 0 0 0 6px;
+  color: black;
 }
 
 /* .navbar-collapse {

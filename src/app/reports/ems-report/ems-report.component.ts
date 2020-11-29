@@ -5,6 +5,7 @@ import { DatePipe } from '@angular/common';
 import { PathConstants } from 'src/app/Helper/PathConstants';
 import { RestAPIService } from 'src/app/services/restAPI.service';
 import { Table } from 'primeng/table';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-ems-report',
@@ -228,7 +229,7 @@ export class EmsReportComponent implements OnInit {
     }
   }
 
-  checkValidDateSelection() {
+  checkValidDateSelection(field: NgForm) {
     if (this.fromDate !== undefined && this.toDate !== undefined && this.fromDate !== '' && this.toDate !== '') {
       let selectedFromDate = this.fromDate.getDate();
       let selectedToDate = this.toDate.getDate();
@@ -239,12 +240,13 @@ export class EmsReportComponent implements OnInit {
       if ((selectedFromDate > selectedToDate && ((selectedFromMonth >= selectedToMonth && selectedFromYear >= selectedToYear) ||
         (selectedFromMonth === selectedToMonth && selectedFromYear === selectedToYear))) ||
         (selectedFromMonth > selectedToMonth && selectedFromYear === selectedToYear) || (selectedFromYear > selectedToYear)) {
+        this.messageService.clear();
         this.messageService.add({
-          key: 'msgKey', severity: 'error', life: 5000
+          key: 'msgKey', severity: 'warn', life: 5000
           , summary: 'Invalid Date!', detail: 'Please select the valid date'
         });
-        this.fromDate = '';
-        this.toDate = '';
+        field.controls.fDate.reset();
+        field.controls.tDate.reset();
       }
       return this.fromDate, this.toDate;
     }
