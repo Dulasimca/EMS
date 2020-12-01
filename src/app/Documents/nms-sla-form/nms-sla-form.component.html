@@ -54,11 +54,12 @@
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">
               <div>
-                <label for="comp" class="label-text-color">Component:</label>
+                <label class="label-text-color" for="shopcd">Shop Number:</label>
               </div>
-              <p-dropdown #comp name="comp" [disabled]="!location" [options]="componentOptions"
-                [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="compId" filter="true"
-                (onClick)="onSelect('C')" resetFilterOnHide="true" filterMatchMode="startsWith" required>
+              <p-dropdown #shop name="shop" [disabled]="disableShop" [options]="shopOptions"
+                [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="shopCode" filter="true"
+                (onClick)="onSelect('S')" resetFilterOnHide="true" filterMatchMode="startsWith" optionLabel="label"
+                required>
                 <ng-template let-item pTemplate="selectedItem">
                   <span style="vertical-align:middle">{{item.label}}</span>
                 </ng-template>
@@ -66,12 +67,11 @@
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">
               <div>
-                <label class="label-text-color" for="shopcd">Shop Number:</label>
+                <label for="comp" class="label-text-color">Component:</label>
               </div>
-              <p-dropdown #shop name="shop" [disabled]="disableShop" [options]="shopOptions"
-                [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="shopCode" filter="true"
-                (onClick)="onSelect('S')" resetFilterOnHide="true" filterMatchMode="startsWith" optionLabel="label"
-                required>
+              <p-dropdown #comp name="comp" [disabled]="!location" [options]="componentOptions"
+                [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="compId" filter="true"
+                (onClick)="onSelect('C')" resetFilterOnHide="true" filterMatchMode="startsWith" required>
                 <ng-template let-item pTemplate="selectedItem">
                   <span style="vertical-align:middle">{{item.label}}</span>
                 </ng-template>
@@ -91,6 +91,18 @@
                   </p-radioButton>
                 </div>
               </div>
+            </div>
+            <div class="p-col-12 p-md-4 p-lg-2">
+              <div>
+                <label for="reasons" class="label-text-color">Reason:</label>
+              </div>
+              <p-dropdown #reason name="reasons" [options]="reasonOptions" [style]="{'width':'-webkit-fill-available'}"
+                [(ngModel)]="reasonId" filter="true" resetFilterOnHide="true" (onClick)="onSelect('RE')"
+                filterMatchMode="startsWith" required>
+                <ng-template let-item pTemplate="selectedItem">
+                  <span style="vertical-align:middle">{{item.label}}</span>
+                </ng-template>
+              </p-dropdown>
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">
               <div>

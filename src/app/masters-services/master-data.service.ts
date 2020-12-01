@@ -10,6 +10,7 @@ export class MasterDataService {
   districts?: any;
   products?: any;
   shops?: any;
+  reasons?: any;
 
   constructor(private restApiService: RestAPIService) { }
 
@@ -45,11 +46,21 @@ export class MasterDataService {
 
   getShops() {
     this.shops = [];
-    this.restApiService.get(PathConstants.ShopsGetURL).subscribe(shop => {
+    this.restApiService.getByParameters(PathConstants.ShopsGetURL, { 'type': 2 }).subscribe(shop => {
       shop.forEach(s => {
         this.shops.push({ 'shop_num': s.SHOPNO, 'dcode': s.Dcode });
       })
     })
     return this.shops;
+  }
+
+  getReasons() {
+    this.reasons = [];
+    this.restApiService.get(PathConstants.ReasonMasterGetURL).subscribe(reason => {
+      reason.forEach(r => {
+        this.reasons.push({ 'name': r.reason, 'id': r.reason_id, 'type': r.reason_type });
+      })
+    })
+    return this.reasons;
   }
 }

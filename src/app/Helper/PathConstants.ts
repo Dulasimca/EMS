@@ -1,5 +1,5 @@
 export class PathConstants {
-    public static readonly HMSReportURL = '/api/bugzilladata';
+    public static readonly HMSReportURL = '/api/bugzilladata/Get';
     public static readonly NMSPostURL = '/api/NMSData/Post';
     public static readonly RegionMasterURL = '/api/RegionMaster';
     public static readonly DistrictMasterURL = '/api/DistrictMaster';
@@ -9,4 +9,6 @@ export class PathConstants {
     public static readonly ShopsGetURL = '/api/ShopDetails';
     public static readonly IncidentPostURL = '/api/IncidentDetails/Post';
     public static readonly IncidentGetURL = '/api/IncidentDetails/Get';
+    public static readonly DistrictWiseShopsGetURL = '/api/DistrictWiseShops';
+    public static readonly ReasonMasterGetURL = '/api/ReasonMaster';
 }

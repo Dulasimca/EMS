@@ -51,10 +51,10 @@ export class IncidentDetailsReportComponent implements OnInit {
     ];
     this.incidentCols = [
       { header: 'S.No', field: 'SlNo', width: '40px' },
-      { field: 'rname', header: 'Region Name' },
-      { field: 'dname', header: 'District Name' },
+      { field: 'REGNNAME', header: 'Region Name' },
+      { field: 'Dname', header: 'District Name' },
       { field: 'shopcode', header: 'Shop Number' },
-      { field: 'date', header: 'Doc Date' },
+      { field: 'doc_date', header: 'Doc Date' },
       { field: 'reason', header: 'Reason' },
       { field: 'url_path', header: 'URL' },
       { field: 'remarks', header: 'Remarks' }
@@ -104,8 +104,8 @@ export class IncidentDetailsReportComponent implements OnInit {
       this.fromDate !== undefined && this.fromDate !== null && this.fromDate !== ''
       && this.toDate !== undefined && this.toDate !== null && this.toDate !== '') {
       this.loading = true;
-      const params = new HttpParams().set('FDate', this.datepipe.transform(this.fromDate, 'MM/dd/yyyy'))
-        .append('TDate', this.datepipe.transform(this.toDate, 'MM/dd/yyyy')).append('RCode', this.rcode)
+      const params = new HttpParams().set('FDate', this.datepipe.transform(this.fromDate, 'dd/MM/yyyy'))
+        .append('TDate', this.datepipe.transform(this.toDate, 'dd/MM/yyyy')).append('RCode', this.rcode)
         .append('DCode', this.dcode);
       this.restApiService.getByParameters(PathConstants.IncidentGetURL, params).subscribe((res: any) => {
         if (res !== undefined && res !== null && res.length !== 0) {
@@ -118,21 +118,21 @@ export class IncidentDetailsReportComponent implements OnInit {
           this.incidentData = [];
           this.messageService.clear();
           this.messageService.add({
-            key: 't-err', severity: 'error',
-            summary: 'Error Message', detail: 'No record found!'
+            key: 'msgKey', severity: 'warn',
+            summary: 'Warning Message', detail: 'No record found!'
           });
         }
       }, (err: HttpErrorResponse) => {
         if (err.status === 0 || err.status === 400) {
           this.messageService.clear();
           this.messageService.add({
-            key: 't-err', severity: 'error',
+            key: 'msgKey', severity: 'error',
             summary: 'Error Message', detail: 'Please contact administrator!'
           });
         } else {
           this.messageService.clear();
           this.messageService.add({
-            key: 't-err', severity: 'error',
+            key: 'msgKey', severity: 'error',
             summary: 'Error Message', detail: 'Please check your network connection!'
           });
         }

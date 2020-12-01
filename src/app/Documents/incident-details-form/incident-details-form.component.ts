@@ -6,6 +6,7 @@ import { MasterDataService } from 'src/app/masters-services/master-data.service'
 import { HttpErrorResponse } from '@angular/common/http';
 import { PathConstants } from 'src/app/Helper/PathConstants';
 import { NgForm } from '@angular/forms';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-incident-details-form',
@@ -17,6 +18,7 @@ export class IncidentDetailsFormComponent implements OnInit {
   districtsData: any = [];
   shopData: any = [];
   regionsData: any = [];
+  reasonData: any = [];
   reasonOptions: SelectItem[];
   rcode: any;
   regionOptions: SelectItem[];
@@ -36,19 +38,16 @@ export class IncidentDetailsFormComponent implements OnInit {
     this.districtsData = this.masterDataService.getDistricts();
     this.regionsData = this.masterDataService.getRegions();
     this.shopData = this.masterDataService.getShops();
-    this.reasonOptions = [
-      { label: '-select-', value: null },
-      { label: 'Scheduled', value: 1 }, { label: 'Non Scheduled', value: 2 },
-      { label: 'Accidental', value: 3 }, { label: 'Incidental', value: 4 }
-    ];
+    this.reasonData = this.masterDataService.getReasons();
   }
 
   onSelect(type) {
     let regionSelection = [];
     let districtSeletion = [];
     let shopSeletion = [];
+    let reasonSeletion = [];
     switch (type) {
-      case 'R':
+      case 'RM':
         if (this.regionsData.length !== 0) {
           this.regionsData.forEach(r => {
             regionSelection.push({ label: r.name, value: r.code });
@@ -57,7 +56,7 @@ export class IncidentDetailsFormComponent implements OnInit {
           this.regionOptions.unshift({ label: '-select-', value: null });
         }
         break;
-      case 'D':
+      case 'DM':
         if (this.districtsData.length !== 0) {
           this.districtsData.forEach(d => {
             if (this.rcode === d.rcode) {
@@ -68,7 +67,7 @@ export class IncidentDetailsFormComponent implements OnInit {
           this.districtOptions.unshift({ label: '-select-', value: null });
         }
         break;
-      case 'S':
+      case 'SH':
         if (this.shopData.length !== 0) {
           this.shopData.forEach(s => {
             if (this.dcode === s.dcode) {
@@ -79,12 +78,25 @@ export class IncidentDetailsFormComponent implements OnInit {
           this.shopOptions.unshift({ label: '-select-', value: null });
         }
         break;
+      case 'RE':
+        if (this.reasonData.length !== 0) {
+          this.reasonData.forEach(r => {
+            if (r.type === 2) {
+              reasonSeletion.push({ label: r.name, value: r.id });
+            }
+          })
+          this.reasonOptions = reasonSeletion;
+          this.reasonOptions.unshift({ label: '-select-', value: null });
+        }
+        break;
     }
   }
 
   onResetFields(field) {
     if (field === 'RM') {
       this.dcode = null;
+    } else if (field === 'DM') {
+      this.shopCode = null;
     }
   }
 

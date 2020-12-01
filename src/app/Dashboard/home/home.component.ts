@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   slaBarData: any;
   pieData: any;
   nmsBarOptions: any;
-  NMSLabels: any;
+  NMSLabels: any = [];
   SLALabels: any = [];
   slaBarOptions: any;
   pieOptions: any;
@@ -41,16 +41,30 @@ export class HomeComponent implements OnInit {
   nmsTypeOptions: SelectItem[];
   slaType: string = 'SH';
   nmsType: string = 'DM';
-  districts: string[] = [];
+  districts: any = [];
   regions: string[] = [];
   components: any[] = [];
   nmsBarType: string;
+  shops: any = [];
+  pieLabels: string[] = [];
+  bug_count: any = [];
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
     private masterDataService: MasterDataService, private router: Router) { }
 
   ngOnInit() {
     this.preventBackButton();
+    this.slaTypeOptions = [
+      { label: 'Retail Shop', value: 'SH' },
+      { label: 'DM Office', value: 'DM' },
+      { label: 'RM Office', value: 'RM' },
+      { label: 'HeadOffice', value: 'HO' }
+    ];
+    this.nmsTypeOptions = [
+      { label: 'DM Office', value: 'DM' },
+      { label: 'RM Office', value: 'RM' },
+      { label: 'HeadOffice', value: 'HO' }
+    ];
     this.restApi.get(PathConstants.RegionMasterURL).subscribe(reg => {
       reg.forEach(r => {
         this.regions.push(r.REGNNAME);
@@ -64,6 +78,7 @@ export class HomeComponent implements OnInit {
         var firstStr = str.slice(0, 1).toUpperCase();
         var secondStr = str.slice(1, str.length).toLowerCase();
         str = firstStr + secondStr;
+        // this.districts.push({ 'name': str, 'value': d.Dcode });
         this.districts.push(str);
       })
       //NMS Bar chart
@@ -73,21 +88,53 @@ export class HomeComponent implements OnInit {
       comp.forEach(c => {
         this.components.push({ name: c.name, id: c.product_id });
       });
+      this.restApi.getByParameters(PathConstants.ShopsGetURL, { 'type': 1 }).subscribe(shop => {
+        shop.forEach(s => {
+          this.shops.push({ 'shop_num': s.shopno, 'dcode': s.dcode });
+        })
+      })
       //SLA Bar chart
       this.onSLATypeChange(this.slaType);
     });
-    this.slaTypeOptions = [
-      { label: 'Retail Shop', value: 'SH' },
-      { label: 'DM Office', value: 'DM' },
-      { label: 'RM Office', value: 'RM' },
-      { label: 'HeadOffice', value: 'HO' }
-    ];
-    this.nmsTypeOptions = [
-      { label: 'DM Office', value: 'DM' },
-      { label: 'RM Office', value: 'RM' },
-      { label: 'HeadOffice', value: 'HO' }
-    ];
 
+    //Pie chart
+    this.onLoadHMSChart();
+
+    //Line Chart
+    this.onLoadIncidentChart();
+  }
+
+  onLoadHMSChart() {
+    this.pieLabels = ['Assigned', 'Completed', 'In-Progress', 'Open'];
+    this.restApi.getByParameters(PathConstants.HMSReportURL, { 'value': 1 }).subscribe(res => {
+      for (let i = 0; i < this.pieLabels.length; i++) {
+        res.forEach(c => {
+          if (this.pieLabels[i].toLowerCase() === c.bug_status.toLowerCase()) {
+            this.bug_count.push(c.bug_count);
+          }
+        })
+      }
+      this.pieData = {
+        labels: this.pieLabels,
+        datasets: [
+          {
+            label: "Percentage",
+            data: this.bug_count,
+            backgroundColor: [
+              "#f5953b",
+              "#4fc437",
+              "#f7ee39",
+              "#f73e3e",
+            ],
+            hoverBackgroundColor: [
+              "#f2851f",
+              "#3abf1f",
+              "#fff305",
+              "#ed2d2d",
+            ]
+          }]
+      };
+    })
     //Pie chart show data inside each slices
     this.chartJs.plugins.unregister(this.chartLabelPlugin);
     this.plugin = ChartDataLabels;
@@ -113,29 +160,9 @@ export class HomeComponent implements OnInit {
         position: 'bottom'
       }
     }
-    //Pie chart
-    this.pieData = {
-      labels: ['Open', 'Assigned', 'In-Progress', 'Completed'],
-      datasets: [
-        {
-          label: "Percentage",
-          data: [200, 50, 120, 80],
-          backgroundColor: [
-            "#f73e3e",
-            "#f5953b",
-            "#f7ee39",
-            "#4fc437"
-          ],
-          hoverBackgroundColor: [
-            "#ed2d2d",
-            "#f2851f",
-            "#fff305",
-            "#3abf1f"
-          ]
-        }]
-    };
+  }
 
-    //Line Chart
+  onLoadIncidentChart() {
     const months = ["August", "September", "October", "November", "December",
       "January", "February", "March", "April", "May", "June", "July"
     ];
@@ -144,7 +171,7 @@ export class HomeComponent implements OnInit {
       labels: months,
       datasets: [
         {
-          label: 'Months ( From Year' + ' ' + year + ' )',
+          label: 'Months ( From Year' + ' ' + year + ' - ' + (year + 1) + ' )',
           data: [65, 59, 80, 81, 91, 60, 70, 97, 65, 80, 75, 90],
           fill: false,
           borderColor: '#4bc0c0',
@@ -165,7 +192,6 @@ export class HomeComponent implements OnInit {
             weight: 'bold'
           }
         }
-
       },
       title: {
         display: true,
@@ -281,6 +307,15 @@ export class HomeComponent implements OnInit {
     if (value === 'DM') {
       this.NMSLabels = this.districts;
       this.nmsBarType = 'bar';
+      var dataRunning = [];
+      // this.shops.forEach(x => {
+      //   this.districts.forEach(y => {
+      //     if (x.dcode === y.value) {
+
+      //     }
+
+      //   })
+      // })
       this.nmsBarData = {
         labels: this.NMSLabels,
         datasets: [

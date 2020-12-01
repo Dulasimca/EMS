@@ -14,7 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class BugzillaReportComponent implements OnInit {
   bugzillaCols: any;
-  bugzillaData: any;
+  bugzillaData: any = [];
   loading: boolean;
   items: MenuItem[];
   @ViewChild('dt', { static: false }) table: Table;
@@ -48,53 +48,17 @@ export class BugzillaReportComponent implements OnInit {
     this.restApi.get(PathConstants.HMSReportURL).subscribe(data => {
       if (data !== undefined && data !== null && data.length !== 0) {
         let sno = 1;
-        this.bugzillaData = data.Table;
+        this.bugzillaData = data;
         this.bugzillaData.forEach(x => {
           x.SlNo = sno;
           sno += 1;
         });
-        this.bugzillaData.push(
-          {
-            SlNo: 5, bug_id: 12, bug_severity: 'enhancement', bug_status: 'ASSIGNED', assigned_to: 26,
-            short_desc: 'bug test', creation_ts: '2020-06-20T21:48:22'
-          },
-          {
-            SlNo: 6, bug_id: 13, bug_severity: 'enhancement', bug_status: 'OPEN', assigned_to: 31,
-            short_desc: 'testing 123', creation_ts: '2020-08-20T21:48:22'
-          },
-          {
-            SlNo: 7, bug_id: 21, bug_severity: 'enhancement', bug_status: 'OPEN', assigned_to: 22,
-            short_desc: 'bug test', creation_ts: '2020-12-22T21:48:22'
-          },
-          {
-            SlNo: 8, bug_id: 12, bug_severity: 'enhancement', bug_status: 'IN-PROGRESS', assigned_to: 33,
-            short_desc: 'bug test', creation_ts: '2020-10-20T21:48:22'
-          },
-          {
-            SlNo: 9, bug_id: 10, bug_severity: 'enhancement', bug_status: 'IN-PROGRESS', assigned_to: 27,
-            short_desc: 'bug test', creation_ts: '2020-11-02T21:48:22'
-          },
-          {
-            SlNo: 10, bug_id: 20, bug_severity: 'enhancement', bug_status: 'OPEN', assigned_to: 21,
-            short_desc: 'bug test', creation_ts: '2020-06-11T21:48:22'
-          },
-          {
-            SlNo: 11, bug_id: 9, bug_severity: 'enhancement', bug_status: 'IN-PROGRESS', assigned_to: 30,
-            short_desc: 'bug test', creation_ts: '2020-07-20T21:48:22'
-          },
-          {
-            SlNo: 12, bug_id: 32, bug_severity: 'enhancement', bug_status: 'OPEN', assigned_to: 27,
-            short_desc: 'bug test', creation_ts: '2020-06-27T21:48:22'
-          },
-          {
-            SlNo: 13, bug_id: 28, bug_severity: 'enhancement', bug_status: 'IN-PROGRESS', assigned_to: 18,
-            short_desc: 'bug test', creation_ts: '2020-02-28T21:48:22'
-          },
-        )
         if (index !== undefined && index !== null) {
           this.bugzillaData = this.bugzillaData.filter(y => {
-            return index === '0' && y.bug_status === 'OPEN' || index === '1' && y.bug_status === 'ASSIGNED'
-              || index === '2' && y.bug_status === 'IN-PROGRESS' || index === '3' && y.bug_status === 'COMPLETED'
+            return (index === '4' && y.bug_status.toUpperCase() === 'OPEN')
+              || (index === '0' && y.bug_status.toUpperCase() === 'ASSIGNED')
+              || (index === '3' && y.bug_status.toUpperCase() === 'IN-PROGRESS')
+              || (index === '1' && y.bug_status.toUpperCase() === 'COMPLETED')
           })
           let slno = 1;
           this.bugzillaData.forEach(x => {

@@ -1,6 +1,10 @@
 <div class="p-col-12 p-md-12 p-lg-12 menu-bar border-green" style="height: 40px;">
   <div style="float: right;">
-    <a class="menu-a" href="#main">Skip to Main Content |</a>
+    <a class="menu-a" style="color: white;" routerLink="/login">Logout<i class="pi pi-sign-out"
+        style="padding-left:5px"></i>
+    </a>
+    <!-- <button pButton type="submit" label="Logout" (click)=" onLogout()" class="p-button-raised p-btn-pad"
+      style="margin-top: -5px;"><i class="pi pi-sign-out"></i></button> -->
   </div>
 </div>
 <div class="p-grid" style="height: 90px !important;">
@@ -32,7 +36,7 @@
 <div class="p-col-12 p-md-12 p-lg-12 no-pad-left no-pad-right no-pad-bottom">
   <app-menubar></app-menubar>
 </div>
-<p-overlayPanel #op>
+<!-- <p-overlayPanel #op>
   <ng-template pTemplate>
     <div class="p-col-12 no-pad-bottom">
       <label style="padding-right: 5px;">Username:</label>
@@ -44,4 +48,4 @@
         icon="pi pi-sign-out" iconPos="right"></button>
     </div>
   </ng-template>
-</p-overlayPanel>
+</p-overlayPanel> -->

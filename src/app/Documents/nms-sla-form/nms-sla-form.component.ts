@@ -23,6 +23,8 @@ export class NMSSLAFormComponent implements OnInit {
   location: number;
   componentOptions: SelectItem[];
   compId: string;
+  reasonOptions: SelectItem[];
+  reasonId: number;
   bug_id: number;
   closed_date: string;
   remarksTxt: string;
@@ -30,6 +32,7 @@ export class NMSSLAFormComponent implements OnInit {
   maxDate: Date = new Date();
   fromDate: any;
   toDate: any;
+  reasonData: any = [];
   regionsData: any = [];
   componentsData: any = [];
   districtsData: any = [];
@@ -51,6 +54,7 @@ export class NMSSLAFormComponent implements OnInit {
     this.regionsData = this.masterDataService.getRegions();
     this.locationsData = this.masterDataService.getProducts();
     this.shopData = this.masterDataService.getShops();
+    this.reasonData = this.masterDataService.getReasons();
   }
 
   onSelect(type) {
@@ -58,6 +62,7 @@ export class NMSSLAFormComponent implements OnInit {
     let districtSeletion = [];
     let locationSeletion = [];
     let shopSeletion = [];
+    let reasonSeletion = [];
     switch (type) {
       case 'R':
         if (this.regionsData.length !== 0) {
@@ -110,7 +115,7 @@ export class NMSSLAFormComponent implements OnInit {
               this.componentsData.push({ 'label': x.name, 'value': x.id });
             } else if (this.location === 5 && x.product_id === 5) {
               this.componentsData.push({ 'label': x.name, 'value': x.id });
-            } else if (this.location === 6 && x.product_id === 5) {
+            } else if (this.location === 2 && x.product_id === 5) {
               this.componentsData.push({ 'label': x.name, 'value': x.id });
             }
           });
@@ -129,12 +134,24 @@ export class NMSSLAFormComponent implements OnInit {
           this.shopOptions.unshift({ label: '-select-', value: null });
         }
         break;
+      case 'RE':
+        if (this.reasonData.length !== 0) {
+          this.reasonData.forEach(r => {
+            if (r.type === 1) {
+              reasonSeletion.push({ label: r.name, value: r.id });
+            }
+          })
+          this.reasonOptions = reasonSeletion;
+          this.reasonOptions.unshift({ label: '-select-', value: null });
+        }
+        break;
     }
   }
 
   onResetFields(field) {
     if (field === 'RM') {
       this.dcode = null;
+      this.shopCode = null;
     } else if (field === 'L') {
       this.compId = null;
       this.dcode = null;
@@ -157,6 +174,7 @@ export class NMSSLAFormComponent implements OnInit {
       'FromDate': this.datepipe.transform(this.fromDate, 'dd/MM/yyyy h:mm:ss a'),
       'ToDate': this.datepipe.transform(this.toDate, 'dd/MM/yyyy h:mm:ss a'),
       'Remarks': (this.remarksTxt !== null && this.remarksTxt.trim() !== '') ? this.remarksTxt.trim() : '-',
+      'Reason': (this.reasonId !== undefined && this.reasonId !== null) ? this.reasonId : ''
     }
     this.restApiService.post(PathConstants.NMSPostURL, params).subscribe(res => {
       if (res.item1) {

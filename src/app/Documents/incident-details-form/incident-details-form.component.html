@@ -23,7 +23,7 @@
                             </div>
                             <p-dropdown #reg name="rname" [options]="regionOptions"
                                 [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="rcode"
-                                (onClick)="onSelect('R')" (onChange)="onResetFields('RM')" filter="true"
+                                (onClick)="onSelect('RM')" (onChange)="onResetFields('RM')" filter="true"
                                 resetFilterOnHide="true" filterMatchMode="startsWith" [disabled]="disableRM" required>
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span style="vertical-align:middle">{{item.label}}</span>
@@ -36,8 +36,9 @@
                             </div>
                             <p-dropdown #dist name="dname" [options]="districtOptions"
                                 [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="dcode"
-                                (onClick)="onSelect('D')" filter="true" resetFilterOnHide="true"
-                                filterMatchMode="startsWith" [disabled]="disableDM" required>
+                                (onClick)="onSelect('DM')" filter="true" resetFilterOnHide="true"
+                                filterMatchMode="startsWith" (onChange)="onResetFields('DM')" [disabled]="disableDM"
+                                required>
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span style="vertical-align:middle">{{item.label}}</span>
                                 </ng-template>
@@ -49,7 +50,7 @@
                             </div>
                             <p-dropdown #shop name="shop" [disabled]="disableShop" [options]="shopOptions"
                                 [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="shopCode" filter="true"
-                                (onClick)="onSelect('S')" resetFilterOnHide="true" filterMatchMode="startsWith"
+                                (onClick)="onSelect('SH')" resetFilterOnHide="true" filterMatchMode="startsWith"
                                 optionLabel="label" required>
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span style="vertical-align:middle">{{item.label}}</span>
@@ -71,7 +72,8 @@
                             </div>
                             <p-dropdown #reg name="reasons" [options]="reasonOptions"
                                 [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="reason" filter="true"
-                                resetFilterOnHide="true" filterMatchMode="startsWith" required>
+                                resetFilterOnHide="true" (onClick)="onSelect('RE')" filterMatchMode="startsWith"
+                                required>
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span style="vertical-align:middle">{{item.label}}</span>
                                 </ng-template>

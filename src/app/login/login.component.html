@@ -1,4 +1,4 @@
-<body class="login-body" >
+<body class="login-body">
     <div class="p-grid">
         <div class="p-col-12 p-md-12 p-lg-12">
             <div class="login-container">
@@ -13,7 +13,7 @@
                               margin-bottom: -12%;" />
                                 </div>
                                 <div> <i class="fa fa-user-circle fa-3x"></i> </div>
-                                <span>User Login</span>
+                                <span>EMS Login</span>
                             </div>
                             <div class="p-col-12 p-md-12 p-lg-12" style="background: whitesmoke;">
                                 <div class="p-col-12 p-md-12 p-lg-12 txt-align">
@@ -31,9 +31,8 @@
                                                 autocomplete="off" required />
                                         </div>
                                         <button pButton type="submit" label="login"
-                                            class="p-button-raised p-btn-pad bg-div"
-                                            icon="pi pi-sign-in" iconPos="right"
-                                            [disabled]="!loginForm.valid"></button>
+                                            class="p-button-raised p-btn-pad bg-div" icon="pi pi-sign-in"
+                                            iconPos="right" [disabled]="!loginForm.valid"></button>
                                     </form>
                                     <div class="p-col-12 p-md-12 p-lg-12 txt-align">
                                         <div class="f-pwd-text cursor-pointer" (click)="openPwdReset()">Forget password?
@@ -95,7 +94,8 @@
                                                     maxlength="10" autocomplete="off" required />
                                             </div>
                                             <!-- <div class="alert alert-danger" *ngIf="cPwd.touched && cPwd.invalid">*Password is required</div> -->
-                                            <div class="alert alert-danger" *ngIf="showPwdNoMatchErr" style="padding-top: 5px;">*Password mismatches!</div>
+                                            <div class="alert alert-danger" *ngIf="showPwdNoMatchErr"
+                                                style="padding-top: 5px;">*Password mismatches!</div>
                                         </div>
                                         <div class="txt-align">
                                             <button pButton type="submit" label="Change Password"
