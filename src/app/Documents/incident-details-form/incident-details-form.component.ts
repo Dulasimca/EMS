@@ -117,7 +117,7 @@ export class IncidentDetailsFormComponent implements OnInit {
       'RCode': (this.rcode !== undefined && this.rcode !== null) ? this.rcode : '-',
       'DCode': (this.dcode !== undefined && this.dcode !== null) ? this.dcode : '-',
       'ShopCode': (this.shopCode !== undefined && this.shopCode !== null) ? this.shopCode.label : '-',
-      'DocDate': this.datepipe.transform(this.date, 'dd/MM/yyyy h:mm:ss a'),
+      'DocDate': this.datepipe.transform(this.date, 'yyyy-MM-dd h:mm:ss a'),
       'Reason': this.reason,
       'URL': this.urlPath,
       'Remarks': (this.remarksTxt !== null && this.remarksTxt.trim() !== '') ? this.remarksTxt.trim() : '-'

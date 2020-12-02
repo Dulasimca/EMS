@@ -11,4 +11,6 @@ export class PathConstants {
     public static readonly IncidentGetURL = '/api/IncidentDetails/Get';
     public static readonly DistrictWiseShopsGetURL = '/api/DistrictWiseShops';
     public static readonly ReasonMasterGetURL = '/api/ReasonMaster';
+    public static readonly NMSDataPutURL = '/api/NMSData/Put';
+    public static readonly MonthwiseIncidentGetURL = '/api/MonthwiseIncidentDetails';
 }

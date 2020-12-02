@@ -48,12 +48,19 @@ export class HomeComponent implements OnInit {
   shops: any = [];
   pieLabels: string[] = [];
   bug_count: any = [];
+  incidents: any = [];
+  months: string[];
+  maxLimitOfIncident: number;
+  stepSizeOfIncident: number;
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
     private masterDataService: MasterDataService, private router: Router) { }
 
   ngOnInit() {
     this.preventBackButton();
+    this.months = ["August", "September", "October", "November", "December",
+      "January", "February", "March", "April", "May", "June", "July"
+    ];
     this.slaTypeOptions = [
       { label: 'Retail Shop', value: 'SH' },
       { label: 'DM Office', value: 'DM' },
@@ -72,25 +79,20 @@ export class HomeComponent implements OnInit {
       //NMS Bar chart
       this.onNMSTypeChange(this.nmsType);
     })
-    this.restApi.get(PathConstants.DistrictMasterURL).subscribe(dist => {
-      dist.forEach(d => {
-        var str: string = d.Dname;
-        var firstStr = str.slice(0, 1).toUpperCase();
-        var secondStr = str.slice(1, str.length).toLowerCase();
-        str = firstStr + secondStr;
-        // this.districts.push({ 'name': str, 'value': d.Dcode });
-        this.districts.push(str);
-      })
-      //NMS Bar chart
-      this.onNMSTypeChange(this.nmsType);
-    })
     this.restApi.get(PathConstants.ComponentsURL).subscribe((comp: any) => {
       comp.forEach(c => {
         this.components.push({ name: c.name, id: c.product_id });
       });
       this.restApi.getByParameters(PathConstants.ShopsGetURL, { 'type': 1 }).subscribe(shop => {
         shop.forEach(s => {
-          this.shops.push({ 'shop_num': s.shopno, 'dcode': s.dcode });
+          var str: string = s.district;
+          var firstStr = str.slice(0, 1).toUpperCase();
+          var secondStr = str.slice(1, str.length).toLowerCase();
+          str = firstStr + secondStr;
+          this.districts.push(str);
+          this.shops.push({ 'count': s.shopcount, 'status': s.installation_status, 'dcode': s.dcode });
+          //NMS Bar chart
+          this.onNMSTypeChange(this.nmsType);
         })
       })
       //SLA Bar chart
@@ -101,7 +103,26 @@ export class HomeComponent implements OnInit {
     this.onLoadHMSChart();
 
     //Line Chart
-    this.onLoadIncidentChart();
+    this.restApi.getByParameters(PathConstants.MonthwiseIncidentGetURL, { 'type': 1 }).subscribe(data => {
+      for (let i = 0; i < this.months.length; i++) {
+        for (let j = 0; j < data.length; j++) {
+          if (this.months[i] === data[j].doc_date) {
+            this.incidents.splice(i, 0, data[j].count);
+            break;
+          }
+          if (this.incidents.length === data.length) {
+            this.incidents.splice(i, 0, 0);
+          }
+        }
+        if (this.incidents.length > data.length) {
+          this.incidents.splice(i, 0, 0);
+        }
+      }
+      this.maxLimitOfIncident = this.incidents.reduce((a, b) => Math.max(a, b));
+      this.stepSizeOfIncident = (this.maxLimitOfIncident.toString().length === 1) ? 1 :
+        ((this.maxLimitOfIncident.toString().length === 2) ? 10 : 100);
+      this.onLoadIncidentChart();
+    })
   }
 
   onLoadHMSChart() {
@@ -163,16 +184,13 @@ export class HomeComponent implements OnInit {
   }
 
   onLoadIncidentChart() {
-    const months = ["August", "September", "October", "November", "December",
-      "January", "February", "March", "April", "May", "June", "July"
-    ];
     const year = new Date().getFullYear();
     this.incidentLineData = {
-      labels: months,
+      labels: this.months,
       datasets: [
         {
           label: 'Months ( From Year' + ' ' + year + ' - ' + (year + 1) + ' )',
-          data: [65, 59, 80, 81, 91, 60, 70, 97, 65, 80, 75, 90],
+          data: this.incidents,
           fill: false,
           borderColor: '#4bc0c0',
           lineTension: 0.08,
@@ -181,6 +199,15 @@ export class HomeComponent implements OnInit {
     }
     this.incidentLineOptions = {
       responsive: true,
+      scales: {
+        yAxes: [{
+          ticks: {
+            min: 0,
+            max: this.maxLimitOfIncident,
+            stepSize: this.stepSizeOfIncident
+          }
+        }]
+      },
       plugins: {
         datalabels: {
           align: 'end',
@@ -307,32 +334,30 @@ export class HomeComponent implements OnInit {
     if (value === 'DM') {
       this.NMSLabels = this.districts;
       this.nmsBarType = 'bar';
-      var dataRunning = [];
-      // this.shops.forEach(x => {
-      //   this.districts.forEach(y => {
-      //     if (x.dcode === y.value) {
-
-      //     }
-
-      //   })
-      // })
-      this.nmsBarData = {
-        labels: this.NMSLabels,
-        datasets: [
-          {
-            label: "Running (in No's)",
-            data: [300, 0, 0, 0, 250, 220, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-              0, 0, 0, 0, 0, 0, 290, 315, 375, 0, 250, 280, 0, 310, 250, 0, 0, 310, 225, 0],
-            backgroundColor: '#52c91e',
-          },
-          {
-            label: "Not Running (in No's)",
-            data: [0, 95, 85, 81, 0, 0, 100, 180, 75, 58, 150, 170, 110, 99, 155, 187, 74, 165,
-              180, 111, 108, 140, 90, 155, 0, 0, 0, 80, 0, 0, 120, 0, 0, 150, 195, 0, 0, 137],
-            backgroundColor: '#fc2121',
-          }
-        ]
-      }
+      var dataset = [];
+      var bgColor: string[] = [];
+      this.shops.forEach(s => {
+        if (s.status) {
+          bgColor.push('#52c91e');
+        } else {
+          bgColor.push('#fc2121');
+        }
+        dataset.push(s.count);
+        this.nmsBarData = {
+          labels: this.NMSLabels,
+          datasets: [
+            {
+              label: "Running (in No's)",
+              data: dataset,
+              backgroundColor: bgColor,
+            },
+            {
+              label: "Not Running (in No's)",
+              backgroundColor: '#52c91e',
+            }
+          ]
+        }
+      })
       this.nmsBarOptions = {
         scales: {
           xAxes: [{
@@ -451,7 +476,5 @@ export class HomeComponent implements OnInit {
       history.pushState(null, null, location.href);
     })
   }
-
-
 }
 

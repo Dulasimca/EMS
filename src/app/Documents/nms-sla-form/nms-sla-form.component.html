@@ -128,11 +128,14 @@
                   [(ngModel)]="remarksTxt" pInputTextarea autoResize="autoResize" required></textarea>
               </div>
             </div>
-            <div class="p-col-12 p-md-12 p-lg-12">
-              <div class="p-col-12 p-md-12 p-lg-12 txt-align" style="margin-top: 5px;">
-                <button pButton type="submit" label="Save" class="p-button-raised p-btn-pad bg-div" (click)="onSave(f)"
-                  [disabled]="!f.valid"></button>
-              </div>
+            <div class="p-col-5"></div>
+            <div class="p-col-1 p-md-1 p-lg-1 no-pad-right" style="margin-top: 5px; text-align: end;">
+              <button pButton type="submit" label="Save" class="p-button-raised p-btn-pad bg-div" (click)="onSave(f)"
+                [disabled]="!f.valid"></button>
+            </div>
+            <div class="p-col-1 p-md-1 p-lg-1" style="margin-top: 5px;">
+              <button pButton type="button" label="View" class="p-button-raised p-btn-pad bg-div"
+                (click)="onView()"></button>
             </div>
           </div>
         </form>

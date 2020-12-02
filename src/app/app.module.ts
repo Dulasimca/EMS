@@ -21,6 +21,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { BlockUIModule } from 'primeng/blockui';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MenubarModule } from 'primeng/menubar';
+import { DialogModule } from 'primeng/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -83,7 +84,8 @@ import { IncidentDetailsReportComponent } from './reports/incident-details-repor
     SelectButtonModule,
     BlockUIModule,
     SplitButtonModule,
-    MenubarModule
+    MenubarModule,
+    DialogModule
   ],
   providers: [AuthService, RestAPIService, DatePipe, MessageService, MasterDataService],
   bootstrap: [AppComponent]

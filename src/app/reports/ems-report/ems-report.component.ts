@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MenuItem, MessageService, SelectItem } from 'primeng/api';
+import { MenuItem, MessageService, SelectItem, ConfirmationService } from 'primeng/api';
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { PathConstants } from 'src/app/Helper/PathConstants';
@@ -22,6 +22,10 @@ export class EmsReportComponent implements OnInit {
   typeOptions: SelectItem[];
   type: any;
   items: MenuItem[];
+  showDialog: boolean;
+  selectedDocId: number;
+  selected: any;
+  closedDate: any;
   @ViewChild('dt', { static: false }) table: Table;
   @ViewChild('f', { static: false }) fields: NgForm;
 
@@ -29,6 +33,7 @@ export class EmsReportComponent implements OnInit {
     private restApiService: RestAPIService) { }
 
   ngOnInit() {
+    this.closedDate = this.maxDate;
     this.items = [
       {
         label: 'Excel', icon: 'pi pi-file-excel', command: () => {
@@ -44,14 +49,16 @@ export class EmsReportComponent implements OnInit {
     this.nmsCols = [
       { header: 'S.No', field: 'SlNo', width: '40px' },
       { field: 'location', header: 'Location' },
-      { field: 'rm_office', header: 'RM Office' },
-      { field: 'dm_office', header: 'DM Office' },
-      { field: 'component', header: 'Component' },
+      { field: 'REGNNAME', header: 'RM Office' },
+      { field: 'Dname', header: 'DM Office' },
+      { field: 'Cname', header: 'Component' },
       { field: 'shop_number', header: 'Shop Number' },
       { field: 'type', header: 'Type' },
       { field: 'from_date', header: 'From Date' },
       { field: 'to_date', header: 'To Date' },
-      { field: 'remarks', header: 'Remarks' }
+      { field: 'remarks', header: 'Remarks' },
+      { field: 'reason', header: 'Reason' },
+      { field: 'closed_date', header: 'Closed Date' },
     ];
     this.typeOptions = [
       { label: '-select-', value: null },
@@ -60,16 +67,14 @@ export class EmsReportComponent implements OnInit {
     ];
   }
 
-  onChange(type) {
+  onChange() {
     this.nmsData = [];
-    if (type === 'D') {
-      this.checkValidDateSelection();
-    }
+    this.loading = true;
     if (this.fromDate !== undefined && this.fromDate !== null && this.fromDate !== '' &&
       this.toDate !== undefined && this.toDate !== null && this.toDate !== '' && this.type !== null
       && this.type !== undefined) {
-      const params = new HttpParams().set('FDate', this.datepipe.transform(this.fromDate, 'dd/MM/yyyy'))
-        .append('TDate', this.datepipe.transform(this.toDate, 'dd/MM/yyyy'));
+      const params = new HttpParams().set('FDate', this.datepipe.transform(this.fromDate, 'yyyy-MM-dd'))
+        .append('TDate', this.datepipe.transform(this.toDate, 'yyyy-MM-dd'));
       this.restApiService.getByParameters(PathConstants.NMSGetURL, params).subscribe((res: any) => {
         if (res !== undefined && res !== null && res.length !== 0) {
           this.nmsData = res.filter(x => {
@@ -105,6 +110,8 @@ export class EmsReportComponent implements OnInit {
           });
         }
       });
+    } else {
+      this.loading = false;
     }
   }
 
@@ -131,21 +138,58 @@ export class EmsReportComponent implements OnInit {
     }
   }
 
+  onRowSelect(event) {
+    console.log(event);
+    this.showDialog = true;
+    this.selectedDocId = event.data.nms_id;
+  }
+
+  onUpdate() {
+    const params = {
+      ID: this.selectedDocId,
+      ClosedDate: this.datepipe.transform(this.closedDate, 'yyyy-MM-dd')
+    }
+    this.restApiService.put(PathConstants.NMSDataPutURL, params).subscribe((res: any) => {
+      if (res) {
+        this.showDialog = false;
+        this.onChange();
+        this.selectedDocId = null;
+        this.messageService.clear();
+        this.messageService.add({ key: 'msgKey', severity: 'info', summary: 'Confirmed', detail: 'Document closed Successfully!' });
+      } else {
+        this.showDialog = false;
+        this.selectedDocId = null;
+        this.messageService.clear();
+        this.messageService.add({
+          key: 'msgKey', severity: 'error',
+          summary: 'Error Message', detail: 'Please contact administrator!'
+        });
+      }
+    }, (err: HttpErrorResponse) => {
+      this.selectedDocId = null;
+      this.showDialog = false;
+      if (err.status === 0 || err.status === 400) {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 'msgKey', severity: 'error',
+          summary: 'Error Message', detail: 'Please contact administrator!'
+        });
+      } else {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 'msgKey', severity: 'error',
+          summary: 'Error Message', detail: err.message
+        });
+      }
+    });
+  }
+
+  onCancel() {
+    this.showDialog = false;
+    this.selected = null;
+  }
+
   exportPdf() {
-    // var doc = new jsPDF();
-    // doc.text("Tamil Nadu Civil Supplies Corporation - Head Office", 100, 30);
-    // doc.setTextColor(37,174,248);
-    // var col = this.nmsCols;
-    // var rows = [];
-    // this.nmsData.forEach(element => {
-    //   var temp = [element.SlNo, element.rm_office, element.dm_office,
-    //     element.location, element.component, element.shop_number, 
-    //   element.type, element.from_date, element.to_date, element.reason,
-    //   element.remarks, element.url_path];
-    //   rows.push(temp);
-    // });
-    // doc.autoTable(col, rows);
-    // doc.save('Document_Correction.pdf');
     var rows = [];
     this.nmsData.forEach(element => {
       var temp = [element.SlNo, element.rm_office, element.dm_office,

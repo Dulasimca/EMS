@@ -171,8 +171,8 @@ export class NMSSLAFormComponent implements OnInit {
       'ClosedDate': (this.showCloseDate) ? this.closed_date : '-',
       'SLAType': this.selectedType,
       'ShopNumber': (this.shopCode !== undefined && this.shopCode !== null) ? this.shopCode.label : '-',
-      'FromDate': this.datepipe.transform(this.fromDate, 'dd/MM/yyyy h:mm:ss a'),
-      'ToDate': this.datepipe.transform(this.toDate, 'dd/MM/yyyy h:mm:ss a'),
+      'FromDate': this.datepipe.transform(this.fromDate, 'yyyy-MM-dd h:mm:ss a'),
+      'ToDate': this.datepipe.transform(this.toDate, 'yyyy-MM-dd h:mm:ss a'),
       'Remarks': (this.remarksTxt !== null && this.remarksTxt.trim() !== '') ? this.remarksTxt.trim() : '-',
       'Reason': (this.reasonId !== undefined && this.reasonId !== null) ? this.reasonId : ''
     }
@@ -202,7 +202,6 @@ export class NMSSLAFormComponent implements OnInit {
           summary: 'Error Message', detail: 'Please Contact Administrator!'
         });
       }
-
     });
   }
 }
