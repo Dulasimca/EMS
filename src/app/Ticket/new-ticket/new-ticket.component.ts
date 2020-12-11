@@ -22,7 +22,7 @@ export class NewTicketComponent implements OnInit {
   locationOptions: SelectItem[];
   location: number;
   componentOptions: SelectItem[];
-  compId: string;
+  compId: any;
   reasonOptions: SelectItem[];
   ComponentDescription: any;
   Status: any;
@@ -47,6 +47,7 @@ export class NewTicketComponent implements OnInit {
   locationsData: any = [];
   bugStatusData: any = [];
   shopData: any = [];
+  CCData: any = [];
   showCloseDate: boolean;
   isLocationSelected: boolean;
   disableShop: boolean;
@@ -65,6 +66,7 @@ export class NewTicketComponent implements OnInit {
     this.shopData = this.masterDataService.getShops();
     this.reasonData = this.masterDataService.getReasons();
     this.bugStatusData = this.masterDataService.getBugStatus();
+    this.CCData = this.masterDataService.getComponentCC();
   }
 
   onSelect(type) {
@@ -73,6 +75,7 @@ export class NewTicketComponent implements OnInit {
     let locationSeletion = [];
     let shopSeletion = [];
     let reasonSeletion = [];
+    let statusSeletion = [];
     switch (type) {
       case 'R':
         if (this.regionsData.length !== 0) {
@@ -129,9 +132,9 @@ export class NewTicketComponent implements OnInit {
               this.componentsData.push({ label: x.name, value: x.id, desc: x.description });
             }
           });
-          if (this.compId !== undefined) {
-            this.compId
-            this.ComponentDescription = this.compId;
+          if (this.compId !== undefined && this.compId !== null) {
+            this.ComponentDescription = this.compId.desc;
+            this.CCData
           }
           this.componentOptions = this.componentsData;
           this.componentOptions.unshift({ label: '-select-', value: null });
@@ -159,8 +162,14 @@ export class NewTicketComponent implements OnInit {
           this.reasonOptions.unshift({ label: '-select-', value: null });
         }
         break;
-      // case 'Status'
-      // if (this.status)
+      case 'Status':
+        if (this.bugStatusData.length !== 0) {
+          this.bugStatusData.forEach(bs => {
+            statusSeletion.push({ label: bs.value, id: bs.id });
+          })
+          this.StatusOptions = statusSeletion;
+          this.StatusOptions.unshift({ label: '-select-', value: null });
+        }
     }
   }
 

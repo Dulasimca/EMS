@@ -12,6 +12,7 @@ export class MasterDataService {
   shops?: any;
   reasons?: any;
   bugStatus?: any;
+  cc?: any;
 
   constructor(private restApiService: RestAPIService) { }
 
@@ -73,5 +74,15 @@ export class MasterDataService {
       });
     });
     return this.bugStatus;
+  }
+
+  getComponentCC() {
+    this.cc = [];
+    this.restApiService.get(PathConstants.ComponentCC).subscribe(cc => {
+      cc.forEach(cc => {
+        this.cc.push({ 'name': cc.login_name, 'id': cc.component_id });
+      });
+    });
+    return this.cc;
   }
 }

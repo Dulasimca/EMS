@@ -14,4 +14,5 @@ export class PathConstants {
     public static readonly NMSDataPutURL = '/api/NMSData/Put';
     public static readonly MonthwiseIncidentGetURL = '/api/MonthwiseIncidentDetails';
     public static readonly BugStatus = '/api/BugStatus';
+    public static readonly ComponentCC = '/api/ComponentCC';
 }
