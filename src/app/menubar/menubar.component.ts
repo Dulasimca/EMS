@@ -17,33 +17,22 @@ export class MenubarComponent implements OnInit {
     this.showNavBar = false;
     this.items = [
       { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: '/home' },
-      {
-        label: 'Document', icon: 'pi pi-fw pi-desktop',
-        items: [
-          {
-            label: 'NMS-Form', routerLink: '/nms-sla'
-          },
-          {
-            label: 'Incident-Form', routerLink: '/incident-form'
-          }
-        ]
-      },
-      { label: 'SLA', icon: 'pi pi-fw pi-chart-line' },
-      {
-        label: 'Help Desk', icon: 'pi pi-fw pi-comments',
-        routerLink: '/bugzilla'
-      },
+      { label: 'New Ticket', icon: 'pi pi-pw pi-ticket', routerLink: '/NewTicket' },
+      { label: 'Browse', icon: 'pi pi-pw pi-sitemap', routerLink: '/home' },
+      { label: 'Search', icon: 'pi pi-pw pi-search', routerLink: '/home' },
       {
         label: 'Report', icon: 'pi pi-fw pi-file',
         items: [
           {
-            label: 'NMS-Report', routerLink: '/nms-report'
+            label: 'All Ticket', routerLink: '/TicketReport'
           },
           {
-            label: 'Incident-Report', routerLink: '/incident-report'
+            label: 'My Ticket', routerLink: '/TicketReport'
           }
         ]
-      }
+      },
+      { label: 'Administration', icon: 'pi pi-fw pi-id-card', routerLink: '/home' },
+      { label: 'Preferences', icon: 'pi pi-fw pi-users', routerLink: '/home' },
     ];
   }
 

@@ -43,6 +43,8 @@ import { EmsReportComponent } from './reports/ems-report/ems-report.component';
 import { MasterDataService } from './masters-services/master-data.service';
 import { IncidentDetailsFormComponent } from './Documents/incident-details-form/incident-details-form.component';
 import { IncidentDetailsReportComponent } from './reports/incident-details-report/incident-details-report.component';
+import { NewTicketComponent } from './Ticket/new-ticket/new-ticket.component';
+import { TicketReportComponent } from './reports/ticket-report/ticket-report.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { IncidentDetailsReportComponent } from './reports/incident-details-repor
     EmsReportComponent,
     IncidentDetailsFormComponent,
     IncidentDetailsReportComponent,
+    NewTicketComponent,
+    TicketReportComponent
   ],
   imports: [
     BrowserModule,

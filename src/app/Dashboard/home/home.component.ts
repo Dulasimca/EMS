@@ -157,7 +157,7 @@ export class HomeComponent implements OnInit {
       };
     })
     //Pie chart show data inside each slices
-    this.chartJs.plugins.unregister(this.chartLabelPlugin);
+    // this.chartJs.plugins.unregister(this.chartLabelPlugin);
     this.plugin = ChartDataLabels;
     this.pieOptions = {
       plugins: {

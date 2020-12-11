@@ -11,6 +11,7 @@ export class MasterDataService {
   products?: any;
   shops?: any;
   reasons?: any;
+  bugStatus?: any;
 
   constructor(private restApiService: RestAPIService) { }
 
@@ -59,8 +60,18 @@ export class MasterDataService {
     this.restApiService.get(PathConstants.ReasonMasterGetURL).subscribe(reason => {
       reason.forEach(r => {
         this.reasons.push({ 'name': r.reason, 'id': r.reason_id, 'type': r.reason_type });
-      })
-    })
+      });
+    });
     return this.reasons;
+  }
+
+  getBugStatus() {
+    this.bugStatus = [];
+    this.restApiService.get(PathConstants.BugStatus).subscribe(bugstatus => {
+      bugstatus.forEach(bs => {
+        this.bugStatus.push({ 'name': bs.value, 'id': bs.id });
+      });
+    });
+    return this.bugStatus;
   }
 }
