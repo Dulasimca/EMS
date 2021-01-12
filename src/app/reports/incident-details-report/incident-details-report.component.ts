@@ -8,7 +8,8 @@ import { MasterDataService } from 'src/app/masters-services/master-data.service'
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { PathConstants } from 'src/app/Helper/PathConstants';
 import { NgForm } from '@angular/forms';
-
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 @Component({
   selector: 'app-incident-details-report',
   templateUrl: './incident-details-report.component.html',
@@ -88,7 +89,7 @@ export class IncidentDetailsReportComponent implements OnInit {
     }
   }
 
-  onChange(type, field) {
+  onChange(type) {
     this.incidentData = [];
     if (type === 'RM') {
       this.dcode = null;

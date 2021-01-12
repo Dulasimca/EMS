@@ -24,7 +24,7 @@
                             <p-dropdown #reg name="rname" [options]="regionOptions"
                                 [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="rcode"
                                 (onClick)="onSelect('RM')" (onChange)="onResetFields('RM')" filter="true"
-                                resetFilterOnHide="true" filterMatchMode="startsWith" [disabled]="disableRM" required>
+                                resetFilterOnHide="true" filterMatchMode="startsWith" required>
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span style="vertical-align:middle">{{item.label}}</span>
                                 </ng-template>
@@ -37,8 +37,7 @@
                             <p-dropdown #dist name="dname" [options]="districtOptions"
                                 [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="dcode"
                                 (onClick)="onSelect('DM')" filter="true" resetFilterOnHide="true"
-                                filterMatchMode="startsWith" (onChange)="onResetFields('DM')" [disabled]="disableDM"
-                                required>
+                                filterMatchMode="startsWith" (onChange)="onResetFields('DM')" required>
                                 <ng-template let-item pTemplate="selectedItem">
                                     <span style="vertical-align:middle">{{item.label}}</span>
                                 </ng-template>
@@ -48,7 +47,7 @@
                             <div>
                                 <label class="label-text-color" for="shopcd">Shop Number:</label>
                             </div>
-                            <p-dropdown #shop name="shop" [disabled]="disableShop" [options]="shopOptions"
+                            <p-dropdown #shop name="shop" [options]="shopOptions"
                                 [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="shopCode" filter="true"
                                 (onClick)="onSelect('SH')" resetFilterOnHide="true" filterMatchMode="startsWith"
                                 optionLabel="label" required>

@@ -78,13 +78,20 @@ export class EmsReportComponent implements OnInit {
       this.restApiService.getByParameters(PathConstants.NMSGetURL, params).subscribe((res: any) => {
         if (res !== undefined && res !== null && res.length !== 0) {
           this.nmsData = res.filter(x => {
-            return x.sla_type === this.type;
+            return x.sla_type === this.type.value;
           });
           this.nmsData.forEach(y => {
             y.type = (y.sla_type === 1) ? 'Planned' : 'Unplanned';
           })
           let sno = 1;
           this.nmsData.forEach(i => { i.SlNo = sno; sno += 1; });
+          if (this.nmsData.length === 0) {
+            this.messageService.clear();
+            this.messageService.add({
+              key: 'msgKey', severity: 'warn',
+              summary: 'Warning Message', detail: 'No record found for type: ' + this.type.label + ' !'
+            });
+          }
           this.loading = false;
         } else {
           this.loading = false;
@@ -138,10 +145,9 @@ export class EmsReportComponent implements OnInit {
     }
   }
 
-  onRowSelect(event) {
-    console.log(event);
+  onRowSelect(data, index) {
     this.showDialog = true;
-    this.selectedDocId = event.data.nms_id;
+    this.selectedDocId = data.nms_id;
   }
 
   onUpdate() {
@@ -155,7 +161,10 @@ export class EmsReportComponent implements OnInit {
         this.onChange();
         this.selectedDocId = null;
         this.messageService.clear();
-        this.messageService.add({ key: 'msgKey', severity: 'info', summary: 'Confirmed', detail: 'Document closed Successfully!' });
+        this.messageService.add({
+          key: 'msgKey', severity: 'success', summary: 'Success Message',
+          detail: 'Document Closed Successfully!'
+        });
       } else {
         this.showDialog = false;
         this.selectedDocId = null;
