@@ -11,6 +11,8 @@ export class MasterDataService {
   products?: any;
   shops?: any;
   reasons?: any;
+  bugStatus?: any;
+  cc?: any;
 
   constructor(private restApiService: RestAPIService) { }
 
@@ -59,8 +61,28 @@ export class MasterDataService {
     this.restApiService.get(PathConstants.ReasonMasterGetURL).subscribe(reason => {
       reason.forEach(r => {
         this.reasons.push({ 'name': r.reason, 'id': r.reason_id, 'type': r.reason_type });
-      })
-    })
+      });
+    });
     return this.reasons;
+  }
+
+  getBugStatus() {
+    this.bugStatus = [];
+    this.restApiService.get(PathConstants.BugStatus).subscribe(bugstatus => {
+      bugstatus.forEach(bs => {
+        this.bugStatus.push({ 'name': bs.value, 'id': bs.id });
+      });
+    });
+    return this.bugStatus;
+  }
+
+  getComponentCC() {
+    this.cc = [];
+    this.restApiService.get(PathConstants.ComponentCC).subscribe(cc => {
+      cc.forEach(cc => {
+        this.cc.push({ 'name': cc.login_name, 'id': cc.component_id });
+      });
+    });
+    return this.cc;
   }
 }

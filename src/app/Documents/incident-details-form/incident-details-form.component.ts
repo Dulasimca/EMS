@@ -30,6 +30,7 @@ export class IncidentDetailsFormComponent implements OnInit {
   urlPath: string;
   date: any;
   remarksTxt: string;
+  maxDate: Date = new Date();
 
   constructor(private restApiService: RestAPIService, private datepipe: DatePipe,
     private messageService: MessageService, private masterDataService: MasterDataService) { }

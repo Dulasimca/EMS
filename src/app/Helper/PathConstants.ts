@@ -1,4 +1,5 @@
 export class PathConstants {
+    public static readonly LoginURL = '/api/Login/Get';
     public static readonly HMSReportURL = '/api/bugzilladata/Get';
     public static readonly NMSPostURL = '/api/NMSData/Post';
     public static readonly RegionMasterURL = '/api/RegionMaster';
@@ -13,4 +14,6 @@ export class PathConstants {
     public static readonly ReasonMasterGetURL = '/api/ReasonMaster';
     public static readonly NMSDataPutURL = '/api/NMSData/Put';
     public static readonly MonthwiseIncidentGetURL = '/api/MonthwiseIncidentDetails';
+    public static readonly BugStatus = '/api/BugStatus';
+    public static readonly ComponentCC = '/api/ComponentCC';
 }
