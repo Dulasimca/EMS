@@ -6,6 +6,8 @@ import { MenuItem } from 'primeng/api/menuitem';
 import { Table } from 'primeng/table/table';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
+// declare var jsPDF: any;
+
 
 @Component({
   selector: 'app-bugzilla-report',
@@ -30,7 +32,7 @@ export class BugzillaReportComponent implements OnInit {
       },
       {
         label: 'PDF', icon: 'pi pi-file-pdf', command: () => {
-          this.exportPdf();
+          // this.exportPdf();
         }
       },
     ];
@@ -93,20 +95,20 @@ export class BugzillaReportComponent implements OnInit {
     });
   }
 
-  exportPdf() {
-    var rows = [];
-    this.bugzillaData.forEach(element => {
-      var temp = [element.SlNo, element.bug_id, element.bug_severity,
-      element.bug_status, element.assigned_to, element.short_desc,
-      element.creation_ts];
-      rows.push(temp);
-    });
-    import("jspdf").then(jsPDF => {
-      import("jspdf-autotable").then(x => {
-        const doc = new jsPDF.default('l', 'pt', 'a4');
-        doc.autoTable(this.bugzillaCols, rows);
-        doc.save('HELPDESK_STATUS_REPORT.pdf');
-      })
-    })
-  }
+  // exportPdf() {
+  //   var rows = [];
+  //   this.bugzillaData.forEach(element => {
+  //     var temp = [element.SlNo, element.bug_id, element.bug_severity,
+  //     element.bug_status, element.assigned_to, element.short_desc,
+  //     element.creation_ts];
+  //     rows.push(temp);
+  //   });
+  //   import("jspdf").then(jsPDF => {
+  //     import("jspdf-autotable").then(x => {
+  //       const doc = new jsPDF.default('l', 'pt', 'a4');
+  //       doc.autoTable(this.bugzillaCols, rows);
+  //       doc.save('HELPDESK_STATUS_REPORT.pdf');
+  //     })
+  //   })
+  // }
 }

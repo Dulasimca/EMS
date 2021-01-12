@@ -46,7 +46,7 @@ export class IncidentDetailsReportComponent implements OnInit {
       },
       {
         label: 'PDF', icon: 'pi pi-file-pdf', command: () => {
-          this.exportPdf();
+          // this.exportPdf();
         }
       },
     ];
@@ -170,22 +170,22 @@ export class IncidentDetailsReportComponent implements OnInit {
     }
   }
 
-  exportPdf() {
-    var rows = [];
-    this.incidentData.forEach(element => {
-      var temp = [element.SlNo, element.rm_office, element.dm_office,
-      element.location, element.component, element.shop_number, element.type,
-      element.from_date, element.to_date, element.reason, element.remarks,
-      element.url_path];
-      rows.push(temp);
-    });
-    import("jspdf").then(jsPDF => {
-      import("jspdf-autotable").then(x => {
-        const doc = new jsPDF.default('l', 'pt', 'a4');
-        doc.autoTable(this.incidentCols, rows);
-        doc.save('NMS_REPORT.pdf');
-      })
-    })
-  }
+  // exportPdf() {
+  //   var rows = [];
+  //   this.incidentData.forEach(element => {
+  //     var temp = [element.SlNo, element.rm_office, element.dm_office,
+  //     element.location, element.component, element.shop_number, element.type,
+  //     element.from_date, element.to_date, element.reason, element.remarks,
+  //     element.url_path];
+  //     rows.push(temp);
+  //   });
+  //   import("jspdf").then(jsPDF => {
+  //     import("jspdf-autotable").then(x => {
+  //       const doc = new jsPDF.default('l', 'pt', 'a4');
+  //       doc.autoTable(this.incidentCols, rows);
+  //       doc.save('NMS_REPORT.pdf');
+  //     })
+  //   })
+  // }
 
 }

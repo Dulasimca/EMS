@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'nms-sla', component: NMSSLAFormComponent, canActivate: [AuthGuard] },
   { path: 'nms-report', component: EmsReportComponent, canActivate: [AuthGuard] },
   { path: 'incident-form', component: IncidentDetailsFormComponent, canActivate: [AuthGuard] },
-  { path: 'incident-report', component: IncidentDetailsReportComponent, canActivate: [AuthGuard] }
+  { path: 'incident-report', component: IncidentDetailsReportComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
