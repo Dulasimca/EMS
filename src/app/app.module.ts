@@ -43,6 +43,7 @@ import { EmsReportComponent } from './reports/ems-report/ems-report.component';
 import { MasterDataService } from './masters-services/master-data.service';
 import { IncidentDetailsFormComponent } from './Documents/incident-details-form/incident-details-form.component';
 import { IncidentDetailsReportComponent } from './reports/incident-details-report/incident-details-report.component';
+import { ThemeService } from './theme/theme.service';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,7 @@ import { IncidentDetailsReportComponent } from './reports/incident-details-repor
     MenubarModule,
     DialogModule
   ],
-  providers: [AuthService, RestAPIService, DatePipe, MessageService, MasterDataService],
+  providers: [AuthService, RestAPIService, DatePipe, MessageService, MasterDataService, ThemeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
