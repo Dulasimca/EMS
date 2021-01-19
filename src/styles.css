@@ -29,7 +29,7 @@ body {
     /* color: #32CD32 !important; */
     color: #ce0000;
     font-size: 32px;
-    margin-top: -10px !important;
+    margin-top: -3px !important;
     margin-bottom: 0px !important;
     font-weight: normal;
   } 
@@ -218,12 +218,12 @@ body {
     font-size: 2.3em;
   }
 
-  .p-menubar {
+  /* .p-menubar {
     padding: 0 !important;
     background: #157110;
     font-size: 0.95rem;
     color: #464b50;
-}
+} */
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-menuitem-text {
   color: whitesmoke;
@@ -246,13 +246,13 @@ body {
   color: whitesmoke !important;
 }
 
-.p-menubar .p-submenu-list {
+/* .p-menubar .p-submenu-list {
   padding: 0.25rem 0;
   background: #3d8c40;
   border: 0 none;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
   width: 12.5rem;
-}
+} */
 
 .pi-angle-down:before {
   content: "\e930";
@@ -311,27 +311,27 @@ li {
 ul {
     list-style-type: disc;
 }
-.p-menubar {
+/* .p-menubar {
     padding: 0 !important;
     background: #157110;
     font-size: 0.95rem;
     color: whitesmoke !important;
-}
+} */
 .p-component {
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol !important;
 }
 
-.p-menubar .p-menuitem.p-menuitem-active > .p-menuitem-link {
+/* .p-menubar .p-menuitem.p-menuitem-active > .p-menuitem-link {
   background: #499b4d !important;
-}
+} */
 
 .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text {
   color: whitesmoke !important;
 }
 
-.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover {
+/* .p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover {
   background: #499b4d !important;
-}
+} */
 
 .p-menubar .p-menuitem-link .p-menuitem-text {
   color: whitesmoke !important;
@@ -348,12 +348,11 @@ ul {
 .p-menubar .p-menuitem-text {
   line-height: 0.5;
 }
-  .menu-bar{
+  /* .menu-bar{
       background: #157110;
       font-size: 0.95rem;
       color: #464b50;
-      /* font-family: var(--font-family); */
-  }
+  } */
 
   .menu-icons {
     font-size: 0.95rem !important;
@@ -413,13 +412,10 @@ ul {
     padding-right: 0px !important;
   }
 
-  .bg-div {
-    /* background: rgb(104, 206, 3); */
-    /* background: rgb(104, 206, 3); */
-    /* background: #14af0b; */
+  /* .bg-div {
     background: #157110;
     border: 1px solid rgb(126 214 38);
-  }
+  } */
 
   .login-card {
     box-shadow: 0px 8.2px 12px 1px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.42);
@@ -463,31 +459,6 @@ ul {
     justify-content: center;
   }
   
-  .mat-form-field {
-    width: 100%;
-    display: block;
-  }
-  
-  .mat-raised-button {
-    width: 100%;
-    margin-top: 15px;
-  }
-
-  .mat-toolbar.mat-primary {
-    background: #3f51b5;
-    color: white;
-    /* background: rgb(104, 206, 3); */
-    background: #157110;
-    /* background: #14af0b; */
-}
-
-.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
-  color: white; 
-  /* background: rgb(104, 206, 3); */
- /* background: #14af0b; */
- background: #157110;
-}
-
 .home-bg{
   background-color: rgb(194, 189, 189) !important;
   margin-left: 35px; margin-right: 35px;
@@ -502,16 +473,14 @@ body { margin: 0px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Ro
   cursor: pointer !important;
 }
 
-.p-panel .p-panel-header {
+/* .p-panel .p-panel-header {
   border: 1px solid rgb(194 241 147);
   padding: 0.38rem;
-  /* background: #f8f9fa; */
-  /* background: rgb(194 241 147); */
   background: #9dca71;
   color: #495057;
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
-}
+} */
 
 .menu-a {
   text-decoration: none !important;
@@ -519,13 +488,10 @@ body { margin: 0px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Ro
   color: white;
 }
 
-.footer-bg {
-  /* background: rgb(104, 206, 3); */
-  /* background: rgb(104, 206, 3); */
-  /* background: #14af0b; */
+/* .footer-bg {
   background: #157110;
   color: white;
-}
+} */
 
 .label-text-color {
   color: #000000cc !important;
@@ -548,7 +514,7 @@ body { margin: 0px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Ro
   text-align: start;
 }
 
-.p-button {
+/* .p-button {
   color: #ffffff;
   background: #4CAF50;
   border: 1px solid #4CAF50;
@@ -556,7 +522,7 @@ body { margin: 0px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Ro
   font-size: 0.92rem;
   transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
   border-radius: 3px;
-}
+} */
 
 .p-button.p-button-icon-only {
   width: 2.18rem;
@@ -575,9 +541,9 @@ body { margin: 0px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Ro
  background-color: white !important;
 }
 
-.border-green {
+/* .border-color {
   border: 0.03px #a4d27d solid;
-}
+} */
 
 .border-grey {
   border: 1px solid #dee2e6;
@@ -653,14 +619,6 @@ body { margin: 0px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Ro
   position:fixed;top:50%;left:46%
 }
 
-
-
-
-
-/* .p-toast .p-toast-message .p-toast-message-content {
-    padding: 1rem;
-    border-width: 0 0 0 6px;
-} */
 .p-toast .p-toast-message.p-toast-message-error {
   padding: .5em 1em;
   background: crimson;
@@ -703,28 +661,309 @@ body { margin: 0px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Ro
   border-top-left-radius: 3px;
 }
 
-/* .navbar-collapse {
-  flex-basis: 100%;
-  flex-grow: 1; 
-  align-items: initial !important;
+.footer-styling {
+  margin-left: 35px !important; margin-right: 35px !important; margin-top: 10px !important;
 }
 
-.navbar-light .navbar-brand {
-  color: whitesmoke;
+
+/* theming */
+
+:root {
+  /* Colors */
+  --foreground-default: #08090a;
+  --foreground-secondary: #41474d;
+  --foreground-tertiary: #797c80;
+  --foreground-quaternary: #f4faff;
+  --foreground-light: #41474d;
+
+  --background-default: #157110;
+  /* --background-secondary: #FFC90E;
+  --background-tertiary: #1271cb;
+  --background-light: #E05C0A; */
+
+   --border-default: 1px solid #7ED626;
+
+   --panel-background: #9dca71;
+
+   --button-background: #4CAF50;
+   --button-border: 1px solid #4CAF50;
+ 
+  --border-color-default: 0.03px #a4d27d solid;
+
+  --primary-default: #5dfdcb;
+  --primary-dark: #24b286;
+  --primary-light: #b2ffe7;
+
+  --error-default: #ef3e36;
+  --error-dark: #800600;
+  --error-light: #ffcecc;
+
+  /* Shadows */
+  --background-tertiary-shadow: 0 1px 3px 0 rgba(92, 125, 153, 0.5);
+
+  /* Fonts */
+  --h1-size: 6rem;
+  --h1-weight: 400;
+  --h1-spacing: -1.5px;
+
+  --h2-size: 3.75rem;
+  --h2-weight: 400;
+  --h2-spacing: -0.5px;
+
+  --h3-size: 3rem;
+  --h3-weight: 400;
+  --h3-spacing: -0px;
+
+  --h4-size: 2.125rem;
+  --h4-weight: 400;
+  --h4-spacing: -0.25px;
+
+  --h5-size: 1.5rem;
+  --h5-weight: 400;
+  --h5-spacing: -0px;
+
+  --h6-size: 1.25rem;
+  --h6-weight: 700;
+  --h6-spacing: -0.15px;
+
+  --s1-size: 1rem;
+  --s1-weight: 400;
+  --s1-spacing: 0.15px;
+
+  --s2-size: 0.875rem;
+  --s2-weight: 700;
+  --s2-spacing: 0.1px;
+
+  --b1-size: 1rem;
+  --b1-weight: 400;
+  --b1-spacing: 0.5px;
+
+  --b2-size: 0.875rem;
+  --b2-weight: 400;
+  --b2-spacing: 0.25px;
+
+  --button-size: 0.875rem;
+  --button-weight: 700;
+  --button-spacing: 1.25px;
+
+  --caption-size: 0.75rem;
+  --caption-weight: 400;
+  --caption-spacing: 0.4px;
+
+  --overline-size: 0.625rem;
+  --overline-weight: 400;
+  --overline-spacing: 1.5px;
 }
 
-.nav-item li {
-  padding: 5px;
-  border-radius: 5px;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "PT Sans", sans-serif;
 }
 
-.nav li a:hover {
-  color: white !important;
- }
- .navbar a:hover {
-  color: white !important;
- }
+body {
+  background: rgb(194, 189, 189); 
+}
 
- .navbar{
-   color: whitesmoke !important;
- } */
+h1 {
+  font-size: var(--h1-size);
+  font-weight: var(--h1-weight);
+  letter-spacing: var(--h1-spacing);
+}
+
+h2 {
+  font-size: var(--h2-size);
+  font-weight: var(--h2-weight);
+  letter-spacing: var(--h2-spacing);
+}
+
+h3 {
+  font-size: var(--h3-size);
+  font-weight: var(--h3-weight);
+  letter-spacing: var(--h3-spacing);
+}
+
+h4 {
+  font-size: var(--h4-size);
+  font-weight: var(--h4-weight);
+  letter-spacing: var(--h4-spacing);
+}
+
+h5 {
+  font-size: var(--h5-size);
+  font-weight: var(--h5-weight);
+  letter-spacing: var(--h5-spacing);
+}
+
+h6 {
+  font-size: var(--h6-size);
+  font-weight: var(--h6-weight);
+  letter-spacing: var(--h6-spacing);
+}
+
+.s1 {
+  font-size: var(--s1-size);
+  font-weight: var(--s1-weight);
+  letter-spacing: var(--s1-spacing);
+}
+
+.s2 {
+  font-size: var(--s2-size);
+  font-weight: var(--s2-weight);
+  letter-spacing: var(--s2-spacing);
+}
+
+.b1 {
+  font-size: var(--b1-size);
+  font-weight: var(--b1-weight);
+  letter-spacing: var(--b1-spacing);
+}
+
+.b2 {
+  font-size: var(--b2-size);
+  font-weight: var(--b2-weight);
+  letter-spacing: var(--b2-spacing);
+}
+
+.button {
+  font-size: var(--button-size);
+  font-weight: var(--button-weight);
+  letter-spacing: var(--button-spacing);
+}
+
+.caption {
+  font-size: var(--caption-size);
+  font-weight: var(--caption-weight);
+  letter-spacing: var(--caption-spacing);
+}
+
+.overline {
+  font-size: var(--overline-size);
+  font-weight: var(--overline-weight);
+  letter-spacing: var(--overline-spacing);
+}
+
+.secondary-font {
+  font-family: "Inconsolata", monospace;
+}
+
+
+.menu-bar{
+  background: var(--background-default);
+  font-size: 0.95rem;
+  color: #464b50;
+}
+
+.p-menubar {
+  padding: 0 !important;
+  background: var(--background-default);
+  font-size: 0.95rem;
+  color: #464b50;
+}
+
+.p-menubar .p-submenu-list {
+  padding: 0.25rem 0;
+  background: var(--background-default);
+  border: 0 none;
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+  width: 12.5rem;
+}
+
+.p-menubar .p-menuitem.p-menuitem-active > .p-menuitem-link {
+  background: var(--background-default);
+}
+
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover {
+  background: var(--background-default);
+}
+
+.p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link, .p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link:not(.p-disabled):hover {
+  background: var(--background-default);
+}
+
+.bg-div {
+  background: var(--background-default);
+  border: var(--border-default);
+}
+
+
+.footer-bg {
+  color: white;
+  background: var(--background-default);
+}
+
+.p-panel .p-panel-header {
+  border: 1px solid rgb(194 241 147);
+  padding: 0.38rem;
+  background: var(--panel-background);
+  color: #495057;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+
+.p-button {
+  color: #ffffff;
+  background: var(--button-background);
+  border: 1px solid var(--button-border);
+  padding: 0.5rem 1rem;
+  font-size: 0.92rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  border-radius: 3px;
+}
+
+.border-color {
+  border: 0.03px var(--border-color-default) solid;
+}
+
+.p-selectbutton .p-button.p-highlight {
+  background: var(--button-background);
+  border-color: var(--button-border);
+  color: #ffffff;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: var(--button-background);
+  border-color: var(--button-border);
+  color: #ffffff;
+}
+
+#rectangle-yellow{
+  width:20px;
+  height:20px;
+  background:#fac917;;
+  border: 0.5px solid grey;
+  margin-right: 5px !important;
+}
+
+#rectangle-red{
+  width:20px;
+  height:20px;
+  background:#e76615;
+  border: 0.5px solid grey;
+  margin-right: 5px !important;
+}
+
+#rectangle-blue{
+  width:20px;
+  height:20px;
+  background: #1a78cf;
+  border: 0.5px solid grey;
+  margin-right: 5px !important;
+}
+
+#rectangle-green{
+  width:20px;
+  height:20px;
+  background:#21991a;
+  border: 0.5px solid grey;
+  margin-right: 5px !important;
+}
+
+#rectangle-red{
+  width:20px;
+  height:20px;
+  background:#e76615;
+  border: 0.5px solid grey;
+  margin-right: 5px !important;
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { ThemeService } from '../theme/theme.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ export class MenubarComponent implements OnInit {
   items: MenuItem[];
   showNavBar: boolean;
 
-  constructor() { }
+  constructor(private themeService: ThemeService) { }
 
   ngOnInit() {
     this.showNavBar = false;

@@ -6,10 +6,7 @@ import * as Chart from 'chart.js';
 import * as ChartDataLabels from 'chartjs-plugin-datalabels';
 import { SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Helper/PathConstants';
-import { MasterDataService } from 'src/app/masters-services/master-data.service';
-import { type } from 'os';
 import { Router } from '@angular/router';
-import { black } from 'color-name';
 
 
 @Component({
@@ -54,7 +51,7 @@ export class HomeComponent implements OnInit {
   stepSizeOfIncident: number;
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
-    private masterDataService: MasterDataService, private router: Router) { }
+     private router: Router) { }
 
   ngOnInit() {
     this.preventBackButton();
