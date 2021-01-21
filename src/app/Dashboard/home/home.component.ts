@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
   stepSizeOfIncident: number;
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
-     private router: Router) { }
+    private router: Router) { }
 
   ngOnInit() {
     this.preventBackButton();
@@ -250,6 +250,17 @@ export class HomeComponent implements OnInit {
       },
       legend: {
         position: 'bottom'
+      },
+      plugins: {
+        datalabels: {
+          align: 'end',
+          anchor: 'end',
+          borderRadius: 4,
+          color: 'black',
+          font: {
+            weight: 'normal'
+          }
+        }
       }
     };
     if (value === 'SH') {

@@ -27,7 +27,8 @@
                             <p-selectButton [options]="slaTypeOptions" [(ngModel)]="slaType"
                                 (onChange)="onSLATypeChange(slaType)"></p-selectButton>
                         </div>
-                        <p-chart type="bar" [data]="slaBarData" width="auto" height="60vh" [options]="slaBarOptions">
+                        <p-chart type="bar" [data]="slaBarData" width="auto" height="60vh" [plugins]="plugin"
+                            [options]="slaBarOptions">
                         </p-chart>
                     </div>
                 </div>
@@ -35,8 +36,8 @@
                     <div class="p-col-12 p-md-12 p-lg-12 card border-color">
                         <div class="header-line">Helpdesk Management Ticket Status</div>
                         <div class="padding-gap">
-                            <p-chart type="pie" [data]="pieData" width="auto" height="80vh" [plugins]="plugin"
-                                [options]="pieOptions" (onDataSelect)="selectData($event)"></p-chart>
+                            <p-chart type="pie" [data]="pieData" [plugins]="plugin" [options]="pieOptions"
+                                (onDataSelect)="selectData($event)"></p-chart>
                         </div>
                     </div>
                 </div>
