@@ -375,10 +375,21 @@ ul {
     padding: 0.08rem 0.16rem 0.08rem 0.16rem;
 }
 
+.p-float-label input:focus ~ label, .p-float-label input.p-filled ~ label, .p-float-label textarea:focus ~ label, .p-float-label textarea.p-filled ~ label, .p-float-label .p-inputwrapper-focus ~ label, .p-float-label .p-inputwrapper-filled ~ label {
+  top: -.75rem;
+  font-size: 13px;
+}
+
+.p-float-label > label {
+  left: 0.5rem;
+  color: #606360;
+  transition-duration: 0.2s;
+}
+
   .login-body{
     background: rgb(42 49 43 / 76%);
     margin-bottom: 7px;
-    height: 600px;
+    height: 555px;
   }
 
   .f-pwd-text {

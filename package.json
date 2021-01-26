@@ -29,7 +29,7 @@
     "jspdf-autotable": "^3.5.13",
     "primeflex": "^2.0.0-rc.1",
     "primeicons": "^4.0.0",
-    "primeng": "^10.0.0-rc.3",
+    "primeng": "^11.2.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
