@@ -4,7 +4,13 @@
 /* @import '../node_modules/primeflex/primeflex.css'; */
 @import url("http://fonts.googleapis.com/css?family=Oswald");
 /* @import '../node_modules/font-awesome/css/font-awesome.min.css'; */
+
+html {
+  overflow-x: hidden !important;
+  width: 100%;
+}
 body {
+    overflow-x: hidden !important;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
     position: relative;
   
@@ -389,7 +395,7 @@ ul {
   .login-body{
     background: rgb(42 49 43 / 76%);
     margin-bottom: 7px;
-    height: 555px;
+    height: 600px;
   }
 
   .f-pwd-text {
