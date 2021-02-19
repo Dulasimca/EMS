@@ -19,7 +19,8 @@
             <!-- row 1 -->
             <div class="p-col-12 p-md-4 p-lg-2">
               <div>
-                <label for="loc" class="label-text-color">Issue Location:</label>
+                <label for="loc" class="label-text-color">Issue Location:<span
+                    class="form-mandatory-field">*</span></label>
               </div>
               <p-dropdown #loc name="loc" [options]="locationOptions" [style]="{'width':'-webkit-fill-available'}"
                 [(ngModel)]="location" (onClick)="onSelect('L')" (onChange)="onResetFields('L')" required>
@@ -30,7 +31,8 @@
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">
               <div>
-                <label for="rname" class="label-text-color">RM Office:</label>
+                <label for="rname" class="label-text-color">RM Office:<span *ngIf="!disableRM"
+                    class="form-mandatory-field">*</span></label>
               </div>
               <p-dropdown #reg name="rname" [options]="regionOptions" [style]="{'width':'-webkit-fill-available'}"
                 [(ngModel)]="rcode" (onClick)="onSelect('R')" (onChange)="onResetFields('RM')" filter="true"
@@ -42,7 +44,8 @@
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">
               <div>
-                <label for="dname" class="label-text-color">DM Office:</label>
+                <label for="dname" class="label-text-color">DM Office:<span *ngIf="!disableDM"
+                    class="form-mandatory-field">*</span></label>
               </div>
               <p-dropdown #dist name="dname" [options]="districtOptions" [style]="{'width':'-webkit-fill-available'}"
                 [(ngModel)]="dcode" (onClick)="onSelect('D')" filter="true" resetFilterOnHide="true"
@@ -54,7 +57,8 @@
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">
               <div>
-                <label class="label-text-color" for="shopcd">Shop Number:</label>
+                <label class="label-text-color" for="shopcd">Shop Number:<span *ngIf="!disableShop"
+                    class="form-mandatory-field">*</span></label>
               </div>
               <p-dropdown #shop name="shop" [disabled]="disableShop" [options]="shopOptions"
                 [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="shopCode" filter="true"
@@ -67,7 +71,7 @@
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">
               <div>
-                <label for="comp" class="label-text-color">Component:</label>
+                <label for="comp" class="label-text-color">Component:<span class="form-mandatory-field">*</span></label>
               </div>
               <p-dropdown #comp name="comp" [disabled]="!location" [options]="componentOptions"
                 [style]="{'width':'-webkit-fill-available'}" [(ngModel)]="compId" filter="true"
@@ -81,7 +85,7 @@
             <!-- row 2 -->
             <div class="p-col-12 p-md-4 p-lg-3 pad-left">
               <div>
-                <label class="label-text-color" for="shopcd">Type:</label>
+                <label class="label-text-color" for="type">Type:<span class="form-mandatory-field">*</span></label>
               </div>
               <div class="border-grey">
                 <div style="padding-top: 5px;"> &nbsp;
@@ -106,14 +110,15 @@
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">
               <div>
-                <label class="label-text-color" for="shopcd">From Date:</label>
+                <label class="label-text-color" for="shopcd">From Date:<span
+                    class="form-mandatory-field">*</span></label>
               </div>
               <p-calendar name="fDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [(ngModel)]="fromDate" showTime="true"
                 hourFormat="12" [showIcon]="true" required></p-calendar>
             </div>
             <div class="p-col-12 p-md-4 p-lg-2">
               <div>
-                <label class="label-text-color" for="shopcd">To Date:</label>
+                <label class="label-text-color" for="shopcd">To Date:<span class="form-mandatory-field">*</span></label>
               </div>
               <p-calendar class="date-text" name="tDate" [maxDate]="maxDate" dateFormat="dd/mm/yy" [(ngModel)]="toDate"
                 showTime="true" hourFormat="12" [showIcon]="true" required></p-calendar>
@@ -122,7 +127,8 @@
             <div class="p-col-12 p-md-12 p-lg-12">
               <div class="p-col-12 p-md-6 p-lg-3 no-pad-left">
                 <div>
-                  <label for="remarks" class="label-text-color">Remarks:</label>
+                  <label for="remarks" class="label-text-color">Remarks:<span
+                      class="form-mandatory-field">*</span></label>
                 </div>
                 <textarea class="p-col-10 p-md-10 p-lg-10" [rows]="3" name="remarks" [cols]="28"
                   [(ngModel)]="remarksTxt" pInputTextarea autoResize="autoResize" required></textarea>

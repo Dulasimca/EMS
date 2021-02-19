@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { ThemeService } from '../theme/theme.service';
-
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-menubar',
@@ -11,11 +10,14 @@ import { ThemeService } from '../theme/theme.service';
 export class MenubarComponent implements OnInit {
   items: MenuItem[];
   showNavBar: boolean;
+  roleId: any;
 
-  constructor(private themeService: ThemeService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.showNavBar = false;
+    this.roleId = this.authService.getLoggedUser().RoleId;
+    const showMenu = (this.roleId === 1) ? true : false;
     this.items = [
       { label: 'Home', icon: 'pi pi-fw pi-home', routerLink: '/home' },
       {
@@ -24,9 +26,9 @@ export class MenubarComponent implements OnInit {
           {
             label: 'NMS-Form', routerLink: '/nms-sla'
           },
-          {
-            label: 'Incident-Form', routerLink: '/incident-form'
-          }
+          // {
+          //   label: 'Incident-Form', routerLink: '/incident-form'
+          // }
         ]
       },
       { label: 'SLA', icon: 'pi pi-fw pi-chart-line' },
@@ -40,9 +42,9 @@ export class MenubarComponent implements OnInit {
           {
             label: 'NMS-Report', routerLink: '/nms-report'
           },
-          {
-            label: 'Incident-Report', routerLink: '/incident-report'
-          }
+          // {
+          //   label: 'Incident-Report', routerLink: '/incident-report'
+          // }
         ]
       }
     ];

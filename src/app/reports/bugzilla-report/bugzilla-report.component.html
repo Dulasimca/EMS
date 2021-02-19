@@ -9,14 +9,16 @@
           <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">TASMAC-HMS Status Report</div>
         </p-header>
         <div class="p-grid">
-          <div class="p-col-10"></div>
+          <div class="p-col-10">
+            ** All the tickets created in helpdesk management system **
+          </div>
           <div class="p-col-12 p-md-3 p-lg-1 txt-align no-pad-top">
             <p-splitButton label="Download" icon="pi pi-download" [disabled]="(bugzillaData.length==0)" [model]="items">
             </p-splitButton>
           </div>
         </div>
         <div class="p-col-12 p-md-12 p-lg-12 no-pad-top">
-          <p-table #dt styleClass="p-datatable-gridlines" [columns]="bugzillaCols" [value]="bugzillaData" [rows]="20"
+          <p-table #dt styleClass="p-datatable-gridlines" [columns]="bugzillaCols" [value]="bugzillaData" [rows]="50"
             [rowsPerPageOptions]="[10,20,30,40,50,100]" [paginator]="true" [responsive]="true" autoLayout="true"
             [loading]="loading" exportFilename="BUGZILLA_STATUS_REPORT">
             <ng-template pTemplate="header" let-columns>

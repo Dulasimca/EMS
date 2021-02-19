@@ -38,11 +38,13 @@ export class BugzillaReportComponent implements OnInit {
     ];
     const index = this.route.snapshot.queryParamMap.get('id');
     this.bugzillaCols = [
-      { header: 'S.No', field: 'SlNo', width: '40px' },
-      { field: 'bug_id', header: 'Bug ID' },
-      { field: 'bug_severity', header: 'Bug Severity' },
-      { field: 'bug_status', header: 'Bug Status' },
+      { field: 'ticket_id', header: 'Ticket ID' },
       { field: 'assigned_to', header: 'Assigned To' },
+      { field: 'ticket_status', header: 'Ticket Status' },
+      { field: 'REGNNAME', header: 'Region Name' },
+      { field: 'Dname', header: 'District Name' },
+      { field: 'pname', header: 'Product' },
+      { field: 'cname', header: 'Component' },
       { field: 'short_desc', header: 'Description' },
       { field: 'creation_ts', header: 'Created Date' }
     ];
@@ -57,10 +59,10 @@ export class BugzillaReportComponent implements OnInit {
         });
         if (index !== undefined && index !== null) {
           this.bugzillaData = this.bugzillaData.filter(y => {
-            return (index === '4' && y.bug_status.toUpperCase() === 'OPEN')
-              || (index === '0' && y.bug_status.toUpperCase() === 'ASSIGNED')
-              || (index === '3' && y.bug_status.toUpperCase() === 'IN-PROGRESS')
-              || (index === '1' && y.bug_status.toUpperCase() === 'COMPLETED')
+            return (index === '3' && (y.status_code === 8 || y.status_code === 2))
+              || (index === '2' && y.status_code === 5)
+              || (index === '1' && y.status_code === 6)
+              || (index === '0' && (y.status_code === 7 || y.status_code === 4))
           })
           let slno = 1;
           this.bugzillaData.forEach(x => {

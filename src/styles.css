@@ -31,13 +31,13 @@ body {
     border: lightgray 1px solid;
   }
 
-  .header-text {
-    color: #ce0000;
-    text-align: end !important;
-    align-self: center !important;
-    margin: 0rem 0 0 2rem;
-    font-size: 25px;
-    white-space: pre;
+    .header-text {
+      color: #ce0000;
+      text-align: end !important;
+      align-self: center !important;
+      margin: 2rem 0 0 4rem;
+      font-size: 20px;
+      white-space: pre;
   }
 
   .header-h1 {
@@ -451,7 +451,9 @@ ul {
 
   .login-bar {
     text-align: center;
-    color: white;
+    background: #b7e0b8;
+    border: 1px solid var(--border-default);
+    color: #157110;
     padding: 12px !important;
   }
 
