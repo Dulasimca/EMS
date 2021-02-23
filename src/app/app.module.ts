@@ -13,7 +13,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { DropdownModule } from 'primeng/dropdown';
 import { CheckboxModule } from 'primeng/checkbox';
 import { SidebarModule } from 'primeng/sidebar';
-import { RadioButtonModule } from 'primeng/radiobutton';
+import { RadioButtonModule, RadioControlRegistry } from 'primeng/radiobutton';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { CalendarModule } from 'primeng/calendar';
 import { ToastModule } from 'primeng/toast';
@@ -38,7 +38,7 @@ import { BugzillaReportComponent } from './reports/bugzilla-report/bugzilla-repo
 import { ScreenReaderComponent } from './screen-reader/screen-reader.component';
 import { NMSSLAFormComponent } from './Documents/nms-sla-form/nms-sla-form.component';
 import { DatePipe } from '@angular/common';
-import { MessageService } from 'primeng/api';
+import { MessageService, PrimeNGConfig, FilterService } from 'primeng/api';
 import { EmsReportComponent } from './reports/ems-report/ems-report.component';
 import { MasterDataService } from './masters-services/master-data.service';
 import { IncidentDetailsFormComponent } from './Documents/incident-details-form/incident-details-form.component';
@@ -92,7 +92,8 @@ import { TicketUpdateComponent } from './Documents/ticket-update/ticket-update.c
     MenubarModule,
     DialogModule
   ],
-  providers: [AuthService, RestAPIService, DatePipe, MessageService, MasterDataService, ThemeService],
+  providers: [AuthService, RestAPIService, DatePipe, MessageService, MasterDataService, ThemeService,
+    PrimeNGConfig, FilterService, RadioControlRegistry],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

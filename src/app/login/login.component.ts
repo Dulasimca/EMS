@@ -3,9 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { PathConstants } from '../Helper/PathConstants';
-import { MessageService } from 'primeng/api';
 import { RestAPIService } from '../services/restAPI.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -20,13 +20,12 @@ export class LoginComponent implements OnInit {
   pwdResetForm: FormGroup;
   isSubmitted: boolean;
   clickedReset: boolean;
-  oldPassword: string;
-  newPassword: string;
-  confirmPassword: string;
+  emailId: string;
   showPwdNoMatchErr: boolean;
+  showPswd: boolean;
 
   constructor(private authService: AuthService, private fb: FormBuilder, private router: Router,
-    private messageService: MessageService, private restApiService: RestAPIService) { }
+    private restApiService: RestAPIService, private messageService: MessageService) { }
 
   ngOnInit() {
     this.isSubmitted = false;
@@ -36,9 +35,7 @@ export class LoginComponent implements OnInit {
       pswd: ['', Validators.required]
     });
     this.pwdResetForm = this.fb.group({
-      oldPwd: ['', Validators.required],
-      newPwd: ['', Validators.required],
-      confirmPwd: ['', Validators.required]
+      email: ['', Validators.required]
     })
   }
 
@@ -46,12 +43,18 @@ export class LoginComponent implements OnInit {
     this.isSubmitted = true;
     this.restApiService.getByParameters(PathConstants.LoginURL, { 'username': this.username }).subscribe(credentials => {
       if (credentials.length !== 0 && credentials !== null && credentials !== undefined) {
-        if (this.username.toLowerCase() === credentials[0].login_name.toLowerCase() &&
-          this.password.toLowerCase() === credentials[0].userpwd.toLowerCase()) {
+        if (this.username.toLowerCase().trim() === credentials[0].login_name.toLowerCase().trim() &&
+          this.password.toLowerCase().trim() === credentials[0].userpwd.toLowerCase().trim()) {
           var obj = this.loginForm.value;
           obj['Id'] = credentials[0].userid;
+          obj['RoleId'] = credentials[0].role_id;
+          obj['Region'] = (credentials[0].role_id === 3 || credentials[0].role_id === 4) ? credentials[0].REGNNAME : '';
+          obj['District'] = (credentials[0].role_id === 4) ? credentials[0].Dname : '';
+          obj['RCode'] = (credentials[0].role_id === 3 || credentials[0].role_id === 4) ? credentials[0].RegionID : '';
+          obj['DCode'] = (credentials[0].role_id === 4) ? credentials[0].DistrictID : '';
+          obj['RealName'] = credentials[0].realname;
           this.authService.loginInfo(obj);
-          this.router.navigate(['home']);
+          this.router.navigate(['/home']);
         } else {
           this.messageService.clear();
           this.messageService.add({
@@ -63,7 +66,7 @@ export class LoginComponent implements OnInit {
         this.messageService.clear();
         this.messageService.add({
           key: 't-err', severity: 'error',
-          summary: 'Error Message', detail: 'Please Contact Administrator!'
+          summary: 'Error Message', detail: 'Invalid user!'
         });
       }
     }, (err: HttpErrorResponse) => {
@@ -83,29 +86,26 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onChangePassword() {
-
+  onForgotPassword() {
+    const params = {
+      'MailId': this.emailId
+    }
   }
 
   openPwdReset() {
     this.clickedReset = true;
   }
 
-  onValidatePwd(value) {
-    const pwd: string = value.toString();
-    const npwd = this.newPassword;
-    if (pwd !== null && pwd !== '' && npwd !== '' && npwd !== null) {
-      if (pwd.length === npwd.length && pwd !== npwd) {
-        this.showPwdNoMatchErr = true;
-      } else if (pwd.length !== npwd.length) {
-        this.showPwdNoMatchErr = true;
-      } else {
-        this.showPwdNoMatchErr = false;
-      }
-
+  onShowPswd() {
+    var inputValue = (<HTMLInputElement>document.getElementById('pswd'));
+    if (inputValue.type === 'password') {
+      inputValue.type = 'text';
+      this.showPswd = !this.showPswd;
+    } else {
+      this.showPswd = !this.showPswd;
+      inputValue.type = 'password';
     }
   }
-
 }
 
 

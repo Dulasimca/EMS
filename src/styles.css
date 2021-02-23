@@ -4,7 +4,13 @@
 /* @import '../node_modules/primeflex/primeflex.css'; */
 @import url("http://fonts.googleapis.com/css?family=Oswald");
 /* @import '../node_modules/font-awesome/css/font-awesome.min.css'; */
+
+html {
+  overflow-x: hidden !important;
+  width: 100%;
+}
 body {
+    overflow-x: hidden !important;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
     position: relative;
   
@@ -25,20 +31,26 @@ body {
     border: lightgray 1px solid;
   }
 
+    .header-text {
+      color: #ce0000;
+      text-align: end !important;
+      align-self: center !important;
+      margin: 2rem 0 0 4rem;
+      font-size: 20px;
+      white-space: pre;
+  }
+
   .header-h1 {
     /* color: #32CD32 !important; */
     color: #ce0000;
-    font-size: 32px;
-    margin-top: -3px !important;
-    margin-bottom: 0px !important;
+    font-size: 34px;
+    margin-top: 10px !important;
     font-weight: normal;
   } 
 
   .header-h2 {
     color: #ce0000;
-    font-size: 20px;
-    margin-top: -2px !important;
-    margin-bottom: 0px !important;
+    font-size: 21px;
     font-weight: normal;
   }
 
@@ -46,10 +58,7 @@ body {
     font-weight: normal;
     /* color: #32CD32 !important; */
     color: #ce0000;
-    font-size: 18px;
-    padding-top: 0px !important;
-    margin-top: -2px !important;
-    /* margin-left: 4.3em; */
+    font-size: 20px;
 }
 
 @media screen and (max-width: 775px) {
@@ -398,6 +407,17 @@ ul {
     padding: 0.08rem 0.16rem 0.08rem 0.16rem;
 }
 
+.p-float-label input:focus ~ label, .p-float-label input.p-filled ~ label, .p-float-label textarea:focus ~ label, .p-float-label textarea.p-filled ~ label, .p-float-label .p-inputwrapper-focus ~ label, .p-float-label .p-inputwrapper-filled ~ label {
+  top: -.75rem;
+  font-size: 13px;
+}
+
+.p-float-label > label {
+  left: 0.5rem;
+  color: #606360;
+  transition-duration: 0.2s;
+}
+
   .login-body{
     background: rgb(42 49 43 / 76%);
     margin-bottom: 7px;
@@ -454,7 +474,9 @@ ul {
 
   .login-bar {
     text-align: center;
-    color: white;
+    background: #b7e0b8;
+    border: 1px solid var(--border-default);
+    color: #157110;
     padding: 12px !important;
   }
 
@@ -775,18 +797,24 @@ body { margin: 0px; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Ro
   --foreground-light: #41474d;
 
   --background-default: #157110;
+
+  --comment-text-color: #157110;
   /* --background-secondary: #FFC90E;
   --background-tertiary: #1271cb;
   --background-light: #E05C0A; */
 
-   --border-default: 1px solid #7ED626;
+   --border-default: #7ED626;
+
+   --pi-bg-highlight: #9bd469;
 
    --panel-background: #9dca71;
 
    --button-background: #4CAF50;
-   --button-border: 1px solid #4CAF50;
+   --button-border: #4CAF50;
  
-  --border-color-default: 0.03px #a4d27d solid;
+  --border-color-default: #a4d27d;
+
+  --pi-input-box-shadow: #b7e0b8;
 
   --primary-default: #5dfdcb;
   --primary-dark: #24b286;
@@ -982,7 +1010,7 @@ h6 {
 
 .bg-div {
   background: var(--background-default);
-  border: var(--border-default);
+  border: 1px solid var(--border-default);
 }
 
 
@@ -1025,6 +1053,56 @@ h6 {
   border-color: var(--button-border);
   color: #ffffff;
 }
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  color: #495057;
+  background: var(--pi-bg-highlight);
+}
+
+.p-dropdown:not(.p-disabled):hover {
+  border-color: var(--button-background);
+}
+
+.p-dropdown:enabled:hover {
+  border-color:  var(--button-background);
+}
+
+.p-dropdown:enabled:focus {
+  box-shadow: 0 0 0 0.2rem var(--pi-input-box-shadow);
+  border-color: var(--button-background);
+}
+
+.p-dropdown:disabled:focus {
+  box-shadow: 0 0 0 0.2rem var(--pi-input-box-shadow);
+  border-color: var(--button-background);
+}
+
+.p-inputtext:enabled:hover {
+  border-color:  var(--button-background);
+}
+
+.p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem var(--pi-input-box-shadow);
+  border-color: var(--button-background);
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight {
+  border-color: var(--button-border);
+  background: var(--button-background);
+}
+
+.p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
+  border-color: var(--button-background);
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight:not(.p-disabled):hover {
+  border-color: var(--button-border);
+  background: var(--button-background);
+  color: #ffffff;
+}
+
 
 #rectangle-yellow{
   width:20px;

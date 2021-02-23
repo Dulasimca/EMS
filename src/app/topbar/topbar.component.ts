@@ -12,6 +12,7 @@ export class TopbarComponent implements OnInit {
 
   constructor(private authService: AuthService, private themeService: ThemeService) { }
   username: string;
+  tollFreeNumber: string = 'Toll-free: 8939811111';
   ngOnInit() {
     this.themeService.getActiveTheme();
   }

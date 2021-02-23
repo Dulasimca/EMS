@@ -7,6 +7,7 @@ import * as ChartDataLabels from 'chartjs-plugin-datalabels';
 import { SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Helper/PathConstants';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -49,12 +50,17 @@ export class HomeComponent implements OnInit {
   months: string[];
   maxLimitOfIncident: number;
   stepSizeOfIncident: number;
+  roleId: any;
+  userInfo: any;
+  bugStatusData: any = [];
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
-     private router: Router) { }
+    private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.preventBackButton();
+    this.userInfo = this.authService.getLoggedUser();
+    this.roleId = this.userInfo.RoleId;
     this.months = ["August", "September", "October", "November", "December",
       "January", "February", "March", "April", "May", "June", "July"
     ];
@@ -69,6 +75,13 @@ export class HomeComponent implements OnInit {
       { label: 'RM Office', value: 'RM' },
       { label: 'HeadOffice', value: 'HO' }
     ];
+    //Pie chart
+    this.restApi.get(PathConstants.BugStatus).subscribe(bugstatus => {
+      bugstatus.forEach(bs => {
+        this.bugStatusData.push({ 'name': bs.value, 'id': bs.id });
+      });
+      this.onLoadHMSChart();
+    });
     this.restApi.get(PathConstants.RegionMasterURL).subscribe(reg => {
       reg.forEach(r => {
         this.regions.push(r.REGNNAME);
@@ -95,10 +108,6 @@ export class HomeComponent implements OnInit {
       //SLA Bar chart
       this.onSLATypeChange(this.slaType);
     });
-
-    //Pie chart
-    this.onLoadHMSChart();
-
     //Line Chart
     this.restApi.getByParameters(PathConstants.MonthwiseIncidentGetURL, { 'type': 1 }).subscribe(data => {
       for (let i = 0; i < this.months.length; i++) {
@@ -123,14 +132,31 @@ export class HomeComponent implements OnInit {
   }
 
   onLoadHMSChart() {
-    this.pieLabels = ['Assigned', 'Completed', 'In-Progress', 'Open'];
+    this.bugStatusData.forEach(b => {
+      if (b.id === 7 || b.id === 6 || b.id === 5 || b.id === 2)
+        this.pieLabels.push(b.name);
+    })
+    let filteredArr = [];
     this.restApi.getByParameters(PathConstants.HMSReportURL, { 'value': 1 }).subscribe(res => {
+      if (this.roleId === 1 || this.roleId === 2) {
+        filteredArr = res;
+      } else if (this.roleId === 3) {
+        filteredArr = res.filter(f => {
+          return f.product_id === 3 || f.product_id === 4 || f.product_id === 5
+        })
+      } else if (this.roleId === 4) {
+        filteredArr = res.filter(f => {
+          return f.product_id === 4 || f.product_id === 5
+        })
+      }
       for (let i = 0; i < this.pieLabels.length; i++) {
-        res.forEach(c => {
+        let count = 0
+        filteredArr.forEach(c => {
           if (this.pieLabels[i].toLowerCase() === c.bug_status.toLowerCase()) {
-            this.bug_count.push(c.bug_count);
+            count += c.bug_count
           }
         })
+        this.bug_count.push(count);
       }
       this.pieData = {
         labels: this.pieLabels,
@@ -139,16 +165,16 @@ export class HomeComponent implements OnInit {
             label: "Percentage",
             data: this.bug_count,
             backgroundColor: [
-              "#f5953b",
-              "#4fc437",
-              "#f7ee39",
-              "#f73e3e",
+              "#00e71b",
+              "#ffc400",
+              "#1985ff",
+              "#FF0000",
             ],
             hoverBackgroundColor: [
-              "#f2851f",
-              "#3abf1f",
-              "#fff305",
-              "#ed2d2d",
+              "#00e71b",
+              "#ffc400",
+              "#1985ff",
+              "#FF0000",
             ]
           }]
       };
@@ -167,7 +193,7 @@ export class HomeComponent implements OnInit {
               sum += data;
             });
             const percentage = (value * 100 / sum);
-            const calculatedPercent = percentage !== 0 ? percentage.toFixed(2) + '%' : '';
+            const calculatedPercent = percentage !== 0 ? percentage.toFixed(0) + '%' : '';
             return calculatedPercent;
           },
           color: '#fff',
@@ -250,6 +276,17 @@ export class HomeComponent implements OnInit {
       },
       legend: {
         position: 'bottom'
+      },
+      plugins: {
+        datalabels: {
+          align: 'end',
+          anchor: 'end',
+          borderRadius: 4,
+          color: 'black',
+          font: {
+            weight: 'normal'
+          }
+        }
       }
     };
     if (value === 'SH') {

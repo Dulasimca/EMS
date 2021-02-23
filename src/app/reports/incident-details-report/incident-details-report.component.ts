@@ -55,7 +55,7 @@ export class IncidentDetailsReportComponent implements OnInit {
       { field: 'REGNNAME', header: 'Region Name' },
       { field: 'Dname', header: 'District Name' },
       { field: 'shopcode', header: 'Shop Number' },
-      { field: 'doc_date', header: 'Doc Date' },
+      { field: 'doc_date', header: 'Incident Date' },
       { field: 'reason', header: 'Reason' },
       { field: 'url_path', header: 'URL' },
       { field: 'remarks', header: 'Remarks' }
