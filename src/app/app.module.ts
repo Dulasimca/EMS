@@ -44,6 +44,8 @@ import { MasterDataService } from './masters-services/master-data.service';
 import { IncidentDetailsFormComponent } from './Documents/incident-details-form/incident-details-form.component';
 import { IncidentDetailsReportComponent } from './reports/incident-details-report/incident-details-report.component';
 import { ThemeService } from './theme/theme.service';
+import { NewTicketComponent } from './Documents/new-ticket/new-ticket.component';
+import { TicketUpdateComponent } from './Documents/ticket-update/ticket-update.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { ThemeService } from './theme/theme.service';
     EmsReportComponent,
     IncidentDetailsFormComponent,
     IncidentDetailsReportComponent,
+    NewTicketComponent,
+    TicketUpdateComponent
   ],
   imports: [
     BrowserModule,
