@@ -44,6 +44,7 @@ export class HomeComponent implements OnInit {
   components: any[] = [];
   nmsBarType: string;
   shops: any = [];
+  total_shops: any = [];
   pieLabels: string[] = [];
   bug_count: any = [];
   incidents: any = [];
@@ -94,7 +95,10 @@ export class HomeComponent implements OnInit {
         this.components.push({ name: c.name, id: c.product_id });
       });
       this.restApi.getByParameters(PathConstants.ShopsGetURL, { 'type': 1 }).subscribe(shop => {
-        shop.forEach(s => {
+        shop.Table1.forEach(t => {
+          this.total_shops.push({ 'count': t.shopcount, 'status': t.installation_status});
+        })
+        shop.Table.forEach(s => {
           var str: string = s.district;
           var firstStr = str.slice(0, 1).toUpperCase();
           var secondStr = str.slice(1, str.length).toLowerCase();
@@ -465,17 +469,32 @@ export class HomeComponent implements OnInit {
     } else {
       this.NMSLabels = ['Shops'];
       this.nmsBarType = 'horizontalBar';
+      var dataset1 = [];
+      var dataset2 = [];
+      var bgColor: string[] = [];
+      var installed = 0;
+      var not_installed = 0;
+      this.total_shops.forEach(t => {
+        if (t.status) {
+          installed = t.count;
+        } else {
+          not_installed = t.count;
+        }
+    })
+        dataset1.push(installed);
+        dataset2.push(not_installed);
+        // dataset.push(t.count);
       this.nmsBarData = {
         labels: this.NMSLabels,
         datasets: [
           {
             label: "Running (in No's)",
-            data: [3000],
+            data: dataset1,
             backgroundColor: '#52c91e',
           },
           {
             label: "Not Running (in No's)",
-           // data: [0],
+            data: (not_installed === 0) ? null : dataset2,
             backgroundColor: '#fc2121',
           }
         ]
