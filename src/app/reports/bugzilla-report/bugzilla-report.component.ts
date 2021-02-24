@@ -53,12 +53,14 @@ export class BugzillaReportComponent implements OnInit {
       if (data !== undefined && data !== null && data.length !== 0) {
         this.bugzillaData = data;
         if (index !== undefined && index !== null) {
-          this.bugzillaData = this.bugzillaData.filter(y => {
+          var data = this.bugzillaData.filter(y => {
             return (index === '3' && (y.status_code === 8 || y.status_code === 2))
               || (index === '2' && y.status_code === 5)
               || (index === '1' && y.status_code === 6)
               || (index === '0' && (y.status_code === 7 || y.status_code === 4))
           })
+          this.bugzillaData = data;
+          console.log('data', data);
         }
         this.loading = false;
       } else {

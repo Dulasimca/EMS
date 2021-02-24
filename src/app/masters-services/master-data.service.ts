@@ -80,7 +80,7 @@ export class MasterDataService {
     this.cc = [];
     this.restApiService.get(PathConstants.ComponentCC).subscribe(cc => {
       cc.forEach(cc => {
-        this.cc.push({ 'name': cc.login_name, 'id': cc.component_id });
+        this.cc.push({ 'name': cc.login_name, 'id': cc.component_id, 'assignee': cc.realname });
       });
     });
     return this.cc;

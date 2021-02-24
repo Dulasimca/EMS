@@ -88,7 +88,7 @@ export class TicketUpdateComponent implements OnInit {
       case 'Status':
         if (this.bugStatusData.length !== 0) {
           this.bugStatusData.forEach(bs => {
-            statusSeletion.push({ label: bs.name, id: bs.id });
+            statusSeletion.push({ label: bs.name, value: bs.id });
           });
           this.StatusOptions = statusSeletion;
           this.StatusOptions.unshift({ label: '-select-', value: null });
@@ -162,7 +162,7 @@ export class TicketUpdateComponent implements OnInit {
     this.TicketDescription = event.data.TicketDescription;
     this.ComponentDescription = (event.data.description !== undefined && event.data.description !== null) ? event.data.description : '';
     this.StatusOptions = [{ label: event.data.Status, value: event.data.status_code }];
-    this.Status = event.data.Status;
+    this.Status = [{ label: event.data.Status, value: event.data.status_code }];
     this.StatusCode = event.data.status_code;
     this.onTD();
     this.showDialog = true;
@@ -225,8 +225,8 @@ export class TicketUpdateComponent implements OnInit {
         'ShopCode': this.ShopName,
         'Component': this.Component,
         'Asignee': this.Assignee,
-        'Status': (this.Status.label === undefined) ? this.Status : this.Status.label,
-        'StatusCode': (this.Status.value === undefined) ? this.StatusCode : this.Status.value,
+        'Status': (this.Status.label !== undefined && this.Status.label !== null) ? this.Status.label : this.Status,
+        'StatusCode': (this.Status.value !== undefined && this.Status.value !== null) ? this.Status.value : this.StatusCode ,
         'ComponentDescription': this.ComponentDescription,
         'TicketDescription': this.TicketDescription,
         'Subject': this.Subject,
@@ -239,7 +239,7 @@ export class TicketUpdateComponent implements OnInit {
         'short_desc': this.Subject,
         'URL': "Tasmac-hms.com",
         'CC': this.DefaultCC,
-        'StatusCode': (this.Status.value === undefined) ? this.StatusCode : this.Status.value,
+        'StatusCode': (this.Status.value !== undefined && this.Status.value !== null) ? this.Status.value : this.StatusCode ,
         //mailsending
         'bodyMessage': bodyparams
 

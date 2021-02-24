@@ -181,7 +181,7 @@ export class NewTicketComponent implements OnInit {
       this.CCData.forEach(bs => {
         if (bs.id === this.compId.value) {
           this.DefaultTo = bs.name;
-          this.Assignee = bs.assiginee;
+          this.Assignee = bs.assignee;
         }
       });
     }

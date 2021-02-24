@@ -470,12 +470,12 @@ export class HomeComponent implements OnInit {
         datasets: [
           {
             label: "Running (in No's)",
-            data: [1000],
+            data: [3000],
             backgroundColor: '#52c91e',
           },
           {
             label: "Not Running (in No's)",
-            data: [2000],
+           // data: [0],
             backgroundColor: '#fc2121',
           }
         ]
