@@ -26,6 +26,8 @@ export class MenubarComponent implements OnInit {
           {
             label: 'NMS-Form', routerLink: '/nms-sla'
           },
+          { label: 'New Ticket', icon: '', routerLink: '/NewTicket' },
+          { label: 'Update Ticket', routerLink: '/TicketUpdate' },
           // {
           //   label: 'Incident-Form', routerLink: '/incident-form'
           // }

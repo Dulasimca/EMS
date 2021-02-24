@@ -8,6 +8,9 @@ import { NMSSLAFormComponent } from './Documents/nms-sla-form/nms-sla-form.compo
 import { EmsReportComponent } from './reports/ems-report/ems-report.component';
 import { IncidentDetailsFormComponent } from './Documents/incident-details-form/incident-details-form.component';
 import { IncidentDetailsReportComponent } from './reports/incident-details-report/incident-details-report.component';
+import { NewTicketComponent } from './Documents/new-ticket/new-ticket.component';
+import { TicketUpdateComponent } from './Documents/ticket-update/ticket-update.component';
+import { AllIncidentReportComponent } from './reports/all-incident-report/all-incident-report.component';
 
 
 const routes: Routes = [
@@ -19,6 +22,9 @@ const routes: Routes = [
   { path: 'nms-report', component: EmsReportComponent, canActivate: [AuthGuard] },
   { path: 'incident-form', component: IncidentDetailsFormComponent, canActivate: [AuthGuard] },
   { path: 'incident-report', component: IncidentDetailsReportComponent, canActivate: [AuthGuard] },
+  { path: 'NewTicket', component: NewTicketComponent, canActivate: [AuthGuard] },
+  { path: 'TicketUpdate', component: TicketUpdateComponent, canActivate: [AuthGuard] },
+  { path: 'all-incident-report', component: AllIncidentReportComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

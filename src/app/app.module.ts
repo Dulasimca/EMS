@@ -38,7 +38,7 @@ import { BugzillaReportComponent } from './reports/bugzilla-report/bugzilla-repo
 import { ScreenReaderComponent } from './screen-reader/screen-reader.component';
 import { NMSSLAFormComponent } from './Documents/nms-sla-form/nms-sla-form.component';
 import { DatePipe } from '@angular/common';
-import { MessageService, PrimeNGConfig, FilterService } from 'primeng/api';
+import { FilterService, MessageService, PrimeNGConfig } from 'primeng/api';
 import { EmsReportComponent } from './reports/ems-report/ems-report.component';
 import { MasterDataService } from './masters-services/master-data.service';
 import { IncidentDetailsFormComponent } from './Documents/incident-details-form/incident-details-form.component';
@@ -46,6 +46,7 @@ import { IncidentDetailsReportComponent } from './reports/incident-details-repor
 import { ThemeService } from './theme/theme.service';
 import { NewTicketComponent } from './Documents/new-ticket/new-ticket.component';
 import { TicketUpdateComponent } from './Documents/ticket-update/ticket-update.component';
+import { AllIncidentReportComponent } from './reports/all-incident-report/all-incident-report.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { TicketUpdateComponent } from './Documents/ticket-update/ticket-update.c
     IncidentDetailsFormComponent,
     IncidentDetailsReportComponent,
     NewTicketComponent,
-    TicketUpdateComponent
+    TicketUpdateComponent,
+    AllIncidentReportComponent,
   ],
   imports: [
     BrowserModule,

@@ -69,7 +69,7 @@ export class NewTicketComponent implements OnInit {
 
   ngOnInit() {
     this.showCloseDate = false;
-    this.login_User = JSON.parse(this.authService.getLoggedUser());
+    this.login_User = this.authService.getLoggedUser();
     this.districtsData = this.masterDataService.getDistricts();
     this.regionsData = this.masterDataService.getRegions();
     this.locationsData = this.masterDataService.getProducts();

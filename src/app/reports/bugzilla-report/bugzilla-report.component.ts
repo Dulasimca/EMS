@@ -51,12 +51,7 @@ export class BugzillaReportComponent implements OnInit {
     this.loading = true;
     this.restApi.get(PathConstants.HMSReportURL).subscribe(data => {
       if (data !== undefined && data !== null && data.length !== 0) {
-        let sno = 1;
         this.bugzillaData = data;
-        this.bugzillaData.forEach(x => {
-          x.SlNo = sno;
-          sno += 1;
-        });
         if (index !== undefined && index !== null) {
           this.bugzillaData = this.bugzillaData.filter(y => {
             return (index === '3' && (y.status_code === 8 || y.status_code === 2))
@@ -64,16 +59,11 @@ export class BugzillaReportComponent implements OnInit {
               || (index === '1' && y.status_code === 6)
               || (index === '0' && (y.status_code === 7 || y.status_code === 4))
           })
-          let slno = 1;
-          this.bugzillaData.forEach(x => {
-            x.SlNo = slno;
-            slno += 1;
-          });
         }
         this.loading = false;
       } else {
         this.loading = false;
-        this.bugzillaData = [];
+        this.table.reset();
         this.messageService.clear();
         this.messageService.add({
           key: 't-err', severity: 'error',
@@ -81,6 +71,8 @@ export class BugzillaReportComponent implements OnInit {
         });
       }
     }, (err: HttpErrorResponse) => {
+      this.loading = false;
+      this.table.reset();
       if (err.status === 0 || err.status === 400) {
         this.messageService.clear();
         this.messageService.add({

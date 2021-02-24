@@ -10,7 +10,8 @@
             <div class="p-grid">
                 <div class="p-col-12 p-md-12 p-lg-12" style="display: flex;">
                     <div class="p-col-12 p-md-12 p-lg-12 border-color card border-color">
-                        <div class="header-line">Enterprise Management System</div>
+                        <div class="header-line-l1">Enterprise Management System</div>
+                        <div class="header-line">CCTV Camera Installation Status</div>
                         <div>
                             <p-selectButton [options]="nmsTypeOptions" [(ngModel)]="nmsType"
                                 (onChange)="onNMSTypeChange(nmsType)"></p-selectButton>
@@ -37,7 +38,7 @@
                         <div class="header-line">Helpdesk Management Ticket Status</div>
                         <div class="padding-gap">
                             <p-chart type="pie" [data]="pieData" [plugins]="plugin" [options]="pieOptions"
-                                (onDataSelect)="selectData($event)"></p-chart>
+                                (onDataSelect)="selectData($event, 'P')"></p-chart>
                         </div>
                     </div>
                 </div>
@@ -45,7 +46,7 @@
                     <div class="p-col-12 p-md-12 p-lg-12 border-color card border-color">
                         <div class="header-line">Incident Status</div>
                         <p-chart type="line" [data]="incidentLineData" width="auto" height="60vh" [plugins]="plugin"
-                            [options]="incidentLineOptions">
+                            [options]="incidentLineOptions" (onDataSelect)="selectData($event, 'L')">
                         </p-chart>
                     </div>
                 </div>

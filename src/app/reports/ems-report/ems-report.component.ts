@@ -95,7 +95,7 @@ export class EmsReportComponent implements OnInit {
           this.loading = false;
         } else {
           this.loading = false;
-          this.nmsData = [];
+          this.table.reset();
           this.messageService.clear();
           this.messageService.add({
             key: 'msgKey', severity: 'warn',
@@ -103,6 +103,8 @@ export class EmsReportComponent implements OnInit {
           });
         }
       }, (err: HttpErrorResponse) => {
+        this.loading = false;
+        this.table.reset();
         if (err.status === 0 || err.status === 400) {
           this.messageService.clear();
           this.messageService.add({

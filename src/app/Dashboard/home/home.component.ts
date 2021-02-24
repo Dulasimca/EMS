@@ -66,14 +66,14 @@ export class HomeComponent implements OnInit {
     ];
     this.slaTypeOptions = [
       { label: 'Retail Shop', value: 'SH' },
-      { label: 'DM Office', value: 'DM' },
-      { label: 'RM Office', value: 'RM' },
-      { label: 'HeadOffice', value: 'HO' }
+      { label: 'District wise', value: 'DM' },
+      { label: 'Regional wise', value: 'RM' },
+      { label: 'Total', value: 'HO' }
     ];
     this.nmsTypeOptions = [
-      { label: 'DM Office', value: 'DM' },
-      { label: 'RM Office', value: 'RM' },
-      { label: 'HeadOffice', value: 'HO' }
+      { label: 'District wise', value: 'DM' },
+      { label: 'Regional wise', value: 'RM' },
+      { label: 'Total', value: 'HO' }
     ];
     //Pie chart
     this.restApi.get(PathConstants.BugStatus).subscribe(bugstatus => {
@@ -138,6 +138,13 @@ export class HomeComponent implements OnInit {
     })
     let filteredArr = [];
     this.restApi.getByParameters(PathConstants.HMSReportURL, { 'value': 1 }).subscribe(res => {
+      res.forEach(x => {
+        if (x.status_code === 8) {
+          x.bug_status = 'OPEN';
+        } else if (x.status_code === 4) {
+          x.bug_status = 'COMPLETED';
+        }
+      })
       if (this.roleId === 1 || this.roleId === 2) {
         filteredArr = res;
       } else if (this.roleId === 3) {
@@ -499,9 +506,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  selectData(event) {
+  selectData(event, type) {
     const index: string = event.element._index;
+    if(type === 'P') {
     this.router.navigate(['bugzilla'], { queryParams: { id: index, si: true } });
+    } else if(type === 'L') {
+      this.router.navigate(['all-incident-report'], { queryParams: { id: index, si: true } });
+    }
   }
 
   preventBackButton() {

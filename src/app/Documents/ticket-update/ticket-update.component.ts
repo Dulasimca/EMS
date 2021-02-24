@@ -55,7 +55,7 @@ export class TicketUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.bugStatusData = this.masterDataService.getBugStatus();
-    this.login_User = JSON.parse(this.authService.getLoggedUser());
+    this.login_User = this.authService.getLoggedUser();
     this.onTicket();
     // this.onTD();
     this.TicketReportCols = [
