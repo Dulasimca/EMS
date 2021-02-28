@@ -22,6 +22,7 @@ import { BlockUIModule } from 'primeng/blockui';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { MenubarModule } from 'primeng/menubar';
 import { DialogModule } from 'primeng/dialog';
+import { TabViewModule } from 'primeng/tabview';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -47,6 +48,7 @@ import { ThemeService } from './theme/theme.service';
 import { NewTicketComponent } from './Documents/new-ticket/new-ticket.component';
 import { TicketUpdateComponent } from './Documents/ticket-update/ticket-update.component';
 import { AllIncidentReportComponent } from './reports/all-incident-report/all-incident-report.component';
+import { ShopLiveDetailsComponent } from './Documents/shop-live-details/shop-live-details.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { AllIncidentReportComponent } from './reports/all-incident-report/all-in
     NewTicketComponent,
     TicketUpdateComponent,
     AllIncidentReportComponent,
+    ShopLiveDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -92,7 +95,8 @@ import { AllIncidentReportComponent } from './reports/all-incident-report/all-in
     BlockUIModule,
     SplitButtonModule,
     MenubarModule,
-    DialogModule
+    DialogModule,
+    TabViewModule
   ],
   providers: [AuthService, RestAPIService, DatePipe, MessageService, MasterDataService, ThemeService,
     PrimeNGConfig, FilterService, RadioControlRegistry],

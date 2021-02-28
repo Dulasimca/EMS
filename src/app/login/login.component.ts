@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
     this.isSubmitted = true;
     this.restApiService.getByParameters(PathConstants.LoginURL, { 'username': this.username }).subscribe(credentials => {
       if (credentials.length !== 0 && credentials !== null && credentials !== undefined) {
+        if(credentials[0].role_id !== 3 && credentials[0].role_id !== 4) {
         if (this.username.toLowerCase().trim() === credentials[0].login_name.toLowerCase().trim() &&
           this.password.toLowerCase().trim() === credentials[0].userpwd.toLowerCase().trim()) {
           var obj = this.loginForm.value;
@@ -69,6 +70,13 @@ export class LoginComponent implements OnInit {
           summary: 'Error Message', detail: 'Invalid user!'
         });
       }
+    } else {
+      this.messageService.clear();
+      this.messageService.add({
+        key: 't-err', severity: 'error',
+        summary: 'Error Message', detail: 'Please contact administrator!'
+      });
+    }
     }, (err: HttpErrorResponse) => {
       if (err.status === 0 || err.status === 400) {
         this.messageService.clear();

@@ -22,6 +22,8 @@ export const light_y: Theme = {
 
     "--panel-background": "#f5d049",
 
+    "--tabview-nav-bgcolor": "#fff0bb",
+
     "--button-background": "#fcd23d",
     "--button-border": "#f1c629",
 
@@ -62,6 +64,8 @@ export const dark_g: Theme = {
 
     "--border-color-default": "#a4d27d",
 
+    "--tabview-nav-bgcolor": "#b6eab6",
+
     "--button-background": "#4CAF50",
     "--button-border": "#4CAF50",
 
@@ -90,16 +94,18 @@ export const dark_b: Theme = {
 
     "--comment-text-color": "#1271cb",
 
+    "--tabview-nav-bgcolor": "#c6eafd",
+
     "--button-background": "#2b8fec",
     "--button-border": "#1f78ca",
 
-    "--border-color-default": "#60affa",
+    "--border-color-default": "#a5d0f9",
 
     "--pi-input-box-shadow": "#749ffc",
 
     "--pi-bg-highlight": "#5dc0f7",
 
-    "--border-default": "#2d91ee;",
+    "--border-default": "#2d91ee",
 
     "--panel-background": "#49a5fc",
 
@@ -128,7 +134,9 @@ export const light_r: Theme = {
 
     "--comment-text-color": "#f77403",
 
-    "--border-color-default": "#fa9455",
+    "--border-color-default": "#fdaf7f",
+
+    "--tabview-nav-bgcolor": "#ffe0ba",
 
     "--border-default": "#ec7830",
 

@@ -90,20 +90,30 @@ export class HomeComponent implements OnInit {
       //NMS Bar chart
       this.onNMSTypeChange(this.nmsType);
     })
+
+    this.restApi.get(PathConstants.DistrictMasterURL).subscribe(dist => {
+      dist.forEach(d => {
+        this.districts.push({'name': d.Dname, 'code': d.Dcode });
+      })
+      //NMS Bar chart
+      this.onNMSTypeChange(this.nmsType); 
+     })
     this.restApi.get(PathConstants.ComponentsURL).subscribe((comp: any) => {
       comp.forEach(c => {
         this.components.push({ name: c.name, id: c.product_id });
       });
       this.restApi.getByParameters(PathConstants.ShopsGetURL, { 'type': 1 }).subscribe(shop => {
+        /// total shop count
         shop.Table1.forEach(t => {
           this.total_shops.push({ 'count': t.shopcount, 'status': t.installation_status});
         })
+        /// district wise shop count
         shop.Table.forEach(s => {
-          var str: string = s.district;
-          var firstStr = str.slice(0, 1).toUpperCase();
-          var secondStr = str.slice(1, str.length).toLowerCase();
-          str = firstStr + secondStr;
-          this.districts.push(str);
+          // var str: string = s.district;
+          // var firstStr = str.slice(0, 1).toUpperCase();
+          // var secondStr = str.slice(1, str.length).toLowerCase();
+          // str = firstStr + secondStr;
+          // this.districts.push(str);
           this.shops.push({ 'count': s.shopcount, 'status': s.installation_status, 'dcode': s.dcode });
           //NMS Bar chart
           this.onNMSTypeChange(this.nmsType);
@@ -377,32 +387,43 @@ export class HomeComponent implements OnInit {
 
   onNMSTypeChange(value) {
     if (value === 'DM') {
-      this.NMSLabels = this.districts;
+      var labels = [];
+      this.districts.forEach(d => {
+        labels.push(d.name);
+      })
+      this.NMSLabels = labels;
       this.nmsBarType = 'bar';
-      var dataset = [];
-      var bgColor: string[] = [];
+      var dataset1 = [];
+      var dataset2 = [];
+      // var bgColor: string[] = [];
       this.shops.forEach(s => {
         if (s.status) {
-          bgColor.push('#52c91e');
+          dataset1.push(s.count);
         } else {
-          bgColor.push('#fc2121');
+          this.districts.forEach(d => {
+            if(d.code === s.dcode) {
+              dataset2.push(s.count);
+            } else {
+              dataset2.push(null);
+            }
+          })
         }
-        dataset.push(s.count);
-        this.nmsBarData = {
+      })
+      this.nmsBarData = {
           labels: this.NMSLabels,
           datasets: [
             {
               label: "Running (in No's)",
-              data: dataset,
-              backgroundColor: bgColor,
+              data: dataset1,
+              backgroundColor: '#52c91e',
             },
             {
               label: "Not Running (in No's)",
-              backgroundColor: '#52c91e',
+              data: dataset2,
+              backgroundColor: '#fc2121',
             }
           ]
         }
-      })
       this.nmsBarOptions = {
         scales: {
           xAxes: [{

@@ -11,6 +11,7 @@ import { IncidentDetailsReportComponent } from './reports/incident-details-repor
 import { NewTicketComponent } from './Documents/new-ticket/new-ticket.component';
 import { TicketUpdateComponent } from './Documents/ticket-update/ticket-update.component';
 import { AllIncidentReportComponent } from './reports/all-incident-report/all-incident-report.component';
+import { ShopLiveDetailsComponent } from './Documents/shop-live-details/shop-live-details.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'incident-report', component: IncidentDetailsReportComponent, canActivate: [AuthGuard] },
   { path: 'NewTicket', component: NewTicketComponent, canActivate: [AuthGuard] },
   { path: 'TicketUpdate', component: TicketUpdateComponent, canActivate: [AuthGuard] },
-  { path: 'all-incident-report', component: AllIncidentReportComponent, canActivate: [AuthGuard] }
+  { path: 'all-incident-report', component: AllIncidentReportComponent, canActivate: [AuthGuard] },
+  { path: 'camera-live-details-form', component: ShopLiveDetailsComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

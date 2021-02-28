@@ -20,5 +20,6 @@ export class PathConstants {
     public static readonly MYTicket = '/api/TicketDescription/Get';
     public static readonly TicketDescription = '/api/TicketDescription/Post';
     public static readonly UpdateTicket = '/api/InsertNewTicket/Put';
-
+    public static readonly CameraLiveDetailsPost = '/api/InsertCameraStatus/Post';
+    public static readonly CameraLiveDetailsGet = '/api/InsertCameraStatus/Get';
 }

@@ -9,22 +9,44 @@
         <div id="main" class="p-col-12 p-md-12 p-lg-12 no-pad-top" style="margin-bottom: -10px;">
             <div class="p-grid">
                 <div class="p-col-12 dashboard-header">
-                    <h2 class="header-line-h2" style="margin-top: 1px !important; margin-bottom: 1px;">Enterprise Management System
+                    <h2 class="header-line-h2" style="margin-top: 1px !important; margin-bottom: 1px;">Enterprise
+                        Management System
                     </h2>
                 </div>
-                <div class="p-col-12 p-md-12 p-lg-12 no-pad-top" style="display: flex;">
-                    <div class="p-col-12 p-md-12 p-lg-12 border-color card border-color">
-                        <div class="header-line">CCTV Camera Installation Status</div>
-                        <div>
-                            <p-selectButton [options]="nmsTypeOptions" [(ngModel)]="nmsType"
-                                (onChange)="onNMSTypeChange(nmsType)"></p-selectButton>
+                <div class="p-col-12 p-md-12 p-lg-12 no-pad-bottom">
+                <p-tabView>
+                    <p-tabPanel header="CCTV Status">
+                        <div class="p-col-12 p-md-12 p-lg-12 no-pad" style="display: flex;">
+                            <div class="p-col-12 p-md-12 p-lg-12 border-color card border-color">
+                                <div class="header-line">CCTV Camera Installation Status</div>
+                                <div>
+                                    <p-selectButton [options]="nmsTypeOptions" [(ngModel)]="nmsType"
+                                        (onChange)="onNMSTypeChange(nmsType)"></p-selectButton>
+                                </div>
+                                <p-chart type={{nmsBarType}} [data]="nmsBarData" width="auto" height="60vh"
+                                    [plugins]="plugin" [options]="nmsBarOptions">
+                                </p-chart>
+                            </div>
                         </div>
-                        <p-chart type={{nmsBarType}} [data]="nmsBarData" width="auto" height="60vh" [plugins]="plugin"
-                            [options]="nmsBarOptions">
-                        </p-chart>
-                    </div>
-                </div>
-                <div class="p-col-12 p-md-6 p-lg-6 no-pad-top no-pad-right" style="display: flex;">
+                    </p-tabPanel>
+                    <p-tabPanel header="CCTV Live Status">
+                        <div class="p-col-12 p-md-12 p-lg-12 no-pad" style="display: flex;">
+                            <div class="p-col-12 p-md-12 p-lg-12 border-color card border-color">
+                                <div class="header-line">Live - CCTV Camera Installation Status</div>
+                                <div>
+                                    <p-selectButton [options]="nmsTypeOptions" [(ngModel)]="nmsType"
+                                        (onChange)="onNMSTypeChange(nmsType)">
+                                    </p-selectButton>
+                                </div>
+                                <p-chart type={{nmsBarType}} [data]="nmsBarData" width="auto" height="60vh"
+                                    [plugins]="plugin" [options]="nmsBarOptions">
+                                </p-chart>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+                <div class="p-col-12 p-md-6 p-lg-6 no-pad-top no-pad-right" style="display: flex;padding-left: 15px;">
                     <div class="p-col-12 p-md-12 p-lg-12 card border-color">
                         <div class="header-line">SLA Status</div>
                         <div class="padding-gap">
@@ -36,7 +58,7 @@
                         </p-chart>
                     </div>
                 </div>
-                <div class="p-col-12 p-md-6 p-lg-6 no-pad-top no-pad-left" style="display: flex;">
+                <div class="p-col-12 p-md-6 p-lg-6 no-pad-top no-pad-left" style="display: flex;padding-right: 15px;">
                     <div class="p-col-12 p-md-12 p-lg-12 card border-color">
                         <div class="header-line">Helpdesk Management Ticket Status</div>
                         <div class="padding-gap">
@@ -45,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="p-col-12 p-md-12 p-lg-12" style="display: flex;">
+                <div class="p-col-12 p-md-12 p-lg-12" style="display: flex;padding: 0 15px 0 15px;">
                     <div class="p-col-12 p-md-12 p-lg-12 border-color card border-color">
                         <div class="header-line">Incident Status</div>
                         <p-chart type="line" [data]="incidentLineData" width="auto" height="60vh" [plugins]="plugin"
