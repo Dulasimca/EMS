@@ -618,8 +618,8 @@ export class HomeComponent implements OnInit {
     })
     this.CameraLabels = labels;
     var len = this.districts.length - 1;
-    var dataset1 = new Array(len);
-    var dataset2 = new Array(len);
+    var dataset1 = [];
+    var dataset2 = [];
 
     console.log('d', dataset1, dataset2);
     for (let i = 0; i < this.districts.length; i++) {

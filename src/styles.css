@@ -1065,6 +1065,12 @@ h6 {
   width: 12.5rem;
 }
 
+.p-menubar .p-submenu-list {
+  display: none;
+  position: absolute;
+  z-index: 100 !important;
+}
+
 .p-menubar .p-menuitem.p-menuitem-active > .p-menuitem-link {
   background: var(--background-default);
 }
