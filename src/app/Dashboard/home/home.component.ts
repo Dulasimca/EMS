@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
   slaType: string = 'SH';
   nmsType: string = 'DM';
   districts: any = [];
-  regions: string[] = [];
+  regions: any = [];
   components: any[] = [];
   nmsBarType: string;
   shops: any = [];
@@ -58,6 +58,7 @@ export class HomeComponent implements OnInit {
   CameraLabels: string[] = [];
   cameraBarData: any;
   cameraBarOptions: any;
+  region_wise_shops: any = [];
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
     private router: Router, private authService: AuthService) { }
@@ -92,7 +93,7 @@ export class HomeComponent implements OnInit {
     });
     this.restApi.get(PathConstants.RegionMasterURL).subscribe(reg => {
       reg.forEach(r => {
-        this.regions.push(r.REGNNAME);
+        this.regions.push({ 'name': r.REGNNAME, 'code': r.REGNCODE });
       })
       //NMS Bar chart
       this.onNMSTypeChange(this.nmsType);
@@ -113,6 +114,10 @@ export class HomeComponent implements OnInit {
         /// total shop count
         shop.Table1.forEach(t => {
           this.total_shops.push({ 'count': t.shopcount, 'status': t.installation_status });
+        })
+        ///region wise shop count
+        shop.Table2.forEach(r => {
+          this.region_wise_shops.push({ 'count': r.shopcount, 'status': r.installation_status, 'rcode': r.rcode  })
         })
         /// district wise shop count
         shop.Table.forEach(s => {
@@ -473,22 +478,52 @@ export class HomeComponent implements OnInit {
         }
       };
     } else if (value === 'RM') {
-      this.NMSLabels = this.regions;
+      var labels = [];
+      this.regions.forEach(d => {
+        labels.push(d.name);
+      })
+      this.NMSLabels = labels;
       this.nmsBarType = 'bar';
+      var dataset1 = [];
+      var dataset2 = [];
+      // var bgColor: string[] = [];
+      this.region_wise_shops.forEach(s => {
+        if (s.status) {
+          dataset1.push(s.count);
+        } else {
+          this.regions.forEach(d => {
+            if (d.code === s.dcode) {
+              dataset2.push(s.count);
+            } else {
+              dataset2.push(null);
+            }
+          })
+        }
+      })
       this.nmsBarData = {
         labels: this.NMSLabels,
         datasets: [
           {
-            label: "No's",
-            data: [65, 59, 80, 81, 60, 88],
+            label: "Running (in No's)",
+            data: dataset1,
             backgroundColor: '#52c91e',
+          },
+          {
+            label: "Not Running (in No's)",
+            data: dataset2,
+            backgroundColor: '#fc2121',
           }
         ]
       }
+
       this.nmsBarOptions = {
         scales: {
           xAxes: [{
-            barPercentage: 0.15
+            barPercentage: 0.15,
+            stacked: true
+          }],
+          yAxes: [{
+            stacked: true
           }]
         },
         title: {
@@ -497,6 +532,24 @@ export class HomeComponent implements OnInit {
         },
         legend: {
           position: 'bottom'
+        },
+        plugins: {
+          datalabels: {
+            /* show value inside stacked bar */
+            formatter: (value, ctx) => {
+              let sum = 0;
+              for (let i = 0; i <= ctx.chart.data.datasets.length; i++) {
+                const dataArr = ctx.chart.data.datasets[i].data;
+                dataArr.map(data => {
+                  sum += data;
+                });
+                var data = (value !== 0) ? value : '';
+                return data;
+              }
+            },
+            color: "#000000",
+            fontSize: 14
+          }
         }
       };
     } else {
@@ -504,9 +557,8 @@ export class HomeComponent implements OnInit {
       this.nmsBarType = 'horizontalBar';
       var dataset1 = [];
       var dataset2 = [];
-      var bgColor: string[] = [];
-      var installed = 0;
-      var not_installed = 0;
+      var installed = null;
+      var not_installed = null;
       this.total_shops.forEach(t => {
         if (t.status) {
           installed = t.count;
@@ -527,7 +579,7 @@ export class HomeComponent implements OnInit {
           },
           {
             label: "Not Running (in No's)",
-            data: (not_installed === 0) ? null : dataset2,
+            data: dataset2,
             backgroundColor: '#fc2121',
           }
         ]
