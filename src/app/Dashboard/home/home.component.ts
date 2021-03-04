@@ -54,6 +54,10 @@ export class HomeComponent implements OnInit {
   roleId: any;
   userInfo: any;
   bugStatusData: any = [];
+  camera_count: any = [];
+  CameraLabels: string[] = [];
+  cameraBarData: any;
+  cameraBarOptions: any;
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
     private router: Router, private authService: AuthService) { }
@@ -112,11 +116,6 @@ export class HomeComponent implements OnInit {
         })
         /// district wise shop count
         shop.Table.forEach(s => {
-          // var str: string = s.district;
-          // var firstStr = str.slice(0, 1).toUpperCase();
-          // var secondStr = str.slice(1, str.length).toLowerCase();
-          // str = firstStr + secondStr;
-          // this.districts.push(str);
           this.shops.push({ 'count': s.shopcount, 'status': s.installation_status, 'dcode': s.dcode });
           //NMS Bar chart
           this.onNMSTypeChange(this.nmsType);
@@ -125,6 +124,12 @@ export class HomeComponent implements OnInit {
       //SLA Bar chart
       this.onSLATypeChange(this.slaType);
     });
+    this.restApi.get(PathConstants.CameraCountGet).subscribe(total => {
+      total.forEach(t => {
+        this.camera_count.push({ 'count': t.count, 'status': t.isActive, 'dcode': t.DCode });
+      })
+      this.onLoadCameraStatus();
+    })
     //Line Chart
     this.restApi.getByParameters(PathConstants.MonthwiseIncidentGetURL, { 'type': 1 }).subscribe(data => {
       for (let i = 0; i < this.months.length; i++) {
@@ -551,6 +556,90 @@ export class HomeComponent implements OnInit {
         }
       };
     }
+  }
+
+  onLoadCameraStatus() {
+    var labels = [];
+    var cam_district = [];
+    this.districts.forEach(d => {
+      labels.push(d.name);
+    })
+    this.CameraLabels = labels;
+    var len = this.districts.length - 1;
+    var dataset1 = new Array(len);
+    var dataset2 = new Array(len);
+
+    console.log('d', dataset1, dataset2);
+    for (let i = 0; i < this.districts.length; i++) {
+      for (let j = 0; j < this.camera_count.length; j++) {
+        if (this.camera_count[j].status === 1) {
+          if (this.camera_count[j].dcode === this.districts[i].code) {
+            dataset1[i] = this.camera_count[j].count;
+            break;
+          } else {
+            dataset1[i] = null;
+          }
+        } else {
+          if (this.camera_count[j].dcode === this.districts[i].code) {
+            dataset2[i] = this.camera_count[j].count;
+            // break;
+          } else {
+            dataset2[i] = null;
+          }
+        }
+      }
+    }
+    this.cameraBarData = {
+      labels: this.CameraLabels,
+      datasets: [
+        {
+          label: "Running (in No's)",
+          data: dataset1,
+          backgroundColor: '#52c91e',
+        },
+        {
+          label: "Not Running (in No's)",
+          data: dataset2,
+          backgroundColor: '#fc2121',
+        }
+      ]
+    }
+    this.cameraBarOptions = {
+      scales: {
+        xAxes: [{
+          barPercentage: 0.80,
+          stacked: true
+        }],
+        yAxes: [{
+          stacked: true
+        }]
+      },
+      title: {
+        display: true,
+        fontSize: 16
+      },
+      legend: {
+        position: 'bottom'
+      },
+      plugins: {
+        datalabels: {
+          /* show value inside stacked bar */
+          formatter: (value, ctx) => {
+            let sum = 0;
+            for (let i = 0; i <= ctx.chart.data.datasets.length; i++) {
+              const dataArr = ctx.chart.data.datasets[i].data;
+              dataArr.map(data => {
+                sum += data;
+              });
+              var data = (value !== 0) ? value : '';
+              return data;
+            }
+          },
+          color: "#000000",
+          fontSize: 14
+        }
+      }
+    };
   }
 
   selectData(event, type) {
