@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MessageService, SelectItem } from 'primeng/api';
-import { Table } from 'primeng/table';
+import { Table } from 'primeng/table/table';
 import { PathConstants } from 'src/app/Helper/PathConstants';
 import { MasterDataService } from 'src/app/masters-services/master-data.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -43,8 +43,10 @@ export class ShopLiveDetailsComponent implements OnInit {
   showDialog: boolean;
   btn_label: string;
   @ViewChild('dt', { static: false }) table: Table;
+  disableDM: boolean;
+  isEdited: any;
 
-  constructor(private authService: AuthService, private masterDataService: MasterDataService, 
+  constructor(private authService: AuthService, private masterDataService: MasterDataService,
     private datepipe: DatePipe, private restApiService: RestAPIService, private messageService: MessageService) { }
 
   ngOnInit() {
@@ -99,15 +101,15 @@ export class ShopLiveDetailsComponent implements OnInit {
           this.districtOptions.unshift({ label: '-select-', value: null });
         }
         break;
-      case 'AD': 
-      if (this.districtsData.length !== 0) {
-        this.districtsData.forEach(d => {
+      case 'AD':
+        if (this.districtsData.length !== 0) {
+          this.districtsData.forEach(d => {
             allDistrictSeletion.push({ label: d.name, value: d.code, address: d.address });
-        })
-        this.allDistrictOptions = allDistrictSeletion;
-        this.allDistrictOptions.unshift({ label: '-select-', value: null });
-      }
-      break;
+          })
+          this.allDistrictOptions = allDistrictSeletion;
+          this.allDistrictOptions.unshift({ label: '-select-', value: null });
+        }
+        break;
       case 'SH':
         if (this.shopData.length !== 0) {
           this.shopData.forEach(s => {
@@ -119,132 +121,153 @@ export class ShopLiveDetailsComponent implements OnInit {
           this.shopOptions.unshift({ label: '-select-', value: null });
         }
         break;
+    }
+  }
+
+  onResetFields(field) {
+    if (field === 'RM') {
+      this.dcode = null;
+    } else if (field === 'DM') {
+      this.shopNo = null;
+    }
+  }
+
+  onSave(form: NgForm) {
+    this.blockScreen = true;
+    const params = {
+      'Id': (this.Camera_Id !== null && this.Camera_Id !== undefined) ? this.Camera_Id : 0,
+      'DCode': (this.dcode !== undefined && this.dcode !== null) ? this.dcode.value : null,
+      'RCode': (this.rcode !== undefined && this.rcode !== null) ? this.rcode.value : null,
+      'StartDate': (this.isEdited) ? this.startDate : this.datepipe.transform(this.startDate, 'yyyy-MM-dd'),
+      'Remarks': this.remarks,
+      'ShopNo': (this.shopNo !== undefined && this.shopNo !== null) ? this.shopNo.value : null,
+      'EndDate': (this.isEdited) ? this.endDate : this.datepipe.transform(this.endDate, 'yyyy-MM-dd'),
+      'Hours': this.hours,
+      'isActive': (this.selectedType * 1),
+      'User': this.user,
+    }
+    this.restApiService.post(PathConstants.CameraLiveDetailsPost, params).subscribe(res => {
+      if (res.item1) {
+        this.onClear(form);
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-err', severity: 'success',
+          summary: 'Success Message', detail: (this.isEdited) ? 'Updated Successfully!' : 'Saved Successfully!'
+        });
+      } else {
+        this.blockScreen = false;
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-err', severity: 'error',
+          summary: 'Error Message', detail: 'Please contact administrator !'
+        });
       }
-    }
+    }, (err: HttpErrorResponse) => {
+      this.blockScreen = false;
+      if (err.status === 0 || err.status === 400) {
+        this.messageService.clear();
+        this.messageService.add({
+          key: 't-err', severity: 'error',
+          summary: 'Error Message', detail: 'Please Contact Administrator!'
+        });
+      }
+    });
+  }
 
-    onResetFields(field) {
-      if (field === 'RM') {
-        this.dcode = null;
-      } else if (field === 'DM') {
-        this.shopNo = null;
-      } 
-    }
+  resetFormFields(form) {
+    form.controls.shop_no.reset();
+    form.controls.rname.reset();
+    form.controls.dname.reset();
+    form.controls.s_date.reset();
+    form.controls.e_date.reset();
+    form.controls.hrs.reset();
+    form.controls.cam_status.reset();
+    form.controls.remarks_text.reset();
+  }
 
-    onSave(form: NgForm) {
-      this.blockScreen = true;
+  onView() {
+    this.showDialog = true;
+    this.loading = false;
+    this.isEdited = false;
+    this.table.reset();
+  }
+
+  getCameraStatusDetails() {
+    this.loading = true;
+    if (this.selectedDcode !== null && this.selectedDcode !== undefined) {
+      this.table.reset();
+      this.cameraLiveDetailsData.length = 0;
       const params = {
-        'Id': (this.Camera_Id !== null && this.Camera_Id !== undefined) ? this.Camera_Id : 0,
-        'DCode': (this.dcode !== undefined && this.dcode !== null) ? this.dcode.value : null,
-        'RCode': (this.rcode !== undefined && this.rcode !== null) ? this.rcode.value : null,
-        'StartDate': this.datepipe.transform(this.startDate, 'yyyy-MM-dd'),
-        'Remarks': this.remarks,
-        'ShopNo': (this.shopNo !== undefined && this.shopNo !== null) ? this.shopNo.value : null,
-        'EndDate': this.datepipe.transform(this.endDate, 'yyyy-MM-dd'),
-        'Hours': this.hours,
-        'isActive': (this.selectedType === '1') ? true : false,
-        'User': this.user,
+        'DCode': this.selectedDcode.value
       }
-      this.restApiService.post(PathConstants.CameraLiveDetailsPost, params).subscribe(res => {
-        if (res.item1) {
-          this.onClear(form);
-          this.messageService.clear();
-          this.messageService.add({
-            key: 't-err', severity: 'success',
-            summary: 'Success Message', detail: 'Saved Successfully !'
-          });
+      this.restApiService.getByParameters(PathConstants.CameraLiveDetailsGet, params).subscribe(res => {
+        if (res !== undefined && res !== null && res.length !== 0) {
+          this.cameraLiveDetailsData = res;
+          this.loading = false;
         } else {
-          this.blockScreen = false;
-          this.messageService.clear();
+          this.loading = false;
           this.messageService.add({
-            key: 't-err', severity: 'error',
-            summary: 'Error Message', detail: res.item2
+            key: 'd-err', severity: 'warn',
+            summary: 'Warning Message', detail: 'No data found for selected date!'
           });
         }
       }, (err: HttpErrorResponse) => {
-        this.blockScreen = false;
+        this.loading = false;
         if (err.status === 0 || err.status === 400) {
           this.messageService.clear();
           this.messageService.add({
-            key: 't-err', severity: 'error',
+            key: 'd-err', severity: 'error',
             summary: 'Error Message', detail: 'Please Contact Administrator!'
           });
         }
       });
     }
-  
-    resetFormFields(form) {
-      form.controls.shop_no.reset();
-      form.controls.rname.reset();
-      form.controls.dname.reset();
-      form.controls.s_date.reset();
-      form.controls.e_date.reset();
-      form.controls.hrs.reset();
-      form.controls.cam_status.reset();
-      form.controls.remarks_text.reset();
-    }
+  }
 
-    onView() {
-      
-    }
-  
-    getRelocationDetails() {
-      this.loading = true;
-      if (this.selectedDcode !== null && this.selectedDcode !== undefined) {
-        this.table.reset();
-        const params = {
-          'DCode': this.selectedDcode
-        }
-       this.restApiService.getByParameters(PathConstants.CameraLiveDetailsGet, params).subscribe(res => {
-          if (res !== undefined && res !== null && res.length !== 0) {
-            this.cameraLiveDetailsData = res;
-            this.loading = false;
-          } else {
-            this.loading = false;
-            this.messageService.add({
-              key: 'd-err', severity: 'warn',
-              summary: 'Warning Message', detail: 'No data found for selected date!'
-            });
-          }
-        }, (err: HttpErrorResponse) => {
-          this.loading = false;
-          if (err.status === 0 || err.status === 400) {
-            this.messageService.clear();
-            this.messageService.add({
-              key: 'd-err', severity: 'error',
-              summary: 'Error Message', detail: 'Please Contact Administrator!'
-            });
-          }
-        });
-      }
-    }
-  
-  
-    onRowSelect(row, index, form: NgForm) {
-      if (row !== undefined && row !== null) {
-        this.resetFormFields(form);
-        this.btn_label = 'Update';
-        this.disableRM = true;
-        this.disableRM = true;
-        this.disableSH = true;
-        this.Camera_Id = row.Id;
-        this.remarks = row.Remarks;
-        this.startDate = (this.datepipe.transform(row.StartDate, 'yyyy-MM-dd'));
-        this.endDate = (this.datepipe.transform(row.EndDate, 'yyyy-MM-dd'));
-        this.hours = row.Hours;
-        this.regionOptions = [{ label: row.REGNNAME, value: row.RCode }];
-        this.rcode = { label: row.REGNNAME, value: row.RCode };
-        this.districtOptions = [{ label: row.Dname, value: row.DCode }];
-        this.dcode = { label: row.Dname, value: row.DCode };
-        this.shopOptions = [{ label: row.ShopNo, value: row.ShopNo }];
-        this.shopNo = { label: row.ShopNo, value: row.ShopNo };
-      }
-    }
-  
-    onClear(form: NgForm) {
-      form.reset();
-      form.form.markAsUntouched();
-      form.form.markAsPristine();
-      this.btn_label = 'Save';
+
+  onRowSelect(row, index, form: NgForm) {
+    if (row !== undefined && row !== null) {
+      this.showDialog = false;
+      this.isEdited = true;
+      this.resetFormFields(form);
+      this.btn_label = 'Update';
+      this.disableRM = true;
+      this.disableDM = true;
+      this.disableSH = true;
+      this.Camera_Id = row.Id;
+      this.remarks = row.Remarks;
+      this.startDate = this.datepipe.transform(row.StartDate, 'yyyy-MM-dd');
+      this.endDate = this.datepipe.transform(row.EndDate, 'yyyy-MM-dd');
+      this.hours = row.Hours;
+      this.selectedType = row.isActive;
+      this.regionOptions = [{ label: row.REGNNAME, value: row.RCode }];
+      this.rcode = { label: row.REGNNAME, value: row.RCode };
+      this.districtOptions = [{ label: row.Dname, value: row.DCode }];
+      this.dcode = { label: row.Dname, value: row.DCode };
+      this.shopOptions = [{ label: row.ShopNo, value: row.ShopNo }];
+      this.shopNo = { label: row.ShopNo, value: row.ShopNo };
     }
   }
-  
+
+  onClear(form: NgForm) {
+    form.reset();
+    form.form.markAsUntouched();
+    form.form.markAsPristine();
+    this.resetFormFields(form);
+    this.btn_label = 'Save';
+    this.disableDM = false;
+    this.disableRM = false;
+    this.disableSH = false;
+    this.blockScreen = false;
+    this.loading = false;
+    this.showDialog = false;
+    this.regionOptions = null;
+    this.rcode = null;
+    this.districtOptions = null;
+    this.dcode = null;
+    this.shopOptions = null;
+    this.shopNo = null;
+    this.isEdited = false;
+  }
+}
+

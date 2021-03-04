@@ -48,12 +48,16 @@ export class HomeComponent implements OnInit {
   pieLabels: string[] = [];
   bug_count: any = [];
   incidents: any = [];
-  months: string[];
+  months: any[];
   maxLimitOfIncident: number;
   stepSizeOfIncident: number;
   roleId: any;
   userInfo: any;
   bugStatusData: any = [];
+  camera_count: any = [];
+  CameraLabels: string[] = [];
+  cameraBarData: any;
+  cameraBarOptions: any;
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
     private router: Router, private authService: AuthService) { }
@@ -62,9 +66,12 @@ export class HomeComponent implements OnInit {
     this.preventBackButton();
     this.userInfo = this.authService.getLoggedUser();
     this.roleId = this.userInfo.RoleId;
-    this.months = ["August", "September", "October", "November", "December",
-      "January", "February", "March", "April", "May", "June", "July"
-    ];
+    this.months = [{ name: "August", value: 8 }, { name: "September", value: 9 },
+    { name: "October", value: 10 }, { name: "November", value: 11 },
+    { name: "December", value: 12 }, { name: "January", value: 1 },
+    { name: "February", value: 2 }, { name: "March", value: 3 },
+    { name: "April", value: 4 }, { name: "May", value: 5 }, { name: "June", value: 6 },
+    { name: "July", value: 7 }];
     this.slaTypeOptions = [
       { label: 'Retail Shop', value: 'SH' },
       { label: 'District wise', value: 'DM' },
@@ -93,11 +100,11 @@ export class HomeComponent implements OnInit {
 
     this.restApi.get(PathConstants.DistrictMasterURL).subscribe(dist => {
       dist.forEach(d => {
-        this.districts.push({'name': d.Dname, 'code': d.Dcode });
+        this.districts.push({ 'name': d.Dname, 'code': d.Dcode });
       })
       //NMS Bar chart
-      this.onNMSTypeChange(this.nmsType); 
-     })
+      this.onNMSTypeChange(this.nmsType);
+    })
     this.restApi.get(PathConstants.ComponentsURL).subscribe((comp: any) => {
       comp.forEach(c => {
         this.components.push({ name: c.name, id: c.product_id });
@@ -105,15 +112,10 @@ export class HomeComponent implements OnInit {
       this.restApi.getByParameters(PathConstants.ShopsGetURL, { 'type': 1 }).subscribe(shop => {
         /// total shop count
         shop.Table1.forEach(t => {
-          this.total_shops.push({ 'count': t.shopcount, 'status': t.installation_status});
+          this.total_shops.push({ 'count': t.shopcount, 'status': t.installation_status });
         })
         /// district wise shop count
         shop.Table.forEach(s => {
-          // var str: string = s.district;
-          // var firstStr = str.slice(0, 1).toUpperCase();
-          // var secondStr = str.slice(1, str.length).toLowerCase();
-          // str = firstStr + secondStr;
-          // this.districts.push(str);
           this.shops.push({ 'count': s.shopcount, 'status': s.installation_status, 'dcode': s.dcode });
           //NMS Bar chart
           this.onNMSTypeChange(this.nmsType);
@@ -122,12 +124,19 @@ export class HomeComponent implements OnInit {
       //SLA Bar chart
       this.onSLATypeChange(this.slaType);
     });
+    this.restApi.get(PathConstants.CameraCountGet).subscribe(total => {
+      total.forEach(t => {
+        this.camera_count.push({ 'count': t.count, 'status': t.isActive, 'dcode': t.DCode });
+      })
+      this.onLoadCameraStatus();
+    })
     //Line Chart
     this.restApi.getByParameters(PathConstants.MonthwiseIncidentGetURL, { 'type': 1 }).subscribe(data => {
       for (let i = 0; i < this.months.length; i++) {
         for (let j = 0; j < data.length; j++) {
-          if (this.months[i] === data[j].doc_date) {
+          if (this.months[i].value === data[j].month_no) {
             this.incidents.splice(i, 0, data[j].count);
+            this.months[i]['index'] = i;
             break;
           }
           if (this.incidents.length === data.length) {
@@ -141,6 +150,7 @@ export class HomeComponent implements OnInit {
       this.maxLimitOfIncident = this.incidents.reduce((a, b) => Math.max(a, b));
       this.stepSizeOfIncident = (this.maxLimitOfIncident.toString().length === 1) ? 1 :
         ((this.maxLimitOfIncident.toString().length === 2) ? 10 : 100);
+      console.log(this.months);
       this.onLoadIncidentChart();
     })
   }
@@ -229,8 +239,10 @@ export class HomeComponent implements OnInit {
 
   onLoadIncidentChart() {
     const year = new Date().getFullYear();
+    var labels = [];
+    this.months.forEach(m => { labels.push(m.name) });
     this.incidentLineData = {
-      labels: this.months,
+      labels: labels,
       datasets: [
         {
           label: 'Months ( From Year' + ' ' + year + ' - ' + (year + 1) + ' )',
@@ -401,7 +413,7 @@ export class HomeComponent implements OnInit {
           dataset1.push(s.count);
         } else {
           this.districts.forEach(d => {
-            if(d.code === s.dcode) {
+            if (d.code === s.dcode) {
               dataset2.push(s.count);
             } else {
               dataset2.push(null);
@@ -410,20 +422,20 @@ export class HomeComponent implements OnInit {
         }
       })
       this.nmsBarData = {
-          labels: this.NMSLabels,
-          datasets: [
-            {
-              label: "Running (in No's)",
-              data: dataset1,
-              backgroundColor: '#52c91e',
-            },
-            {
-              label: "Not Running (in No's)",
-              data: dataset2,
-              backgroundColor: '#fc2121',
-            }
-          ]
-        }
+        labels: this.NMSLabels,
+        datasets: [
+          {
+            label: "Running (in No's)",
+            data: dataset1,
+            backgroundColor: '#52c91e',
+          },
+          {
+            label: "Not Running (in No's)",
+            data: dataset2,
+            backgroundColor: '#fc2121',
+          }
+        ]
+      }
       this.nmsBarOptions = {
         scales: {
           xAxes: [{
@@ -501,10 +513,10 @@ export class HomeComponent implements OnInit {
         } else {
           not_installed = t.count;
         }
-    })
-        dataset1.push(installed);
-        dataset2.push(not_installed);
-        // dataset.push(t.count);
+      })
+      dataset1.push(installed);
+      dataset2.push(not_installed);
+      // dataset.push(t.count);
       this.nmsBarData = {
         labels: this.NMSLabels,
         datasets: [
@@ -546,12 +558,102 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  onLoadCameraStatus() {
+    var labels = [];
+    var cam_district = [];
+    this.districts.forEach(d => {
+      labels.push(d.name);
+    })
+    this.CameraLabels = labels;
+    var len = this.districts.length - 1;
+    var dataset1 = new Array(len);
+    var dataset2 = new Array(len);
+
+    console.log('d', dataset1, dataset2);
+    for (let i = 0; i < this.districts.length; i++) {
+      for (let j = 0; j < this.camera_count.length; j++) {
+        if (this.camera_count[j].status === 1) {
+          if (this.camera_count[j].dcode === this.districts[i].code) {
+            dataset1[i] = this.camera_count[j].count;
+            break;
+          } else {
+            dataset1[i] = null;
+          }
+        } else {
+          if (this.camera_count[j].dcode === this.districts[i].code) {
+            dataset2[i] = this.camera_count[j].count;
+            // break;
+          } else {
+            dataset2[i] = null;
+          }
+        }
+      }
+    }
+    this.cameraBarData = {
+      labels: this.CameraLabels,
+      datasets: [
+        {
+          label: "Running (in No's)",
+          data: dataset1,
+          backgroundColor: '#52c91e',
+        },
+        {
+          label: "Not Running (in No's)",
+          data: dataset2,
+          backgroundColor: '#fc2121',
+        }
+      ]
+    }
+    this.cameraBarOptions = {
+      scales: {
+        xAxes: [{
+          barPercentage: 0.80,
+          stacked: true
+        }],
+        yAxes: [{
+          stacked: true
+        }]
+      },
+      title: {
+        display: true,
+        fontSize: 16
+      },
+      legend: {
+        position: 'bottom'
+      },
+      plugins: {
+        datalabels: {
+          /* show value inside stacked bar */
+          formatter: (value, ctx) => {
+            let sum = 0;
+            for (let i = 0; i <= ctx.chart.data.datasets.length; i++) {
+              const dataArr = ctx.chart.data.datasets[i].data;
+              dataArr.map(data => {
+                sum += data;
+              });
+              var data = (value !== 0) ? value : '';
+              return data;
+            }
+          },
+          color: "#000000",
+          fontSize: 14
+        }
+      }
+    };
+  }
+
   selectData(event, type) {
     const index: string = event.element._index;
-    if(type === 'P') {
-    this.router.navigate(['bugzilla'], { queryParams: { id: index, si: true } });
-    } else if(type === 'L') {
-      this.router.navigate(['all-incident-report'], { queryParams: { id: index, si: true } });
+    if (type === 'P') {
+      this.router.navigate(['bugzilla'], { queryParams: { id: index, si: true } });
+    } else if (type === 'L') {
+      let month;
+      this.months.forEach(m => {
+        if (m.index === index && m.index !== undefined) {
+          month = m.value;
+          this.router.navigate(['all-incident-report'], { queryParams: { id: month, si: true } });
+        }
+      })
     }
   }
 
