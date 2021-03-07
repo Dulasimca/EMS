@@ -26,11 +26,17 @@ export class AllIncidentReportComponent implements OnInit {
     this.incidentCols = [
       { field: 'REGNNAME', header: 'Region Name' },
       { field: 'Dname', header: 'District Name' },
-      { field: 'shopcode', header: 'Shop Number' },
-      { field: 'doc_date', header: 'Incident Date' },
-      { field: 'reason', header: 'Reason' },
-      { field: 'url_path', header: 'URL' },
-      { field: 'remarks', header: 'Remarks' }
+      { field: 'Shopcode', header: 'Shop Number' },
+      { field: 'DocDate', header: 'Incident Date' },
+      { field: 'StatusName', header: 'Status' },
+      { field: 'LocName', header: 'Location' },
+      { field: 'Address', header: 'Address'},
+      { field: 'IssueTypeName', header: 'Issue Type' },
+      { field: 'Remarks', header: 'Reason' },
+      { field: 'VideoURL', header: 'Video URL' },
+      { field: 'ImageURL', header: 'Image URL' },
+      { field: 'CreatedDate', header: 'Created Date' },
+      { field: 'CompletedDate', header: 'Completed Date' }
     ];
     this.loading = true;
     index = (index * 1);
@@ -39,9 +45,13 @@ export class AllIncidentReportComponent implements OnInit {
 
   onLoadTable(month) {
     this.loading = true;
+    let tempArr = [];
     this.restApiService.getByParameters(PathConstants.IncidentGetURL, { 'type': 1 }).subscribe((res: any) => {
       if (res !== undefined && res !== null && res.length !== 0) {
-        this.incidentData = res.filter(f => {
+        res.Table.forEach(x => { tempArr.push(x) });
+        res.Table1.forEach(x => { tempArr.push(x) });
+        res.Table2.forEach(x => { tempArr.push(x) });
+        this.incidentData = tempArr.filter(f => {
           return f.month === month;
         })
         this.loading = false;

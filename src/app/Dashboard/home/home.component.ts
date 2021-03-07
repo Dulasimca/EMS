@@ -8,7 +8,10 @@ import { SelectItem } from 'primeng/api';
 import { PathConstants } from 'src/app/Helper/PathConstants';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-
+import * as Rx from 'rxjs';
+import * as _ from 'lodash';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/observable/from';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +40,7 @@ export class HomeComponent implements OnInit {
   incidentLineOptions: any;
   slaTypeOptions: SelectItem[];
   nmsTypeOptions: SelectItem[];
-  slaType: string = 'SH';
+  slaType: number = 5 ;
   nmsType: string = 'DM';
   districts: any = [];
   regions: any = [];
@@ -59,6 +62,7 @@ export class HomeComponent implements OnInit {
   cameraBarData: any;
   cameraBarOptions: any;
   region_wise_shops: any = [];
+  SLATicketData: any = [];
 
   constructor(private restApi: RestAPIService, private locationStrategy: LocationStrategy,
     private router: Router, private authService: AuthService) { }
@@ -74,10 +78,10 @@ export class HomeComponent implements OnInit {
     { name: "April", value: 4 }, { name: "May", value: 5 }, { name: "June", value: 6 },
     { name: "July", value: 7 }];
     this.slaTypeOptions = [
-      { label: 'Retail Shop', value: 'SH' },
-      { label: 'District wise', value: 'DM' },
-      { label: 'Regional wise', value: 'RM' },
-      { label: 'Total', value: 'HO' }
+      { label: 'Retail Shop', value: 5 },
+      { label: 'District wise', value: 4 },
+      { label: 'Regional wise', value: 3 },
+      { label: 'Total', value: 2 }
     ];
     this.nmsTypeOptions = [
       { label: 'District wise', value: 'DM' },
@@ -108,7 +112,7 @@ export class HomeComponent implements OnInit {
     })
     this.restApi.get(PathConstants.ComponentsURL).subscribe((comp: any) => {
       comp.forEach(c => {
-        this.components.push({ name: c.name, id: c.product_id });
+        this.components.push({ name: c.name, product_id: c.product_id, comp_id: c.id });
       });
       this.restApi.getByParameters(PathConstants.ShopsGetURL, { 'type': 1 }).subscribe(shop => {
         /// total shop count
@@ -127,6 +131,10 @@ export class HomeComponent implements OnInit {
         })
       })
       //SLA Bar chart
+      // this.onSLATypeChange(this.slaType);
+    });
+    this.restApi.get(PathConstants.SLATicketCountGet).subscribe(res => {
+      this.SLATicketData = res;
       this.onSLATypeChange(this.slaType);
     });
     this.restApi.get(PathConstants.CameraCountGet).subscribe(total => {
@@ -136,26 +144,38 @@ export class HomeComponent implements OnInit {
       this.onLoadCameraStatus();
     })
     //Line Chart
-    this.restApi.getByParameters(PathConstants.MonthwiseIncidentGetURL, { 'type': 1 }).subscribe(data => {
+    this.restApi.getByParameters(PathConstants.MonthwiseIncidentGetURL, { 'type': 1 }).subscribe(res => {
+      var data = [];
+      res.Table.forEach(x => { data.push(x); });
+      res.Table1.forEach(x => { data.push(x) });
+      res.Table2.forEach(x => { data.push(x) });
+      var groupedData;
+      Observable.from(data)
+      .groupBy(x => x.month_no) // using groupBy from Rxjs
+      .flatMap(group => group.toArray())// GroupBy dont create a array object so you have to flat it
+      .map(g => {// mapping 
+        return {
+          month_no: g[0].month_no,//take the first name because we grouped them by name
+          count: _.sumBy(g, 'count'), // using lodash to sum price
+        }
+      })
+      .toArray() //.toArray because I guess you want to loop on it with ngFor      
+      .do(sum => console.log('sum:', sum)) // just for debug
+      .subscribe(d => groupedData = d); 
       for (let i = 0; i < this.months.length; i++) {
-        for (let j = 0; j < data.length; j++) {
-          if (this.months[i].value === data[j].month_no) {
-            this.incidents.splice(i, 0, data[j].count);
-            this.months[i]['index'] = i;
+        for (let j = 0; j < groupedData.length; j++) {
+          if (this.months[i].value === groupedData[j].month_no) {
+            this.incidents.splice(i, 0, groupedData[j].count);
+            this.months[i]['index'] = i; //adding index in months array for navigation
             break;
-          }
-          if (this.incidents.length === data.length) {
+          } else {
             this.incidents.splice(i, 0, 0);
           }
-        }
-        if (this.incidents.length > data.length) {
-          this.incidents.splice(i, 0, 0);
         }
       }
       this.maxLimitOfIncident = this.incidents.reduce((a, b) => Math.max(a, b));
       this.stepSizeOfIncident = (this.maxLimitOfIncident.toString().length === 1) ? 1 :
         ((this.maxLimitOfIncident.toString().length === 2) ? 10 : 100);
-      console.log(this.months);
       this.onLoadIncidentChart();
     })
   }
@@ -299,7 +319,7 @@ export class HomeComponent implements OnInit {
         }],
         yAxes: [{
           ticks: {
-            min: 50,
+            min: 10,
             max: 100,
             stepSize: 10,
             callback: function (value, index, values) {
@@ -327,79 +347,37 @@ export class HomeComponent implements OnInit {
         }
       }
     };
-    if (value === 'SH') {
-      this.SLALabels = [];
+    this.SLALabels = [];
+      var dataset = [];
+      let tempArr = this.SLATicketData.filter(y => {
+        return y.product_id === value;
+      });
       var labels = this.components.filter(x => {
-        return x.id === 5;
+        return x.product_id === value;
       });
-      labels.forEach(y => {
-        this.SLALabels.push(y.name);
+      labels.forEach(i => {
+        this.SLALabels.push(i.name);
+        tempArr.forEach(j => {
+          if(i.comp_id === j.component_id) {
+            dataset.push(j.count * 10);
+          }
+        })
       });
+      for(let i = 0; i < labels.length; i ++) {
+        if(dataset.length <= labels.length) {
+          dataset.push(100);
+        }
+      }
       this.slaBarData = {
         labels: this.SLALabels,
         datasets: [
           {
             label: 'Time(in percentage)',
-            backgroundColor: ['#1ebf1b', '#f0dd13', '#09c4d9'],
-            data: [62, 85, 70]
+            backgroundColor: ['#1ebf1b', '#f0dd13', '#ff6993','#fc9b2b', '#09c4d9'],
+            data: dataset
           }
         ]
       }
-    } else if (value === 'DM') {
-      this.SLALabels = [];
-      var labels = this.components.filter(x => {
-        return x.id === 4;
-      });
-      labels.forEach(y => {
-        this.SLALabels.push(y.name);
-      });
-      this.slaBarData = {
-        labels: this.SLALabels,
-        datasets: [
-          {
-            label: 'Time(in percentage)',
-            backgroundColor: ['#f77c2f', '#f0dd13', '#09c4d9', '#26870b', '#d1ae13'],
-            data: [62, 85, 70, 58, 98]
-          }
-        ]
-      }
-    } else if (value === 'RM') {
-      this.SLALabels = [];
-      var labels = this.components.filter(x => {
-        return x.id === 3;
-      });
-      labels.forEach(y => {
-        this.SLALabels.push(y.name);
-      });
-      this.slaBarData = {
-        labels: this.SLALabels,
-        datasets: [
-          {
-            label: 'Time(in percentage)',
-            backgroundColor: ['#4fc437', '#f0dd13', '#09c4d9',],
-            data: [60, 80, 100]
-          }
-        ]
-      }
-    } else if (value === 'HO') {
-      this.SLALabels = [];
-      var labels = this.components.filter(x => {
-        return x.id === 2;
-      });
-      labels.forEach(y => {
-        this.SLALabels.push(y.name);
-      });
-      this.slaBarData = {
-        labels: this.SLALabels,
-        datasets: [
-          {
-            label: 'Time(in percentage)',
-            backgroundColor: ['#1dbfba', '#f0dd13', '#4fc437',],
-            data: [80, 90, 70]
-          }
-        ]
-      }
-    }
   }
 
   onNMSTypeChange(value) {
@@ -412,14 +390,17 @@ export class HomeComponent implements OnInit {
       this.nmsBarType = 'bar';
       var dataset1 = [];
       var dataset2 = [];
-      // var bgColor: string[] = [];
+      var total_running_count = 0;
+      var total_not_running_count = 0;
       this.shops.forEach(s => {
         if (s.status) {
           dataset1.push(s.count);
+          total_running_count += s.count;
         } else {
           this.districts.forEach(d => {
             if (d.code === s.dcode) {
               dataset2.push(s.count);
+              total_not_running_count += s.count;
             } else {
               dataset2.push(null);
             }
@@ -430,12 +411,12 @@ export class HomeComponent implements OnInit {
         labels: this.NMSLabels,
         datasets: [
           {
-            label: "Running (in No's)",
+            label: "Total Running (in No's) - " + total_running_count,
             data: dataset1,
             backgroundColor: '#52c91e',
           },
           {
-            label: "Not Running (in No's)",
+            label: "Total Not Running (in No's) - " + total_not_running_count,
             data: dataset2,
             backgroundColor: '#fc2121',
           }
@@ -486,14 +467,17 @@ export class HomeComponent implements OnInit {
       this.nmsBarType = 'bar';
       var dataset1 = [];
       var dataset2 = [];
-      // var bgColor: string[] = [];
+      var total_running_count = 0;
+      var total_not_running_count = 0;
       this.region_wise_shops.forEach(s => {
         if (s.status) {
           dataset1.push(s.count);
+          total_running_count += s.count;
         } else {
           this.regions.forEach(d => {
             if (d.code === s.dcode) {
               dataset2.push(s.count);
+              total_not_running_count += s.count;
             } else {
               dataset2.push(null);
             }
@@ -504,12 +488,12 @@ export class HomeComponent implements OnInit {
         labels: this.NMSLabels,
         datasets: [
           {
-            label: "Running (in No's)",
+            label: "Total Running (in No's) - " + total_running_count,
             data: dataset1,
             backgroundColor: '#52c91e',
           },
           {
-            label: "Not Running (in No's)",
+            label: " Total Not Running (in No's) - " + total_not_running_count,
             data: dataset2,
             backgroundColor: '#fc2121',
           }
@@ -612,21 +596,20 @@ export class HomeComponent implements OnInit {
 
   onLoadCameraStatus() {
     var labels = [];
-    var cam_district = [];
     this.districts.forEach(d => {
       labels.push(d.name);
     })
     this.CameraLabels = labels;
-    var len = this.districts.length - 1;
     var dataset1 = [];
     var dataset2 = [];
-
-    console.log('d', dataset1, dataset2);
+    var total_running_count = 0;
+    var total_not_running_count = 0;
     for (let i = 0; i < this.districts.length; i++) {
       for (let j = 0; j < this.camera_count.length; j++) {
         if (this.camera_count[j].status === 1) {
           if (this.camera_count[j].dcode === this.districts[i].code) {
             dataset1[i] = this.camera_count[j].count;
+            total_running_count += this.camera_count[j].count;
             break;
           } else {
             dataset1[i] = null;
@@ -634,6 +617,7 @@ export class HomeComponent implements OnInit {
         } else {
           if (this.camera_count[j].dcode === this.districts[i].code) {
             dataset2[i] = this.camera_count[j].count;
+            total_not_running_count += this.camera_count[j].count;
             // break;
           } else {
             dataset2[i] = null;
@@ -645,12 +629,12 @@ export class HomeComponent implements OnInit {
       labels: this.CameraLabels,
       datasets: [
         {
-          label: "Running (in No's)",
+          label: "Total Running (in No's) - " + total_running_count,
           data: dataset1,
           backgroundColor: '#52c91e',
         },
         {
-          label: "Not Running (in No's)",
+          label: "Total Not Running (in No's) - " + total_not_running_count,
           data: dataset2,
           backgroundColor: '#fc2121',
         }

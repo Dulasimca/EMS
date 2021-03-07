@@ -23,4 +23,5 @@ export class PathConstants {
     public static readonly CameraLiveDetailsPost = '/api/InsertCameraStatus/Post';
     public static readonly CameraLiveDetailsGet = '/api/InsertCameraStatus/Get';
     public static readonly CameraCountGet = '/api/CameraCount';
+    public static readonly SLATicketCountGet = '/api/SLATicketCount';
 }

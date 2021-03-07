@@ -18,7 +18,7 @@
                         <p-tabPanel header="CCTV Status">
                             <div class="p-col-12 p-md-12 p-lg-12 no-pad" style="display: flex;">
                                 <div class="p-col-12 p-md-12 p-lg-12 border-color card border-color">
-                                    <div class="header-line">CCTV Camera Installation Status</div>
+                                    <div class="header-line">CCTV Installation Status</div>
                                     <div>
                                         <p-selectButton [options]="nmsTypeOptions" [(ngModel)]="nmsType"
                                             (onChange)="onNMSTypeChange(nmsType)"></p-selectButton>
@@ -32,7 +32,7 @@
                         <p-tabPanel header="CCTV Live Status">
                             <div class="p-col-12 p-md-12 p-lg-12 no-pad" style="display: flex;">
                                 <div class="p-col-12 p-md-12 p-lg-12 border-color card border-color">
-                                    <div class="header-line">Live - CCTV Camera Installation Status</div>
+                                    <div class="header-line">CCTV Live Status</div>
                                     <p-chart type='bar' [data]="cameraBarData" width="auto" height="60vh"
                                         [plugins]="plugin" [options]="cameraBarOptions">
                                     </p-chart>
