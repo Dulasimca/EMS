@@ -25,7 +25,17 @@
                                     </div>
                                     <p-chart type={{nmsBarType}} [data]="nmsBarData" width="auto" height="60vh"
                                         [plugins]="plugin" [options]="nmsBarOptions">
-                                    </p-chart>
+                                    </p-chart><br />
+                                    <div class="p-col-12">
+                                        <span style="text-decoration:underline;"> This graph shows the camera
+                                            installation status in three variants such as,
+                                        </span><br />
+                                        * District wise - can view the number of CCTV cameras installed in
+                                        every districts.<br />
+                                        * Regional wise - can view the number of CCTV cameras installed in all
+                                        Regional offices. (Chennai, Salem, Coimbatore, Trichy and Madurai)<br />
+                                        * Total - can view the overall cameras running all over the state.<br />
+                                    </div>
                                 </div>
                             </div>
                         </p-tabPanel>
@@ -36,6 +46,13 @@
                                     <p-chart type='bar' [data]="cameraBarData" width="auto" height="60vh"
                                         [plugins]="plugin" [options]="cameraBarOptions">
                                     </p-chart>
+                                    <div class="p-col-12">
+                                        <span style="text-decoration:underline;"> This graph shows the camera
+                                            live status in three variants such as,
+                                        </span><br />
+                                        * User can view camera status in all the respective districts.<br/>
+                                        * User can view total camera live status as 'Running' and not live status as 'Not Running' in No's.<br/>
+                                    </div>
                                 </div>
                             </div>
                         </p-tabPanel>
@@ -51,6 +68,15 @@
                         <p-chart type="bar" [data]="slaBarData" width="auto" height="60vh" [plugins]="plugin"
                             [options]="slaBarOptions">
                         </p-chart>
+                        <div class="p-col-12" style="color: #495057; font-size: 16px !important; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                            <span style="text-decoration:underline;">This graph shows the SLA status in three locations such as,
+                            </span><br />
+                            <span style="padding:8px !important;">* Retail Shop, Regional wise, District wise and Total(HO).</span><br/>
+                            <span style="padding:8px !important;"> * User can view the SLA status for all the components of coressponding l
+                            ocation in the above graph.</span><br/>
+                            <span style="padding:8px !important;"> * SLA percentage user should be maintained is 97%.</span><br/>
+                            <span style="padding:8px !important;"> * In Total, User can view SLA status of overall components.</span><br/>
+                        </div>
                     </div>
                 </div>
                 <div class="p-col-12 p-md-6 p-lg-6 no-pad-top no-pad-left" style="display: flex;padding-right: 15px;">
@@ -59,15 +85,26 @@
                         <div class="padding-gap">
                             <p-chart type="pie" [data]="pieData" [plugins]="plugin" [options]="pieOptions"
                                 (onDataSelect)="selectData($event, 'P')"></p-chart>
+                                <div class="p-col-12" style="color: #495057; font-size: 16px !important; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                                    <span style="text-decoration:underline;">This graph shows the ticket status:
+                                    </span><br />
+                                    <span style="padding:8px !important;">* User can view the ticket status created so far.</span> <br/>
+                                    <span style="padding:8px !important;">* This graph shows ticket status such as 'Completed', 'In-Progress', 'Open' and 'Assigned' in percentage.</span><br/>
+                                </div>
                         </div>
                     </div>
                 </div>
-                <div class="p-col-12 p-md-12 p-lg-12" style="display: flex;padding: 0 15px 0 15px;">
+                <div class="p-col-12 p-md-12 p-lg-12" style="display: flex;padding: 0 15px 15px 15px;">
                     <div class="p-col-12 p-md-12 p-lg-12 border-color card border-color">
                         <div class="header-line">Incident Status</div>
                         <p-chart type="line" [data]="incidentLineData" width="auto" height="60vh" [plugins]="plugin"
                             [options]="incidentLineOptions" (onDataSelect)="selectData($event, 'L')">
                         </p-chart>
+                        <div class="p-col-12" style="color: #495057; font-size: 16px !important; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+                            <span style="text-decoration:underline;">This graph shows the Incident status:
+                            </span><br />
+                            <span style="padding:8px !important;">* User can view all the incidents happened/registered on every month. </span><br/>
+                        </div>
                     </div>
                 </div>
             </div>
