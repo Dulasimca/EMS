@@ -47,6 +47,7 @@ export class TicketUpdateComponent implements OnInit {
   ComponentDescription: any;
   dialogHeader: string;
   StatusCode: any;
+  StatusLabel: string;
   blockScreen_dialog: boolean;
 
   constructor(private restApiService: RestAPIService, private datepipe: DatePipe,
@@ -164,6 +165,7 @@ export class TicketUpdateComponent implements OnInit {
     this.StatusOptions = [{ label: event.data.Status, value: event.data.status_code }];
     this.Status = [{ label: event.data.Status, value: event.data.status_code }];
     this.StatusCode = event.data.status_code;
+    this.StatusLabel = event.data.Status;
     this.onTD();
     this.showDialog = true;
     this.dialogHeader = 'Update Ticket' + this.TicketID + ' - Reported By ' + this.reporter
@@ -175,8 +177,8 @@ export class TicketUpdateComponent implements OnInit {
         'ticketID': this.TicketID,
         'reporter': this.login_User.RealName,
         'ticketdescription': this.TicketDescription,
-        'Status': (this.Status.label === undefined) ? this.Status : this.Status.label,
-        'StatusCode': (this.Status.value === undefined) ? this.StatusCode : this.Status.value
+        'Status': (this.Status.label !== undefined && this.Status.label !== null) ? this.Status.label : this.StatusLabel,
+        'StatusCode': (this.Status.value !== undefined && this.Status.value !== null) ? this.Status.value : this.StatusCode,
       }
       this.restApiService.post(PathConstants.TicketDescription, params).subscribe(res => {
         if (res) {
@@ -225,7 +227,7 @@ export class TicketUpdateComponent implements OnInit {
         'ShopCode': this.ShopName,
         'Component': this.Component,
         'Asignee': this.Assignee,
-        'Status': (this.Status.label !== undefined && this.Status.label !== null) ? this.Status.label : this.Status,
+        'Status': (this.Status.label !== undefined && this.Status.label !== null) ? this.Status.label : this.StatusLabel,
         'StatusCode': (this.Status.value !== undefined && this.Status.value !== null) ? this.Status.value : this.StatusCode ,
         'ComponentDescription': this.ComponentDescription,
         'TicketDescription': this.TicketDescription,
@@ -235,7 +237,7 @@ export class TicketUpdateComponent implements OnInit {
       const params = {
         'ticket_id': this.TicketID,
         'assingedTo': this.login_User.user,
-        'Ticketstatus': (this.Status.label === undefined) ? this.Status : this.Status.label,
+        'Ticketstatus': (this.Status.label !== undefined && this.Status.label !== null) ? this.Status.label : this.StatusLabel,
         'short_desc': this.Subject,
         'URL': "Tasmac-hms.com",
         'CC': this.DefaultCC,
